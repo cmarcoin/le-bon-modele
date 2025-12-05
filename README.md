@@ -1,6 +1,7 @@
 # Herve 2
 
 A Rails 8.1 application with PostgreSQL, Tailwind CSS, and importmap, running entirely in Docker containers.
+Helps user buy a car without pain
 
 ## Prerequisites
 
