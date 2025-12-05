@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@theme {
+  --color-herve-blue: #1A3B8F;
+  --color-herve-green: #80FF00;
+  --color-herve-light-blue: #E0F0FF;
+  --color-herve-red: #FF0000;
+}
