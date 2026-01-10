@@ -125,6 +125,76 @@
   </div>
 </section>
 
+<!-- Car Price Selector Section -->
+<%= render 'home/car_data' %>
+<section class="w-full bg-white pt-10 pb-32" data-controller="car-price">
+  <div class="container mx-auto px-8">
+    <!-- Section Title -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-herve-blue mb-4">Trouvez votre véhicule idéal</h2>
+      <p class="text-lg text-herve-blue opacity-80">Il y a tant d'options pour chaque budget...Voyez vous-même !</p>
+    </div>
+
+    <!-- Payment Toggle -->
+    <div class="flex justify-center mb-8">
+      <div class="flex items-center gap-4 bg-herve-light-blue rounded-full px-6 py-3">
+        <span class="text-herve-blue font-medium" data-car-price-target="togglePriceDisplay">5 000 €</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" data-car-price-target="toggle" data-action="change->car-price#togglePayment">
+          <div class="w-14 h-7 bg-white rounded-full peer peer-checked:bg-herve-green transition-colors duration-200 relative">
+            <div class="absolute top-0.5 left-0.5 w-6 h-6 bg-herve-blue rounded-full transition-transform duration-200 peer-checked:translate-x-7"></div>
+          </div>
+        </label>
+        <div class="flex gap-2 text-sm text-herve-blue">
+          <span class="font-medium">Comptant</span>
+          <span class="opacity-60">/</span>
+          <span class="font-medium">Leasing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price Slider -->
+    <div class="mb-12">
+      <div class="max-w-4xl mx-auto">
+        <input 
+          type="range" 
+          min="5000" 
+          max="50000" 
+          step="5000" 
+          value="5000"
+          class="w-full h-3 bg-herve-light-blue rounded-lg appearance-none cursor-pointer slider"
+          style="background: linear-gradient(to right, #1A3B8F 0%, #1A3B8F 0%, #E0F0FF 0%, #E0F0FF 100%);"
+          data-car-price-target="slider"
+          data-action="input->car-price#sliderChanged"
+        >
+        <div class="flex justify-between mt-2 text-sm text-herve-blue">
+          <span data-car-price-target="minLabel">5 000 €</span>
+          <span data-car-price-target="maxLabel">50 000 €</span>
+        </div>
+        <div class="text-center mt-4">
+          <span class="text-3xl font-bold text-herve-blue" data-car-price-target="priceDisplay">5 000 €</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Car Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 max-w-7xl mx-auto" data-car-price-target="carCardsContainer">
+      <%= render 'home/car_card' %>
+      <%= render 'home/car_card' %>
+      <%= render 'home/car_card' %>
+      <%= render 'home/car_card' %>
+      <%= render 'home/car_card' %>
+      <!-- Special CTA Card -->
+      <div class="bg-white rounded-xl shadow-lg border-2 border-herve-light-blue overflow-hidden hover:border-herve-blue transition-colors flex flex-col items-center justify-center p-6 text-center">
+        <p class="text-lg font-medium text-herve-blue mb-4">Et bien d'autres !</p>
+        <button class="px-6 py-3 bg-herve-blue text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors">
+          Perdu ? Contactez-nous !
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Bottom Section -->
 <section class="w-full bg-herve-blue rounded-t-[60px] py-16 -mt-20 relative z-0">
   <div class="container mx-auto px-8 text-center">

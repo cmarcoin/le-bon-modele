@@ -1,0 +1,148 @@
+<script type="application/json" id="car-price-data">
+<%= raw JSON.pretty_generate({
+  "cash" => {
+    "5000" => [
+      { "type" => "city-compact", "title" => "Citadine Compacte", "description" => "Petite citadine économique, idéale pour la ville. Kilométrage moyen, entretien régulier.", "mileage" => "80 000 - 120 000 km", "year" => "2010 - 2015" },
+      { "type" => "old-sportsvan", "title" => "Monospace Ancien", "description" => "Ancien monospace familial avec beaucoup de place. Kilométrage élevé mais robuste.", "mileage" => "150 000 - 200 000 km", "year" => "2005 - 2010" },
+      { "type" => "sedan-basic", "title" => "Berline d'Entrée de Gamme", "description" => "Berline basique, fiable et économique. Parfaite pour les trajets quotidiens.", "mileage" => "100 000 - 140 000 km", "year" => "2012 - 2016" },
+      { "type" => "suv-compact-old", "title" => "SUV Compact Ancien", "description" => "Petit SUV avec quelques années au compteur. Bon compromis espace/prix.", "mileage" => "120 000 - 160 000 km", "year" => "2010 - 2014" },
+      { "type" => "hatchback-basic", "title" => "Compacte Polyvalente", "description" => "Compacte polyvalente, économique en carburant. Idéale pour un premier véhicule.", "mileage" => "90 000 - 130 000 km", "year" => "2011 - 2015" }
+    ],
+    "10000" => [
+      { "type" => "city-compact-newer", "title" => "Citadine Récente", "description" => "Citadine plus récente avec moins de kilométrage. Bon équipement et fiable.", "mileage" => "50 000 - 80 000 km", "year" => "2016 - 2019" },
+      { "type" => "sportsvan-mid", "title" => "Monospace Familial", "description" => "Monospace familial spacieux, idéal pour les familles nombreuses. Kilométrage raisonnable.", "mileage" => "80 000 - 120 000 km", "year" => "2014 - 2018" },
+      { "type" => "sedan-mid", "title" => "Berline Confortable", "description" => "Berline confortable avec bon équipement. Parfaite pour les longs trajets.", "mileage" => "60 000 - 100 000 km", "year" => "2015 - 2019" },
+      { "type" => "suv-compact-mid", "title" => "SUV Compact Récent", "description" => "SUV compact plus récent, bon compromis entre espace et consommation.", "mileage" => "70 000 - 110 000 km", "year" => "2016 - 2020" },
+      { "type" => "hatchback-premium", "title" => "Compacte Premium", "description" => "Compacte de meilleure qualité, équipements modernes et finition soignée.", "mileage" => "50 000 - 90 000 km", "year" => "2017 - 2020" }
+    ],
+    "15000" => [
+      { "type" => "city-premium", "title" => "Citadine Premium", "description" => "Citadine haut de gamme avec équipements modernes. Faible kilométrage.", "mileage" => "30 000 - 60 000 km", "year" => "2019 - 2021" },
+      { "type" => "sportsvan-premium", "title" => "Monospace Premium", "description" => "Monospace haut de gamme, très spacieux et bien équipé. Idéal pour grandes familles.", "mileage" => "50 000 - 80 000 km", "year" => "2018 - 2021" },
+      { "type" => "sedan-premium", "title" => "Berline Premium", "description" => "Berline premium avec équipements haut de gamme. Confort et sécurité optimaux.", "mileage" => "40 000 - 70 000 km", "year" => "2019 - 2022" },
+      { "type" => "suv-mid", "title" => "SUV Milieu de Gamme", "description" => "SUV spacieux et confortable, bon équipement. Parfait pour famille et loisirs.", "mileage" => "50 000 - 85 000 km", "year" => "2018 - 2021" },
+      { "type" => "estate-mid", "title" => "Break Familial", "description" => "Break familial spacieux, idéal pour les vacances et le transport de matériel.", "mileage" => "45 000 - 75 000 km", "year" => "2019 - 2022" }
+    ],
+    "20000" => [
+      { "type" => "city-electric", "title" => "Citadine Électrique", "description" => "Citadine électrique récente, économique et écologique. Autonomie adaptée à la ville.", "mileage" => "20 000 - 50 000 km", "year" => "2020 - 2023" },
+      { "type" => "sportsvan-luxury", "title" => "Monospace Luxe", "description" => "Monospace haut de gamme avec équipements premium. Espace et confort maximaux.", "mileage" => "30 000 - 60 000 km", "year" => "2020 - 2023" },
+      { "type" => "sedan-luxury", "title" => "Berline Luxe", "description" => "Berline de luxe avec finition premium. Confort, sécurité et technologie de pointe.", "mileage" => "25 000 - 55 000 km", "year" => "2021 - 2023" },
+      { "type" => "suv-premium", "title" => "SUV Premium", "description" => "SUV premium spacieux, tout-terrain et confortable. Équipements haut de gamme.", "mileage" => "35 000 - 65 000 km", "year" => "2020 - 2023" },
+      { "type" => "estate-premium", "title" => "Break Premium", "description" => "Break premium avec grand volume de chargement. Confort et équipements modernes.", "mileage" => "30 000 - 60 000 km", "year" => "2021 - 2023" }
+    ],
+    "25000" => [
+      { "type" => "city-electric-premium", "title" => "Citadine Électrique Premium", "description" => "Citadine électrique haut de gamme, grande autonomie et équipements modernes.", "mileage" => "15 000 - 40 000 km", "year" => "2021 - 2024" },
+      { "type" => "sportsvan-top", "title" => "Monospace Top Gamme", "description" => "Monospace top gamme, très spacieux avec équipements premium. Idéal pour grandes familles.", "mileage" => "20 000 - 50 000 km", "year" => "2021 - 2024" },
+      { "type" => "sedan-executive", "title" => "Berline Executive", "description" => "Berline executive avec finition luxe. Technologie avancée et confort optimal.", "mileage" => "20 000 - 45 000 km", "year" => "2022 - 2024" },
+      { "type" => "suv-luxury", "title" => "SUV de Luxe", "description" => "SUV de luxe, très spacieux et puissant. Équipements premium et tout-terrain.", "mileage" => "25 000 - 55 000 km", "year" => "2021 - 2024" },
+      { "type" => "estate-luxury", "title" => "Break de Luxe", "description" => "Break de luxe avec grand volume et équipements haut de gamme. Confort premium.", "mileage" => "20 000 - 50 000 km", "year" => "2022 - 2024" }
+    ],
+    "30000" => [
+      { "type" => "electric-compact", "title" => "Compacte Électrique", "description" => "Compacte électrique récente, bonne autonomie et équipements modernes.", "mileage" => "10 000 - 35 000 km", "year" => "2022 - 2024" },
+      { "type" => "sportsvan-top-luxury", "title" => "Monospace Top Luxe", "description" => "Monospace top luxe, très spacieux avec équipements premium. Confort maximal.", "mileage" => "15 000 - 40 000 km", "year" => "2022 - 2024" },
+      { "type" => "sedan-top-executive", "title" => "Berline Top Executive", "description" => "Berline top executive, finition luxe et technologie de pointe. Confort exceptionnel.", "mileage" => "15 000 - 40 000 km", "year" => "2023 - 2024" },
+      { "type" => "suv-top-luxury", "title" => "SUV Top Luxe", "description" => "SUV top luxe, très spacieux et puissant. Équipements premium et performances.", "mileage" => "20 000 - 45 000 km", "year" => "2022 - 2024" },
+      { "type" => "estate-top-luxury", "title" => "Break Top Luxe", "description" => "Break top luxe avec volume exceptionnel. Équipements premium et confort optimal.", "mileage" => "15 000 - 40 000 km", "year" => "2023 - 2024" }
+    ],
+    "35000" => [
+      { "type" => "electric-premium", "title" => "Électrique Premium", "description" => "Véhicule électrique premium, grande autonomie et équipements haut de gamme.", "mileage" => "8 000 - 30 000 km", "year" => "2023 - 2024" },
+      { "type" => "sportsvan-ultra", "title" => "Monospace Ultra Luxe", "description" => "Monospace ultra luxe, espace maximal et équipements premium. Confort exceptionnel.", "mileage" => "10 000 - 35 000 km", "year" => "2023 - 2024" },
+      { "type" => "sedan-ultra-executive", "title" => "Berline Ultra Executive", "description" => "Berline ultra executive, finition luxe et technologie avancée. Prestige et confort.", "mileage" => "10 000 - 35 000 km", "year" => "2023 - 2024" },
+      { "type" => "suv-ultra-luxury", "title" => "SUV Ultra Luxe", "description" => "SUV ultra luxe, très spacieux et puissant. Équipements premium et performances exceptionnelles.", "mileage" => "15 000 - 40 000 km", "year" => "2023 - 2024" },
+      { "type" => "estate-ultra-luxury", "title" => "Break Ultra Luxe", "description" => "Break ultra luxe avec volume maximal. Équipements premium et confort optimal.", "mileage" => "10 000 - 35 000 km", "year" => "2023 - 2024" }
+    ],
+    "40000" => [
+      { "type" => "electric-top", "title" => "Électrique Top Gamme", "description" => "Véhicule électrique top gamme, autonomie exceptionnelle et équipements premium.", "mileage" => "5 000 - 25 000 km", "year" => "2023 - 2024" },
+      { "type" => "sportsvan-exclusive", "title" => "Monospace Exclusive", "description" => "Monospace exclusive, espace maximal et équipements ultra premium. Confort exceptionnel.", "mileage" => "8 000 - 30 000 km", "year" => "2023 - 2024" },
+      { "type" => "sedan-exclusive", "title" => "Berline Exclusive", "description" => "Berline exclusive, finition luxe et technologie de pointe. Prestige et élégance.", "mileage" => "8 000 - 30 000 km", "year" => "2023 - 2024" },
+      { "type" => "suv-exclusive", "title" => "SUV Exclusive", "description" => "SUV exclusive, très spacieux et puissant. Équipements ultra premium et performances.", "mileage" => "12 000 - 35 000 km", "year" => "2023 - 2024" },
+      { "type" => "estate-exclusive", "title" => "Break Exclusive", "description" => "Break exclusive avec volume maximal. Équipements ultra premium et confort optimal.", "mileage" => "8 000 - 30 000 km", "year" => "2023 - 2024" }
+    ],
+    "45000" => [
+      { "type" => "electric-ultra", "title" => "Électrique Ultra Premium", "description" => "Véhicule électrique ultra premium, autonomie exceptionnelle et équipements de luxe.", "mileage" => "3 000 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "sportsvan-prestige", "title" => "Monospace Prestige", "description" => "Monospace prestige, espace maximal et équipements ultra premium. Confort exceptionnel.", "mileage" => "5 000 - 25 000 km", "year" => "2023 - 2024" },
+      { "type" => "sedan-prestige", "title" => "Berline Prestige", "description" => "Berline prestige, finition luxe et technologie de pointe. Élégance et performance.", "mileage" => "5 000 - 25 000 km", "year" => "2023 - 2024" },
+      { "type" => "suv-prestige", "title" => "SUV Prestige", "description" => "SUV prestige, très spacieux et puissant. Équipements ultra premium et performances exceptionnelles.", "mileage" => "8 000 - 30 000 km", "year" => "2023 - 2024" },
+      { "type" => "estate-prestige", "title" => "Break Prestige", "description" => "Break prestige avec volume maximal. Équipements ultra premium et confort optimal.", "mileage" => "5 000 - 25 000 km", "year" => "2023 - 2024" }
+    ],
+    "50000" => [
+      { "type" => "electric-luxury", "title" => "Électrique de Luxe", "description" => "Véhicule électrique de luxe, autonomie exceptionnelle et équipements premium. Technologie de pointe.", "mileage" => "2 000 - 15 000 km", "year" => "2024" },
+      { "type" => "sportsvan-luxury-top", "title" => "Monospace Luxe Top", "description" => "Monospace luxe top, espace maximal et équipements ultra premium. Confort et élégance exceptionnels.", "mileage" => "3 000 - 20 000 km", "year" => "2024" },
+      { "type" => "sedan-luxury-top", "title" => "Berline Luxe Top", "description" => "Berline luxe top, finition premium et technologie de pointe. Prestige et performance maximales.", "mileage" => "3 000 - 20 000 km", "year" => "2024" },
+      { "type" => "suv-luxury-top", "title" => "SUV Luxe Top", "description" => "SUV luxe top, très spacieux et puissant. Équipements ultra premium et performances exceptionnelles.", "mileage" => "5 000 - 25 000 km", "year" => "2024" },
+      { "type" => "estate-luxury-top", "title" => "Break Luxe Top", "description" => "Break luxe top avec volume maximal. Équipements ultra premium et confort optimal.", "mileage" => "3 000 - 20 000 km", "year" => "2024" }
+    ]
+  },
+  "lease" => {
+    "100" => [
+      { "type" => "lease-city-basic", "title" => "Citadine d'Entrée", "description" => "Citadine économique en leasing, parfaite pour débuter. Modèle récent avec garantie.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-compact-basic", "title" => "Compacte Essentielle", "description" => "Compacte essentielle en leasing, économique et fiable. Idéale pour la ville.", "mileage" => "0 - 25 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-sedan-basic", "title" => "Berline d'Entrée", "description" => "Berline d'entrée de gamme en leasing, confortable pour les trajets quotidiens.", "mileage" => "0 - 30 000 km", "year" => "2022 - 2024" },
+      { "type" => "lease-hatchback-basic", "title" => "Compacte Polyvalente", "description" => "Compacte polyvalente en leasing, économique et spacieuse. Parfaite pour tous les jours.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-small-suv", "title" => "Petit SUV", "description" => "Petit SUV en leasing, pratique et moderne. Bon compromis espace/prix.", "mileage" => "0 - 25 000 km", "year" => "2023 - 2024" }
+    ],
+    "200" => [
+      { "type" => "lease-city-premium", "title" => "Citadine Premium", "description" => "Citadine premium en leasing, équipements modernes et confort. Modèle récent.", "mileage" => "0 - 15 000 km", "year" => "2024" },
+      { "type" => "lease-compact-premium", "title" => "Compacte Premium", "description" => "Compacte premium en leasing, qualité et équipements. Parfaite pour la ville.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-sedan-mid", "title" => "Berline Confortable", "description" => "Berline confortable en leasing, équipements modernes. Idéale pour longs trajets.", "mileage" => "0 - 25 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-suv-compact", "title" => "SUV Compact", "description" => "SUV compact en leasing, spacieux et moderne. Parfait pour famille.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-estate-basic", "title" => "Break Familial", "description" => "Break familial en leasing, grand volume de chargement. Idéal pour vacances.", "mileage" => "0 - 30 000 km", "year" => "2022 - 2024" }
+    ],
+    "300" => [
+      { "type" => "lease-city-top", "title" => "Citadine Haut de Gamme", "description" => "Citadine haut de gamme en leasing, équipements premium et technologie. Modèle récent.", "mileage" => "0 - 10 000 km", "year" => "2024" },
+      { "type" => "lease-compact-top", "title" => "Compacte Top Gamme", "description" => "Compacte top gamme en leasing, qualité premium et équipements avancés.", "mileage" => "0 - 15 000 km", "year" => "2024" },
+      { "type" => "lease-sedan-premium", "title" => "Berline Premium", "description" => "Berline premium en leasing, confort et équipements haut de gamme. Technologie avancée.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-suv-mid", "title" => "SUV Milieu de Gamme", "description" => "SUV milieu de gamme en leasing, spacieux et confortable. Équipements modernes.", "mileage" => "0 - 25 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-estate-mid", "title" => "Break Premium", "description" => "Break premium en leasing, grand volume et équipements. Confort optimal.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" }
+    ],
+    "400" => [
+      { "type" => "lease-electric-city", "title" => "Citadine Électrique", "description" => "Citadine électrique en leasing, économique et écologique. Autonomie adaptée à la ville.", "mileage" => "0 - 15 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-mid", "title" => "Monospace Familial", "description" => "Monospace familial en leasing, très spacieux. Idéal pour grandes familles.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-sedan-executive", "title" => "Berline Executive", "description" => "Berline executive en leasing, finition premium et technologie. Confort exceptionnel.", "mileage" => "0 - 15 000 km", "year" => "2024" },
+      { "type" => "lease-suv-premium", "title" => "SUV Premium", "description" => "SUV premium en leasing, spacieux et tout-terrain. Équipements haut de gamme.", "mileage" => "0 - 20 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-estate-premium", "title" => "Break Premium", "description" => "Break premium en leasing, volume exceptionnel. Équipements modernes.", "mileage" => "0 - 15 000 km", "year" => "2024" }
+    ],
+    "500" => [
+      { "type" => "lease-electric-compact", "title" => "Compacte Électrique", "description" => "Compacte électrique en leasing, bonne autonomie. Équipements modernes.", "mileage" => "0 - 12 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-premium", "title" => "Monospace Premium", "description" => "Monospace premium en leasing, espace maximal. Équipements haut de gamme.", "mileage" => "0 - 18 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-sedan-luxury", "title" => "Berline de Luxe", "description" => "Berline de luxe en leasing, finition premium. Technologie de pointe.", "mileage" => "0 - 12 000 km", "year" => "2024" },
+      { "type" => "lease-suv-luxury", "title" => "SUV de Luxe", "description" => "SUV de luxe en leasing, très spacieux et puissant. Équipements premium.", "mileage" => "0 - 18 000 km", "year" => "2023 - 2024" },
+      { "type" => "lease-estate-luxury", "title" => "Break de Luxe", "description" => "Break de luxe en leasing, volume maximal. Équipements premium.", "mileage" => "0 - 12 000 km", "year" => "2024" }
+    ],
+    "600" => [
+      { "type" => "lease-electric-premium", "title" => "Électrique Premium", "description" => "Véhicule électrique premium en leasing, grande autonomie. Équipements haut de gamme.", "mileage" => "0 - 10 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-luxury", "title" => "Monospace Luxe", "description" => "Monospace luxe en leasing, espace exceptionnel. Équipements ultra premium.", "mileage" => "0 - 15 000 km", "year" => "2024" },
+      { "type" => "lease-sedan-top-executive", "title" => "Berline Top Executive", "description" => "Berline top executive en leasing, finition luxe. Technologie avancée.", "mileage" => "0 - 10 000 km", "year" => "2024" },
+      { "type" => "lease-suv-top-luxury", "title" => "SUV Top Luxe", "description" => "SUV top luxe en leasing, très spacieux. Équipements ultra premium.", "mileage" => "0 - 15 000 km", "year" => "2024" },
+      { "type" => "lease-estate-top-luxury", "title" => "Break Top Luxe", "description" => "Break top luxe en leasing, volume exceptionnel. Équipements premium.", "mileage" => "0 - 10 000 km", "year" => "2024" }
+    ],
+    "700" => [
+      { "type" => "lease-electric-top", "title" => "Électrique Top Gamme", "description" => "Véhicule électrique top gamme en leasing, autonomie exceptionnelle. Technologie de pointe.", "mileage" => "0 - 8 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-ultra", "title" => "Monospace Ultra Luxe", "description" => "Monospace ultra luxe en leasing, espace maximal. Confort exceptionnel.", "mileage" => "0 - 12 000 km", "year" => "2024" },
+      { "type" => "lease-sedan-ultra-executive", "title" => "Berline Ultra Executive", "description" => "Berline ultra executive en leasing, finition luxe. Prestige et élégance.", "mileage" => "0 - 8 000 km", "year" => "2024" },
+      { "type" => "lease-suv-ultra-luxury", "title" => "SUV Ultra Luxe", "description" => "SUV ultra luxe en leasing, très spacieux et puissant. Performances exceptionnelles.", "mileage" => "0 - 12 000 km", "year" => "2024" },
+      { "type" => "lease-estate-ultra-luxury", "title" => "Break Ultra Luxe", "description" => "Break ultra luxe en leasing, volume maximal. Équipements ultra premium.", "mileage" => "0 - 8 000 km", "year" => "2024" }
+    ],
+    "800" => [
+      { "type" => "lease-electric-ultra", "title" => "Électrique Ultra Premium", "description" => "Véhicule électrique ultra premium en leasing, autonomie exceptionnelle. Équipements de luxe.", "mileage" => "0 - 5 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-exclusive", "title" => "Monospace Exclusive", "description" => "Monospace exclusive en leasing, espace maximal. Équipements ultra premium.", "mileage" => "0 - 10 000 km", "year" => "2024" },
+      { "type" => "lease-sedan-exclusive", "title" => "Berline Exclusive", "description" => "Berline exclusive en leasing, finition luxe. Prestige et performance.", "mileage" => "0 - 5 000 km", "year" => "2024" },
+      { "type" => "lease-suv-exclusive", "title" => "SUV Exclusive", "description" => "SUV exclusive en leasing, très spacieux. Équipements ultra premium.", "mileage" => "0 - 10 000 km", "year" => "2024" },
+      { "type" => "lease-estate-exclusive", "title" => "Break Exclusive", "description" => "Break exclusive en leasing, volume maximal. Équipements ultra premium.", "mileage" => "0 - 5 000 km", "year" => "2024" }
+    ],
+    "900" => [
+      { "type" => "lease-electric-luxury", "title" => "Électrique de Luxe", "description" => "Véhicule électrique de luxe en leasing, autonomie exceptionnelle. Technologie de pointe.", "mileage" => "0 - 3 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-prestige", "title" => "Monospace Prestige", "description" => "Monospace prestige en leasing, espace maximal. Confort et élégance exceptionnels.", "mileage" => "0 - 8 000 km", "year" => "2024" },
+      { "type" => "lease-sedan-prestige", "title" => "Berline Prestige", "description" => "Berline prestige en leasing, finition luxe. Élégance et performance maximales.", "mileage" => "0 - 3 000 km", "year" => "2024" },
+      { "type" => "lease-suv-prestige", "title" => "SUV Prestige", "description" => "SUV prestige en leasing, très spacieux. Performances exceptionnelles.", "mileage" => "0 - 8 000 km", "year" => "2024" },
+      { "type" => "lease-estate-prestige", "title" => "Break Prestige", "description" => "Break prestige en leasing, volume maximal. Équipements ultra premium.", "mileage" => "0 - 3 000 km", "year" => "2024" }
+    ],
+    "1000" => [
+      { "type" => "lease-electric-luxury-top", "title" => "Électrique Luxe Top", "description" => "Véhicule électrique luxe top en leasing, autonomie exceptionnelle. Technologie de pointe.", "mileage" => "0 - 2 000 km", "year" => "2024" },
+      { "type" => "lease-sportsvan-luxury-top", "title" => "Monospace Luxe Top", "description" => "Monospace luxe top en leasing, espace maximal. Confort exceptionnel.", "mileage" => "0 - 5 000 km", "year" => "2024" },
+      { "type" => "lease-sedan-luxury-top", "title" => "Berline Luxe Top", "description" => "Berline luxe top en leasing, finition premium. Prestige maximal.", "mileage" => "0 - 2 000 km", "year" => "2024" },
+      { "type" => "lease-suv-luxury-top", "title" => "SUV Luxe Top", "description" => "SUV luxe top en leasing, très spacieux. Performances exceptionnelles.", "mileage" => "0 - 5 000 km", "year" => "2024" },
+      { "type" => "lease-estate-luxury-top", "title" => "Break Luxe Top", "description" => "Break luxe top en leasing, volume maximal. Équipements ultra premium.", "mileage" => "0 - 2 000 km", "year" => "2024" }
+    ]
+  }
+}) %>
+</script>
