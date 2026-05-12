@@ -8,11 +8,8 @@
 
 <header class="site-header" data-controller="site-header" data-site-header-scrolled-class="is-scrolled">
   <div class="container-site flex items-center justify-between gap-6 px-6 py-4 lg:px-8">
-    <%= link_to root_path, class: "flex shrink-0 items-center gap-3", aria: { label: "Le Bon Modele" } do %>
-      <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-primary text-xl font-black text-white shadow-soft">LB</span>
-      <span class="font-heading text-2xl font-black tracking-[-0.04em] text-brand-primary">
-        Le bon<span class="text-brand-coral">Modele</span>
-      </span>
+    <%= link_to root_path, class: "flex shrink-0 items-center", aria: { label: "Le Bon Modèle" } do %>
+      <%= image_tag "/reference-assets/logo.png", alt: "Logo", class: "main-logo", id: "headerLogo" %>
     <% end %>
 
     <nav class="hidden items-center gap-2 lg:flex" aria-label="Navigation principale">

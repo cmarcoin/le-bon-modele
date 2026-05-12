@@ -1,38 +1,33 @@
-<% content_for :title, "Le Bon Modele" %>
+<% content_for :title, "Le Bon Modèle" %>
 
 <%= render "home/header" %>
 
 <main class="overflow-hidden pt-24">
   <section class="relative px-8 py-16 lg:px-12 lg:py-20">
-    <div class="hero-orbit" aria-hidden="true"></div>
+    <dotlottie-wc src="/reference-assets/intro.lottie" autoplay class="HeroHome_Animation__intro"></dotlottie-wc>
     <div class="mx-auto grid max-w-[1280px] items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
       <div>
-        <h1 class="max-w-[980px] font-heading text-[44px] leading-[1.05] sm:text-[56px] lg:text-[64px]">
+        <h1 class="max-w-[980px] font-heading text-[44px] leading-[1.05] sm:text-[56px] lg:text-[50px]">
           <span class="mr-2 inline-block align-middle font-semibold text-brand-primary">Choisissez</span>
-          <span class="inline-block rounded-xl bg-brand-primary-light px-2 py-1 align-middle font-black text-brand-accent">le bon modele</span>
+          <span class="inline-block rounded-xl bg-brand-primary-light px-2 py-1 align-middle font-black text-brand-accent">le bon modèle</span>
           <br>
-          <span class="font-semibold text-brand-primary">Pas celui qu'on cherche a vous vendre.</span>
+          <span class="font-semibold text-brand-primary">Pas celui qu’on cherche à vous vendre.</span>
         </h1>
 
         <p class="mt-10 max-w-[920px] text-[22px] leading-[1.45] text-brand-text-secondary sm:text-[24px]">
-          Bien acheter, c'est etre bien conseille. Avec Le Bon Modele, deux experts independants vous accompagnent, pas a pas, pour choisir la voiture la plus adaptee a votre quotidien et a votre budget.
+          Bien acheter, c’est être bien conseillé. Avec Le Bon Modèle, deux experts
+          indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus
+          adaptée à votre quotidien et à votre budget.
         </p>
 
-        <div class="mt-12 flex flex-wrap gap-10 text-[18px] font-semibold text-brand-text-secondary">
+        <div class="mt-16 flex flex-wrap gap-10 text-[18px] font-semibold text-brand-text-secondary">
           <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Sans commission</span>
-          <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Experts independants</span>
+          <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Experts indépendants</span>
         </div>
       </div>
 
-      <div class="hero-card">
-        <p class="speech-bubble">C'est quoi les differences ?</p>
-        <div class="car-chooser-illustration" aria-hidden="true">
-          <div class="person person-small"></div>
-          <div class="person"></div>
-          <div class="person person-thinking"></div>
-          <div class="choice-car choice-car-left"></div>
-          <div class="choice-car choice-car-right"></div>
-        </div>
+      <div>
+        <%= image_tag "/reference-assets/perdu.gif", width: 1600, height: 1200, alt: "Illustration de recherche de voiture", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
@@ -42,18 +37,20 @@
       <div class="text-center">
         <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Notre approche</h2>
         <p class="mx-auto mt-4 max-w-5xl text-base leading-7 text-brand-text-secondary sm:text-lg">
-          Acheter une voiture est de plus en plus complexe : une multitude de modeles, des annonces difficiles a comparer, des options a n'en plus finir, des modes d'achat peu lisibles et des prix opaques.
+          Acheter une voiture est de plus en plus complexe : une multitude de modèles,
+          des annonces difficiles à comparer, des options à n’en plus finir, des modes
+          d’achat peu lisibles, des prix opaques, etc.
         </p>
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-3">
         <% [
-          [ "On est passes par la", "Derriere Le Bon Modele, il y a Charles et Jules : deux conducteurs qui savent a quel point acheter une voiture peut etre complexe." ],
-          [ "Conseillers independants", "Nous ne vendons pas de voitures. Nous ne prenons pas de commission. Notre metier, c'est de vous fournir un avis objectif." ],
-          [ "Double expertise", "Nous combinons une expertise detaillee des vehicules avec une lecture fine de vos vrais besoins et de vos contraintes." ]
+          [ "On est passés par là", "Derrière Le Bon Modèle, il y a Charles et Jules : deux conducteurs qui savent à quel point acheter une voiture peut être complexe, et qui ont appris à comparer, décortiquer et repérer les bonnes affaires." ],
+          [ "Conseillers indépendants", "Nous ne vendons pas de voitures. Nous ne prenons pas de commission. Notre métier, c’est de vous fournir un avis d’expert objectif, pour vous aider à faire un choix éclairé." ],
+          [ "Double expertise", "Nous combinons une expertise détaillée des véhicules avec une lecture fine de vos vrais besoins et de vos contraintes. Pour trouver une voiture qui vous simplifie la vie." ]
         ].each do |title, body| %>
           <article class="rounded-brand border border-brand-border bg-white p-6 text-center shadow-brand">
-            <div class="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-brand-primary-light text-4xl font-black text-brand-accent">✓</div>
+            <%= image_tag "/reference-assets/check.svg", width: 72, height: 72, alt: "", class: "mx-auto" %>
             <h3 class="mt-4 font-heading text-2xl font-bold text-brand-primary"><%= title %></h3>
             <p class="mt-3 text-sm leading-6 text-brand-primary"><%= body %></p>
           </article>
@@ -64,13 +61,10 @@
 
   <section class="px-8 py-10 lg:px-12 lg:py-16">
     <div class="mx-auto max-w-[980px] rounded-[20px] bg-brand-beige p-6">
-      <div class="grid min-h-[280px] items-center gap-8 rounded-[16px] border border-brand-border bg-white/70 p-8 md:grid-cols-2">
+      <div class="flex min-h-[280px] items-center justify-center rounded-[16px] border border-brand-border bg-white/70 text-center">
         <div>
-          <p class="font-heading text-3xl font-bold text-brand-primary">Comparer avant de choisir</p>
-          <p class="mt-3 text-brand-text-secondary">Nous mettons les modeles, les usages, les couts et les compromis sur la meme grille de lecture.</p>
-        </div>
-        <div class="comparison-visual" aria-hidden="true">
-          <span></span><span></span><span></span>
+          <p class="font-heading text-2xl font-bold text-brand-primary">Illustration comparaison</p>
+          <p class="mt-2 text-sm text-brand-text-secondary">Zone visuelle à remplacer</p>
         </div>
       </div>
     </div>
@@ -78,8 +72,11 @@
 
   <section class="px-8 py-16 lg:px-12 lg:py-20" data-controller="budget">
     <div class="mx-auto max-w-[1280px] text-center">
-      <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Un budget, plusieurs realites</h2>
-      <p class="mt-3 text-brand-text-secondary">A budget constant, vous pouvez opter pour des voitures tres differentes selon le modele, l'equipement et le kilometrage.</p>
+      <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Un budget, plusieurs réalités</h2>
+      <p class="mt-3 text-brand-text-secondary">
+        À budget constant, vous pouvez opter pour des voitures très différentes,
+        selon le modèle, le niveau d’équipement et le kilométrage.
+      </p>
 
       <div class="mt-8 flex items-center justify-center gap-8">
         <button type="button" class="text-[24px] font-bold text-brand-primary" data-budget-target="purchaseLabel" data-action="budget#showPurchase">Achat</button>
@@ -109,8 +106,8 @@
       </div>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
-        <%= render "home/offer_card", path: starter_pack_path, title: "Starter pack", accent_class: "text-brand-accent", objective: "Identifier le modele qu'il vous faut", description: "Passez 90 min avec nos deux experts auto pour identifier le bon modele de voiture a acheter, celui qui correspond vraiment a vos besoins, vos contraintes et votre budget.", price: "59€" %>
-        <%= render "home/offer_card", path: pack_premium_path, title: "Pack Premium", accent_class: "text-brand-coral", objective: "Vous accompagner jusqu'a l'achat", description: "Du cadrage de votre besoin jusqu'a l'achat de votre voiture, nos deux experts auto vous accompagnent a chaque etape.", price: "299€" %>
+        <%= render "home/offer_card", path: starter_pack_path, icon_path: "/reference-assets/icons/starter-pack.svg", title: "Starter pack", accent_class: "text-brand-accent", objective: "Identifier le modèle qu’il vous faut", description: "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget.", price: "59€" %>
+        <%= render "home/offer_card", path: pack_premium_path, icon_path: "/reference-assets/icons/pack-premium.svg", title: "Pack Premium", accent_class: "text-brand-coral", objective: "Vous accompagner jusqu’à l’achat", description: "Du cadrage de votre besoin jusqu’à l’achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.", price: "299€" %>
       </div>
     </div>
   </section>
@@ -118,17 +115,17 @@
   <section class="px-8 py-16 lg:px-12 lg:py-20">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Avis clients</h2>
+        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Avis Clients</h2>
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-3">
         <% [
-          [ "Peugeot 308 de 2022", "a Franck F.", "J'hesitais a racheter ma voiture de fonction. L'accompagnement m'a permis de comparer objectivement." ],
-          [ "Audi A3 de 2021", "a Charlotte M.", "Avec l'arrivee de notre deuxieme enfant, j'avais besoin d'un choix clair et rassurant." ],
-          [ "Passat SW de 2020", "a Anne & Fabrice F.", "Nous devions trouver une voiture familiale sans passer nos soirees a trier les annonces." ]
+          [ "Peugeot XXX de 2022", "à Franck F.", "J’hésitais à racheter ma voiture de fonction, une Ford Focus. C’était le choix le plus simple et le plus rassurant." ],
+          [ "Audi XXX de XXXX", "à Charlotte M.", "Avec l’arrivée de notre deuxième enfant, j’ai dû acheter ma première voiture." ],
+          [ "Passat XXXX de XXXX", "à Anne & Fabrice F.", "Avec deux enfants et des trajets fréquents le week-end, nous devions trouver une voiture familiale." ]
         ].each do |model, customer, quote| %>
           <article class="rounded-[20px] bg-white p-6 shadow-brand">
-            <p class="text-sm font-bold text-brand-primary">On a trouve la parfaite :</p>
+            <p class="text-sm font-bold text-brand-primary">On a trouvé la parfaite :</p>
             <h3 class="mt-2 font-heading text-xl font-bold text-brand-text"><%= model %></h3>
             <p class="text-sm text-brand-text-secondary"><%= customer %></p>
             <p class="mt-4 text-sm leading-6 text-brand-text-secondary"><%= quote %></p>

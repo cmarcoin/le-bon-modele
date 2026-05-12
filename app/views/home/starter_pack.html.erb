@@ -1,4 +1,4 @@
-<% content_for :title, "Starter Pack | Le Bon Modele" %>
+<% content_for :title, "Starter Pack | Le Bon Modèle" %>
 
 <%= render "home/header" %>
 
@@ -7,30 +7,30 @@
     <div class="mx-auto max-w-[1280px]">
       <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
         <div class="flex h-full flex-col">
-          <div class="offer-icon text-brand-accent" aria-hidden="true">
-            <svg viewBox="0 0 92 40" fill="none"><path d="M6 24h7.5a7 7 0 0 1 10.5 0h39a7 7 0 0 1 10.5 0H86v-5c0-5-5-8-11-9l-10-1L55 2H16c-3 0-5 2-6 5L6 18v6Z" fill="currentColor" opacity=".22" /><path d="M21 34a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm49 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM17 7h35l8 6H13l4-6Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" /></svg>
-          </div>
+          <%= image_tag "/reference-assets/icons/starter-pack.svg", alt: "", class: "h-16 w-12" %>
 
           <h1 class="mt-4 font-heading text-[34px] font-bold leading-none text-brand-accent sm:text-[42px]">Starter pack</h1>
           <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
 
           <div class="mt-6">
             <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
-            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Identifier le modele qu'il vous faut</p>
+            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Identifier le modèle qu’il vous faut</p>
           </div>
 
           <p class="mt-8 max-w-[1180px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
-            Passez 90 min avec nos deux experts auto pour identifier le bon modele de voiture a acheter, celui qui correspond vraiment a vos besoins, vos contraintes et votre budget.
+            Passez 90 min avec nos deux experts auto pour identifier le bon modèle
+            de voiture à acheter, celui qui correspond vraiment à vos besoins, vos
+            contraintes et votre budget
           </p>
 
           <div class="mt-10">
             <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Ce qui est inclus :</h2>
             <ul class="mt-6 space-y-4 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
               <% [
-                "Questionnaire preparatoire pour cadrer votre situation, vos usages et vos envies",
+                "Questionnaire préparatoire pour cadrer votre situation, vos usages et vos envies",
                 "Entretien de 60 min avec Charles et Jules, nos deux experts",
-                "Un document de synthese avec nos recommandations, une selection de 2/3 modeles, des reperes de prix et les points de vigilance",
-                "Un echange de suivi de 30 min pour repondre a vos questions"
+                "Un document de synthèse, incluant nos recommandations, une sélection de 2/3 modèles, des repères de prix, et les points de vigilance à connaître",
+                "Un échange de suivi de 30 min pour répondre à vos questions"
               ].each do |item| %>
                 <li class="flex items-start gap-4"><span class="mt-[2px] text-[24px] leading-none text-brand-accent">✓</span><span><%= item %></span></li>
               <% end %>
@@ -38,11 +38,13 @@
           </div>
 
           <div class="mt-10">
-            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Nous transformons une idee floue en choix clair</h2>
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Nous transformons une idée floue en choix clair</h2>
             <ul class="mt-6 list-disc space-y-3 pl-6 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
-              <li>Nous clarifions votre besoin a partir de votre quotidien, de vos contraintes et de vos priorites.</li>
-              <li>Nous vous donnons une vision d'ensemble du marche et des differences entre modeles.</li>
-              <li>Vous repartez avec une liste reduite de 2/3 modeles et un plan clair pour poursuivre votre achat.</li>
+              <li>Nous clarifions votre besoin à partir de votre quotidien, de vos contraintes et de vos priorités</li>
+              <li>Nous vous donnons une vision d’ensemble du marché, nous vous expliquons les différences entre les modèles et les motorisations, entre les finitions et les options</li>
+              <li>Nous discutons et identifions ensemble les modèles et les équipements qu’il vous faut vraiment</li>
+              <li>Nous clarifions les prix et nous éclairons les sujets souvent mal maîtrisés, comme le coût total de possession, le prix à la revente ou les garanties</li>
+              <li>Vous repartez avec une liste réduite de 2/3 modèles et un plan clair pour poursuivre votre achat</li>
             </ul>
           </div>
 

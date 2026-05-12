@@ -1,4 +1,4 @@
-<% content_for :title, "Pack Premium | Le Bon Modele" %>
+<% content_for :title, "Pack Premium | Le Bon Modèle" %>
 
 <%= render "home/header" %>
 
@@ -7,46 +7,50 @@
     <div class="mx-auto max-w-[1280px]">
       <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
         <div class="flex h-full flex-col">
-          <div class="offer-icon text-brand-coral" aria-hidden="true">
-            <svg viewBox="0 0 92 40" fill="none"><path d="M6 24h7.5a7 7 0 0 1 10.5 0h39a7 7 0 0 1 10.5 0H86v-5c0-5-5-8-11-9l-10-1L55 2H16c-3 0-5 2-6 5L6 18v6Z" fill="currentColor" opacity=".22" /><path d="M21 34a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm49 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM17 7h35l8 6H13l4-6Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" /></svg>
-          </div>
+          <%= image_tag "/reference-assets/icons/pack-premium.svg", alt: "", class: "h-16 w-12" %>
 
           <h1 class="mt-4 font-heading text-[34px] font-bold leading-none text-brand-coral sm:text-[42px]">Pack Premium</h1>
           <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
 
           <div class="mt-6">
             <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
-            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Vous accompagner jusqu'a l'achat</p>
+            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Vous accompagner jusqu’à l’achat</p>
           </div>
 
           <p class="mt-8 max-w-[1180px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
-            Du cadrage de votre besoin jusqu'a l'achat de votre voiture, nos deux experts auto vous accompagnent a chaque etape.
+            Du cadrage de votre besoin jusqu’à l’achat de votre voiture, nos deux
+            experts auto vous accompagnent à chaque étape
           </p>
 
           <div class="mt-10">
             <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Ce qui est inclus :</h2>
             <ul class="mt-6 space-y-4 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
               <% [
-                "Questionnaire preparatoire pour cadrer votre situation, vos usages et vos priorites",
-                "Entretien n°1 pour identifier le modele qui correspond vraiment a votre quotidien et a votre budget",
-                "Elaboration d'une liste reduite de 2/3 modeles",
-                "Entretien n°2 pour valider le choix du modele et cadrer la strategie de recherche",
-                "Recherche, tri et analyse des offres sur le marche du neuf et de l'occasion",
-                "Comparatif detaille de 4/5 offres, avec nos recommandations",
-                "Entretien n°3 pour passer les annonces en revue et accompagner jusqu'a la finalisation de l'achat"
+                "Questionnaire préparatoire pour cadrer votre situation, vos usages et vos priorités",
+                "Entretien n°1 (60 min) avec Charles et Jules, nos deux experts, pour identifier le modèle de voiture qui correspond vraiment à votre quotidien et à votre budget",
+                "Elaboration d’une liste réduite de 2/3 modèles",
+                "Entretien n°2 (60 min) pour valider le choix du modèle et cadrer la stratégie de recherche",
+                "Recherche, tri et analyse des offres sur le marché du neuf et de l’occasion",
+                "Elaboration d’une liste réduite de 4/5 offres, avec un comparatif détaillé et nos recommandations",
+                "Entretien n°3 (60 min) pour passer les annonces en revue, approfondir les recherches le cas échéant, arbitrer les produits annexes (assurance, garanties, entretien) et accompagner jusqu’à la finalisation de l’achat"
               ].each do |item| %>
                 <li class="flex items-start gap-4"><span class="mt-[2px] text-[24px] leading-none text-brand-accent">✓</span><span><%= item %></span></li>
               <% end %>
             </ul>
           </div>
 
+          <div class="mt-8 space-y-3 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
+            <p>Après chaque entretien, vous recevez un document de synthèse.</p>
+            <p>Entre les rendez-vous, Charles &amp; Jules restent joignables par email pour répondre à vos questions.</p>
+          </div>
+
           <div class="mt-10">
-            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">La jungle des annonces, c'est notre probleme, plus le votre</h2>
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">La jungle des annonces, c’est notre problème, plus le vôtre</h2>
             <ul class="mt-6 list-disc space-y-3 pl-6 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
-              <li>Nous definissons le modele de voiture et les equipements qu'il vous faut.</li>
-              <li>Nous cherchons, trions et analysons les offres du marche neuf et occasion.</li>
-              <li>Garanties, extensions, entretien et assurances : nous evaluons ce qui est pertinent pour vous.</li>
-              <li>Vous choisissez en toute serenite, au meilleur prix, sans y passer vos soirees.</li>
+              <li>Nous définissons le modèle de voiture et les équipements qu’il vous faut</li>
+              <li>Puis nous cherchons, trions et analysons les offres du marché (neuf &amp; occasion). Nous décortiquons les prix, évaluons la fiabilité des annonces, repérons les fausses bonnes affaires et les angles morts. Nous creusons jusqu’à trouver les meilleures offres</li>
+              <li>Garanties, extensions, contrats d’entretien, assistance, assurances… Nous vous aidons également à comprendre ce que couvre réellement chaque option, à évaluer son rapport coût/bénéfice et à ne retenir que ce qui est pertinent pour vous</li>
+              <li>Au final, vous choisissez votre voiture et vos options en toute sérénité, au meilleur prix, sans y passer vos soirées</li>
             </ul>
           </div>
 

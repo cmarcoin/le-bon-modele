@@ -14,7 +14,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   test "serves the linked marketing pages" do
     {
       about_path => "Rendre l'achat auto lisible",
-      faq_path => "Questions frequentes",
+      faq_path => "Questions fréquentes",
       starter_pack_path => "Starter pack",
       pack_premium_path => "Pack Premium",
       contact_path => "Vous etes perdu"
