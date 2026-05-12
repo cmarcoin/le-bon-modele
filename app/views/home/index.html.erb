@@ -1,204 +1,145 @@
-<!-- Header -->
-<header class="w-full px-8 py-6 flex items-center justify-between bg-white">
-  <!-- Logo -->
-  <div class="flex items-center gap-3">
-    <div class="w-12 h-12 bg-herve-green rounded flex items-center justify-center">
-      <span class="text-white text-2xl font-bold">H</span>
-    </div>
-    <span class="text-herve-blue text-2xl font-bold">Herve</span>
-  </div>
+<% content_for :title, "Le Bon Modele" %>
 
-  <!-- Navigation Links -->
-  <nav class="flex items-center gap-8">
-    <a href="#" class="text-herve-blue font-medium">Accueil</a>
-    <a href="#" class="text-herve-blue font-medium">Onglet</a>
-    <a href="#" class="text-herve-blue font-medium">Onglet</a>
-    <a href="#" class="text-herve-blue font-medium">Onglet</a>
-    <a href="#" class="text-herve-blue font-medium">Onglet</a>
-  </nav>
+<%= render "home/header" %>
 
-  <!-- Contact Button -->
-  <button class="px-6 py-2 border-2 border-herve-blue rounded-lg text-herve-blue font-medium hover:bg-herve-blue hover:text-white transition-colors">
-    Nous contacter
-  </button>
-</header>
+<main class="overflow-hidden pt-24">
+  <section class="relative px-8 py-16 lg:px-12 lg:py-20">
+    <div class="hero-orbit" aria-hidden="true"></div>
+    <div class="mx-auto grid max-w-[1280px] items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div>
+        <h1 class="max-w-[980px] font-heading text-[44px] leading-[1.05] sm:text-[56px] lg:text-[64px]">
+          <span class="mr-2 inline-block align-middle font-semibold text-brand-primary">Choisissez</span>
+          <span class="inline-block rounded-xl bg-brand-primary-light px-2 py-1 align-middle font-black text-brand-accent">le bon modele</span>
+          <br>
+          <span class="font-semibold text-brand-primary">Pas celui qu'on cherche a vous vendre.</span>
+        </h1>
 
-<!-- Hero Section -->
-<section class="relative w-full min-h-screen bg-white overflow-hidden">
-  <!-- Background Wave Pattern -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(135deg, #E0F0FF 0%, transparent 50%); transform: rotate(-5deg); transform-origin: top left; width: 150%; height: 150%;"></div>
-  </div>
+        <p class="mt-10 max-w-[920px] text-[22px] leading-[1.45] text-brand-text-secondary sm:text-[24px]">
+          Bien acheter, c'est etre bien conseille. Avec Le Bon Modele, deux experts independants vous accompagnent, pas a pas, pour choisir la voiture la plus adaptee a votre quotidien et a votre budget.
+        </p>
 
-  <div class="relative z-10 container mx-auto px-8 py-20 flex items-center gap-16">
-    <!-- Left Content -->
-    <div class="flex-1 max-w-2xl">
-      <!-- Headline -->
-      <h1 class="text-5xl font-bold text-herve-blue mb-6 leading-tight">
-        CHOISISSEZ LA BONNE VOITURE, PAS CELLE QU'ON VEUT VOUS VENDRE.
-        <span class="inline-block w-3 h-3 bg-herve-green rounded-full ml-2"></span>
-      </h1>
-
-      <!-- Paragraph -->
-      <p class="text-lg text-herve-blue mb-8 leading-relaxed">
-        Nous vous aidons à trouver le véhicule et le financement adaptés à vos besoins, en toute indépendance.
-      </p>
-
-      <!-- CTA Button -->
-      <button class="px-8 py-4 bg-herve-blue text-white rounded-lg font-medium flex items-center gap-2 hover:bg-opacity-90 transition-colors">
-        Faire mon audit gratuit
-        <svg class="w-5 h-5" fill="#FF0000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Right Illustration -->
-    <div class="flex-1 max-w-lg relative">
-      <!-- Speech Bubble -->
-      <div class="absolute top-0 right-0 bg-herve-green rounded-2xl px-6 py-4 shadow-lg z-20" style="transform: translateY(-20px);">
-        <p class="text-white font-medium">C'est quoi les différences?</p>
-        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
-          <div class="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-herve-green"></div>
+        <div class="mt-12 flex flex-wrap gap-10 text-[18px] font-semibold text-brand-text-secondary">
+          <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Sans commission</span>
+          <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Experts independants</span>
         </div>
       </div>
 
-      <!-- Illustration Container -->
-      <div class="mt-24 relative h-96">
-        <!-- People and Cars Illustration -->
-        <div class="relative h-full">
-          <!-- People silhouettes -->
-          <div class="absolute bottom-0 left-0 right-0 flex items-end justify-around px-8">
-            <!-- Child (left) - smaller -->
-            <div class="flex flex-col items-center">
-              <div class="w-12 h-12 rounded-full bg-white border-2 border-herve-blue mb-2"></div>
-              <div class="w-10 h-20 bg-white border-2 border-herve-blue rounded-t-lg"></div>
-              <div class="flex gap-2 mt-1">
-                <div class="w-4 h-8 bg-white border-2 border-herve-blue rounded"></div>
-                <div class="w-4 h-8 bg-white border-2 border-herve-blue rounded"></div>
-              </div>
-            </div>
-
-            <!-- Woman (middle) -->
-            <div class="flex flex-col items-center">
-              <div class="w-14 h-14 rounded-full bg-white border-2 border-herve-blue mb-2"></div>
-              <div class="w-12 h-28 bg-white border-2 border-herve-blue rounded-t-lg"></div>
-              <div class="flex gap-2 mt-1">
-                <div class="w-5 h-10 bg-white border-2 border-herve-blue rounded"></div>
-                <div class="w-5 h-10 bg-white border-2 border-herve-blue rounded"></div>
-              </div>
-            </div>
-
-            <!-- Man (right) with hand on head -->
-            <div class="flex flex-col items-center relative">
-              <div class="w-14 h-14 rounded-full bg-white border-2 border-herve-blue mb-2"></div>
-              <!-- Hand on head -->
-              <div class="absolute top-0 right-0 w-6 h-8 bg-white border-2 border-herve-blue rounded-full transform rotate-12"></div>
-              <div class="w-12 h-28 bg-white border-2 border-herve-blue rounded-t-lg"></div>
-              <div class="flex gap-2 mt-1">
-                <div class="w-5 h-10 bg-white border-2 border-herve-blue rounded"></div>
-                <div class="w-5 h-10 bg-white border-2 border-herve-blue rounded"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Cars at the bottom -->
-          <div class="absolute bottom-0 left-0 right-0 flex justify-center gap-12 -mb-8">
-            <!-- Car 1 -->
-            <div class="w-40 h-20 bg-white rounded-xl shadow-lg border-2 border-herve-blue relative overflow-hidden">
-              <div class="absolute top-1 left-2 right-2 h-10 bg-herve-light-blue rounded-lg"></div>
-              <div class="absolute bottom-1 left-2 right-2 h-3 bg-herve-light-blue rounded"></div>
-              <div class="absolute bottom-2 left-4 w-8 h-8 rounded-full bg-herve-blue opacity-20"></div>
-              <div class="absolute bottom-2 right-4 w-8 h-8 rounded-full bg-herve-blue opacity-20"></div>
-            </div>
-            <!-- Car 2 -->
-            <div class="w-40 h-20 bg-white rounded-xl shadow-lg border-2 border-herve-blue relative overflow-hidden">
-              <div class="absolute top-1 left-2 right-2 h-10 bg-herve-light-blue rounded-lg"></div>
-              <div class="absolute bottom-1 left-2 right-2 h-3 bg-herve-light-blue rounded"></div>
-              <div class="absolute bottom-2 left-4 w-8 h-8 rounded-full bg-herve-blue opacity-20"></div>
-              <div class="absolute bottom-2 right-4 w-8 h-8 rounded-full bg-herve-blue opacity-20"></div>
-            </div>
-          </div>
+      <div class="hero-card">
+        <p class="speech-bubble">C'est quoi les differences ?</p>
+        <div class="car-chooser-illustration" aria-hidden="true">
+          <div class="person person-small"></div>
+          <div class="person"></div>
+          <div class="person person-thinking"></div>
+          <div class="choice-car choice-car-left"></div>
+          <div class="choice-car choice-car-right"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Car Price Selector Section -->
-<%= render 'home/car_data' %>
-<section class="w-full bg-white pt-10 pb-32" data-controller="car-price">
-  <div class="container mx-auto px-8">
-    <!-- Section Title -->
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-herve-blue mb-4">Trouvez votre véhicule idéal</h2>
-      <p class="text-lg text-herve-blue opacity-80">Il y a tant d'options pour chaque budget...Voyez vous-même !</p>
+  <section id="approche" class="px-8 py-16 lg:px-12 lg:py-20">
+    <div class="mx-auto max-w-[1280px]">
+      <div class="text-center">
+        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Notre approche</h2>
+        <p class="mx-auto mt-4 max-w-5xl text-base leading-7 text-brand-text-secondary sm:text-lg">
+          Acheter une voiture est de plus en plus complexe : une multitude de modeles, des annonces difficiles a comparer, des options a n'en plus finir, des modes d'achat peu lisibles et des prix opaques.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <% [
+          [ "On est passes par la", "Derriere Le Bon Modele, il y a Charles et Jules : deux conducteurs qui savent a quel point acheter une voiture peut etre complexe." ],
+          [ "Conseillers independants", "Nous ne vendons pas de voitures. Nous ne prenons pas de commission. Notre metier, c'est de vous fournir un avis objectif." ],
+          [ "Double expertise", "Nous combinons une expertise detaillee des vehicules avec une lecture fine de vos vrais besoins et de vos contraintes." ]
+        ].each do |title, body| %>
+          <article class="rounded-brand border border-brand-border bg-white p-6 text-center shadow-brand">
+            <div class="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-brand-primary-light text-4xl font-black text-brand-accent">✓</div>
+            <h3 class="mt-4 font-heading text-2xl font-bold text-brand-primary"><%= title %></h3>
+            <p class="mt-3 text-sm leading-6 text-brand-primary"><%= body %></p>
+          </article>
+        <% end %>
+      </div>
     </div>
+  </section>
 
-    <!-- Payment Toggle -->
-    <div class="flex justify-center mb-8">
-      <div class="flex items-center gap-4 bg-herve-light-blue rounded-full px-6 py-3">
-        <span class="text-herve-blue font-medium" data-car-price-target="togglePriceDisplay">5 000 €</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" class="sr-only peer" data-car-price-target="toggle" data-action="change->car-price#togglePayment">
-          <div class="w-14 h-7 bg-white rounded-full peer peer-checked:bg-herve-green transition-colors duration-200 relative">
-            <div class="absolute top-0.5 left-0.5 w-6 h-6 bg-herve-blue rounded-full transition-transform duration-200 peer-checked:translate-x-7"></div>
-          </div>
-        </label>
-        <div class="flex gap-2 text-sm text-herve-blue">
-          <span class="font-medium">Comptant</span>
-          <span class="opacity-60">/</span>
-          <span class="font-medium">Leasing</span>
+  <section class="px-8 py-10 lg:px-12 lg:py-16">
+    <div class="mx-auto max-w-[980px] rounded-[20px] bg-brand-beige p-6">
+      <div class="grid min-h-[280px] items-center gap-8 rounded-[16px] border border-brand-border bg-white/70 p-8 md:grid-cols-2">
+        <div>
+          <p class="font-heading text-3xl font-bold text-brand-primary">Comparer avant de choisir</p>
+          <p class="mt-3 text-brand-text-secondary">Nous mettons les modeles, les usages, les couts et les compromis sur la meme grille de lecture.</p>
+        </div>
+        <div class="comparison-visual" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Price Slider -->
-    <div class="mb-12">
-      <div class="max-w-4xl mx-auto">
-        <input 
-          type="range" 
-          min="5000" 
-          max="50000" 
-          step="5000" 
-          value="5000"
-          class="w-full h-3 bg-herve-light-blue rounded-lg appearance-none cursor-pointer slider"
-          style="background: linear-gradient(to right, #1A3B8F 0%, #1A3B8F 0%, #E0F0FF 0%, #E0F0FF 100%);"
-          data-car-price-target="slider"
-          data-action="input->car-price#sliderChanged"
-        >
-        <div class="flex justify-between mt-2 text-sm text-herve-blue">
-          <span data-car-price-target="minLabel">5 000 €</span>
-          <span data-car-price-target="maxLabel">50 000 €</span>
-        </div>
-        <div class="text-center mt-4">
-          <span class="text-3xl font-bold text-herve-blue" data-car-price-target="priceDisplay">5 000 €</span>
-        </div>
-      </div>
-    </div>
+  <section class="px-8 py-16 lg:px-12 lg:py-20" data-controller="budget">
+    <div class="mx-auto max-w-[1280px] text-center">
+      <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Un budget, plusieurs realites</h2>
+      <p class="mt-3 text-brand-text-secondary">A budget constant, vous pouvez opter pour des voitures tres differentes selon le modele, l'equipement et le kilometrage.</p>
 
-    <!-- Car Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 max-w-7xl mx-auto" data-car-price-target="carCardsContainer">
-      <%= render 'home/car_card' %>
-      <%= render 'home/car_card' %>
-      <%= render 'home/car_card' %>
-      <%= render 'home/car_card' %>
-      <%= render 'home/car_card' %>
-      <!-- Special CTA Card -->
-      <div class="bg-white rounded-xl shadow-lg border-2 border-herve-light-blue overflow-hidden hover:border-herve-blue transition-colors flex flex-col items-center justify-center p-6 text-center">
-        <p class="text-lg font-medium text-herve-blue mb-4">Et bien d'autres !</p>
-        <button class="px-6 py-3 bg-herve-blue text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors">
-          Perdu ? Contactez-nous !
+      <div class="mt-8 flex items-center justify-center gap-8">
+        <button type="button" class="text-[24px] font-bold text-brand-primary" data-budget-target="purchaseLabel" data-action="budget#showPurchase">Achat</button>
+        <button type="button" aria-pressed="false" class="group relative h-[60px] w-[180px] rounded-full border-2 border-brand-coral bg-white transition-all duration-200 ease-out active:scale-95" data-budget-target="modeToggle" data-action="budget#toggle">
+          <span class="absolute left-1 top-1 h-[48px] w-[48px] rounded-full bg-brand-coral transition-transform duration-200 ease-out group-active:scale-110" data-budget-target="modeKnob"></span>
         </button>
+        <button type="button" class="text-[24px] font-bold text-brand-primary opacity-50" data-budget-target="leasingLabel" data-action="budget#showLeasing">Leasing (LOA)</button>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-budget-target="cards"></div>
+
+      <div class="mx-auto mt-8 max-w-4xl">
+        <div class="mb-2 flex items-center justify-between text-xl font-bold text-brand-text">
+          <span data-budget-target="minLabel">5000€</span>
+          <span data-budget-target="maxLabel">50 000€</span>
+        </div>
+        <p class="mb-4 text-xl font-bold text-brand-primary" data-budget-target="currentLabel">5000€</p>
+        <input type="range" min="5000" max="50000" value="5000" step="5000" class="budget-track h-2 w-full appearance-none rounded-full bg-transparent" data-budget-target="range" data-action="input->budget#rangeChanged">
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Bottom Section -->
-<section class="w-full bg-herve-blue rounded-t-[60px] py-16 -mt-20 relative z-0">
-  <div class="container mx-auto px-8 text-center">
-    <h2 class="text-5xl font-bold text-white">Notre Approche</h2>
-  </div>
-</section>
+  <section id="offres" class="px-6 py-16 lg:px-12 lg:py-20">
+    <div class="mx-auto max-w-[1280px]">
+      <div class="text-center">
+        <h2 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Nos accompagnements</h2>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        <%= render "home/offer_card", path: starter_pack_path, title: "Starter pack", accent_class: "text-brand-accent", objective: "Identifier le modele qu'il vous faut", description: "Passez 90 min avec nos deux experts auto pour identifier le bon modele de voiture a acheter, celui qui correspond vraiment a vos besoins, vos contraintes et votre budget.", price: "59€" %>
+        <%= render "home/offer_card", path: pack_premium_path, title: "Pack Premium", accent_class: "text-brand-coral", objective: "Vous accompagner jusqu'a l'achat", description: "Du cadrage de votre besoin jusqu'a l'achat de votre voiture, nos deux experts auto vous accompagnent a chaque etape.", price: "299€" %>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-8 py-16 lg:px-12 lg:py-20">
+    <div class="mx-auto max-w-[1280px]">
+      <div class="text-center">
+        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Avis clients</h2>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <% [
+          [ "Peugeot 308 de 2022", "a Franck F.", "J'hesitais a racheter ma voiture de fonction. L'accompagnement m'a permis de comparer objectivement." ],
+          [ "Audi A3 de 2021", "a Charlotte M.", "Avec l'arrivee de notre deuxieme enfant, j'avais besoin d'un choix clair et rassurant." ],
+          [ "Passat SW de 2020", "a Anne & Fabrice F.", "Nous devions trouver une voiture familiale sans passer nos soirees a trier les annonces." ]
+        ].each do |model, customer, quote| %>
+          <article class="rounded-[20px] bg-white p-6 shadow-brand">
+            <p class="text-sm font-bold text-brand-primary">On a trouve la parfaite :</p>
+            <h3 class="mt-2 font-heading text-xl font-bold text-brand-text"><%= model %></h3>
+            <p class="text-sm text-brand-text-secondary"><%= customer %></p>
+            <p class="mt-4 text-sm leading-6 text-brand-text-secondary"><%= quote %></p>
+          </article>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%= render "home/contact_banner" %>
+</main>
+
+<%= render "home/footer" %>
 

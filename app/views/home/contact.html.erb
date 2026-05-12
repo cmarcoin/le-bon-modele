@@ -1,0 +1,44 @@
+<% content_for :title, "Contact | Le Bon Modele" %>
+
+<%= render "home/header" %>
+
+<main class="pt-28">
+  <section class="px-6 py-14 lg:px-12">
+    <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-coral">Contact</p>
+        <h1 class="mt-4 font-heading text-5xl font-black leading-[0.95] text-brand-primary">Vous etes perdu ? Parlons-en.</h1>
+        <p class="mt-6 text-lg leading-8 text-brand-text-secondary">
+          Decrivez votre situation, votre budget et vos contraintes. Nous vous repondons pour vous orienter vers l'accompagnement le plus adapte.
+        </p>
+      </div>
+
+      <div class="rounded-[28px] bg-white p-6 shadow-brand sm:p-8">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <a href="mailto:bonjour@lebonmodele.fr" class="rounded-brand border border-brand-border p-5 transition hover:border-brand-primary hover:bg-brand-beige">
+            <span class="text-sm font-bold text-brand-primary">Email</span>
+            <span class="mt-2 block text-brand-text-secondary">bonjour@lebonmodele.fr</span>
+          </a>
+          <a href="tel:+33000000000" class="rounded-brand border border-brand-border p-5 transition hover:border-brand-primary hover:bg-brand-beige">
+            <span class="text-sm font-bold text-brand-primary">Telephone</span>
+            <span class="mt-2 block text-brand-text-secondary">Sur rendez-vous</span>
+          </a>
+        </div>
+
+        <form class="mt-8 grid gap-5">
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="grid gap-2 text-sm font-bold text-brand-primary">Prenom<input class="rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" type="text" name="first_name"></label>
+            <label class="grid gap-2 text-sm font-bold text-brand-primary">Email<input class="rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" type="email" name="email"></label>
+          </div>
+          <label class="grid gap-2 text-sm font-bold text-brand-primary">Votre besoin<textarea class="min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" name="message"></textarea></label>
+          <button type="button" class="inline-flex min-h-[60px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft">
+            Envoyer ma demande
+          </button>
+          <p class="text-sm text-brand-text-secondary">Ce formulaire est pret visuellement ; branchez votre outil de reception pour activer l'envoi.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

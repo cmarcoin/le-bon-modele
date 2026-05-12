@@ -1,0 +1,59 @@
+<% content_for :title, "Starter Pack | Le Bon Modele" %>
+
+<%= render "home/header" %>
+
+<main class="pt-28">
+  <section class="px-4 py-10 md:px-6 lg:px-8 lg:py-14">
+    <div class="mx-auto max-w-[1280px]">
+      <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
+        <div class="flex h-full flex-col">
+          <div class="offer-icon text-brand-accent" aria-hidden="true">
+            <svg viewBox="0 0 92 40" fill="none"><path d="M6 24h7.5a7 7 0 0 1 10.5 0h39a7 7 0 0 1 10.5 0H86v-5c0-5-5-8-11-9l-10-1L55 2H16c-3 0-5 2-6 5L6 18v6Z" fill="currentColor" opacity=".22" /><path d="M21 34a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm49 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM17 7h35l8 6H13l4-6Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" /></svg>
+          </div>
+
+          <h1 class="mt-4 font-heading text-[34px] font-bold leading-none text-brand-accent sm:text-[42px]">Starter pack</h1>
+          <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
+
+          <div class="mt-6">
+            <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
+            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Identifier le modele qu'il vous faut</p>
+          </div>
+
+          <p class="mt-8 max-w-[1180px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
+            Passez 90 min avec nos deux experts auto pour identifier le bon modele de voiture a acheter, celui qui correspond vraiment a vos besoins, vos contraintes et votre budget.
+          </p>
+
+          <div class="mt-10">
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Ce qui est inclus :</h2>
+            <ul class="mt-6 space-y-4 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
+              <% [
+                "Questionnaire preparatoire pour cadrer votre situation, vos usages et vos envies",
+                "Entretien de 60 min avec Charles et Jules, nos deux experts",
+                "Un document de synthese avec nos recommandations, une selection de 2/3 modeles, des reperes de prix et les points de vigilance",
+                "Un echange de suivi de 30 min pour repondre a vos questions"
+              ].each do |item| %>
+                <li class="flex items-start gap-4"><span class="mt-[2px] text-[24px] leading-none text-brand-accent">✓</span><span><%= item %></span></li>
+              <% end %>
+            </ul>
+          </div>
+
+          <div class="mt-10">
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Nous transformons une idee floue en choix clair</h2>
+            <ul class="mt-6 list-disc space-y-3 pl-6 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
+              <li>Nous clarifions votre besoin a partir de votre quotidien, de vos contraintes et de vos priorites.</li>
+              <li>Nous vous donnons une vision d'ensemble du marche et des differences entre modeles.</li>
+              <li>Vous repartez avec une liste reduite de 2/3 modeles et un plan clair pour poursuivre votre achat.</li>
+            </ul>
+          </div>
+
+          <div class="mt-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <%= link_to "Je choisis cette offre", contact_path, class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
+            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]">59€</span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">ttc</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

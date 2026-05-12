@@ -1,0 +1,36 @@
+<% content_for :title, "FAQ | Le Bon Modele" %>
+
+<%= render "home/header" %>
+
+<main class="pt-28">
+  <section class="px-4 py-12 md:px-6 lg:px-8" data-controller="faq">
+    <div class="mx-auto max-w-[1280px]">
+      <div class="mb-10 text-center">
+        <h1 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Questions frequentes</h1>
+        <p class="mx-auto mt-4 max-w-2xl text-brand-text-secondary">Les reponses aux questions qui reviennent le plus souvent avant de choisir un accompagnement.</p>
+      </div>
+
+      <div class="space-y-5 md:space-y-6">
+        <% [
+          [ "Est-ce remboursable ?", "Non, l'accompagnement n'est pas remboursable une fois la prestation realisee." ],
+          [ "Puis-je payer en deux fois ?", "Oui, selon l'offre choisie, un paiement en plusieurs fois peut etre propose." ],
+          [ "Est-ce que vous negociez a ma place ?", "Oui, dans le cadre du Pack Premium, nous pouvons vous accompagner sur la negociation et la lecture des offres." ],
+          [ "Travaillez-vous sur toute la France ?", "Oui, nous accompagnons des clients partout en France a distance." ],
+          [ "Vendez-vous des voitures ?", "Non. Nous sommes independants : notre role est de vous conseiller, pas de vous orienter vers un stock." ]
+        ].each do |question, answer| %>
+          <article class="faq-item rounded-[24px] bg-brand-primary-light py-4 transition-all duration-300" data-faq-target="item" data-open="false">
+            <button type="button" class="faq-question flex w-full items-center justify-between gap-4 px-6 py-8 text-left md:px-8 md:py-10" aria-expanded="false" data-action="faq#toggle">
+              <span class="faq-label pr-4 font-heading text-[22px] font-bold text-brand-primary md:text-[26px]"><%= question %></span>
+              <span class="faq-icon text-[30px] font-bold text-brand-primary transition-all duration-300">+</span>
+            </button>
+            <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+              <div class="px-6 pb-8 text-[16px] leading-[1.65] text-white md:px-8 md:pb-10 md:text-[18px]"><%= answer %></div>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

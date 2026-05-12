@@ -1,0 +1,63 @@
+<% content_for :title, "Pack Premium | Le Bon Modele" %>
+
+<%= render "home/header" %>
+
+<main class="pt-28">
+  <section class="px-4 py-10 md:px-6 lg:px-8 lg:py-14">
+    <div class="mx-auto max-w-[1280px]">
+      <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
+        <div class="flex h-full flex-col">
+          <div class="offer-icon text-brand-coral" aria-hidden="true">
+            <svg viewBox="0 0 92 40" fill="none"><path d="M6 24h7.5a7 7 0 0 1 10.5 0h39a7 7 0 0 1 10.5 0H86v-5c0-5-5-8-11-9l-10-1L55 2H16c-3 0-5 2-6 5L6 18v6Z" fill="currentColor" opacity=".22" /><path d="M21 34a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm49 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM17 7h35l8 6H13l4-6Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" /></svg>
+          </div>
+
+          <h1 class="mt-4 font-heading text-[34px] font-bold leading-none text-brand-coral sm:text-[42px]">Pack Premium</h1>
+          <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
+
+          <div class="mt-6">
+            <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
+            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Vous accompagner jusqu'a l'achat</p>
+          </div>
+
+          <p class="mt-8 max-w-[1180px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
+            Du cadrage de votre besoin jusqu'a l'achat de votre voiture, nos deux experts auto vous accompagnent a chaque etape.
+          </p>
+
+          <div class="mt-10">
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Ce qui est inclus :</h2>
+            <ul class="mt-6 space-y-4 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
+              <% [
+                "Questionnaire preparatoire pour cadrer votre situation, vos usages et vos priorites",
+                "Entretien n°1 pour identifier le modele qui correspond vraiment a votre quotidien et a votre budget",
+                "Elaboration d'une liste reduite de 2/3 modeles",
+                "Entretien n°2 pour valider le choix du modele et cadrer la strategie de recherche",
+                "Recherche, tri et analyse des offres sur le marche du neuf et de l'occasion",
+                "Comparatif detaille de 4/5 offres, avec nos recommandations",
+                "Entretien n°3 pour passer les annonces en revue et accompagner jusqu'a la finalisation de l'achat"
+              ].each do |item| %>
+                <li class="flex items-start gap-4"><span class="mt-[2px] text-[24px] leading-none text-brand-accent">✓</span><span><%= item %></span></li>
+              <% end %>
+            </ul>
+          </div>
+
+          <div class="mt-10">
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">La jungle des annonces, c'est notre probleme, plus le votre</h2>
+            <ul class="mt-6 list-disc space-y-3 pl-6 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
+              <li>Nous definissons le modele de voiture et les equipements qu'il vous faut.</li>
+              <li>Nous cherchons, trions et analysons les offres du marche neuf et occasion.</li>
+              <li>Garanties, extensions, entretien et assurances : nous evaluons ce qui est pertinent pour vous.</li>
+              <li>Vous choisissez en toute serenite, au meilleur prix, sans y passer vos soirees.</li>
+            </ul>
+          </div>
+
+          <div class="mt-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <%= link_to "Je choisis cette offre", contact_path, class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
+            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]">299€</span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">ttc</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

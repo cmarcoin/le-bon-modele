@@ -1,0 +1,45 @@
+<footer class="mt-12 bg-[#121212] text-white">
+  <div class="mx-auto grid max-w-[1280px] gap-10 px-8 py-14 md:grid-cols-4 lg:px-12">
+    <div>
+      <h3 class="font-heading text-3xl font-black">Le bon<span class="text-brand-coral">Modele</span></h3>
+      <p class="mt-4 max-w-sm text-sm leading-7 text-white/70">
+        Bien acheter, c'est etre bien conseille. Deux experts independants vous accompagnent pour choisir la voiture adaptee a votre quotidien et a votre budget.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="font-heading text-2xl font-bold">Le bon modele</h4>
+      <ul class="mt-4 space-y-3 text-sm text-white/70">
+        <li><%= link_to "Qui sommes nous ?", about_path, class: "transition hover:text-white" %></li>
+        <li><%= link_to "Starter Pack", starter_pack_path, class: "transition hover:text-white" %></li>
+        <li><%= link_to "Pack Premium", pack_premium_path, class: "transition hover:text-white" %></li>
+        <li><%= link_to "Contactez-nous", contact_path, class: "transition hover:text-white" %></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="font-heading text-2xl font-bold">+ d'infos</h4>
+      <ul class="mt-4 space-y-3 text-sm text-white/70">
+        <li><%= link_to "FAQ", faq_path, class: "transition hover:text-white" %></li>
+        <li><a href="#" class="transition hover:text-white">Politique de confidentialite</a></li>
+        <li><a href="#" class="transition hover:text-white">Mentions legales</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="font-heading text-2xl font-bold">Reseaux sociaux</h4>
+      <p class="mt-4 text-sm text-white/60">Suivez nos prochains conseils auto.</p>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="mx-auto flex max-w-[1280px] flex-col gap-4 px-8 py-5 text-xs text-white/60 lg:flex-row lg:items-center lg:justify-between lg:px-12">
+      <div class="flex flex-wrap gap-4">
+        <a href="#" class="transition hover:text-white">Politique de confidentialite</a>
+        <a href="#" class="transition hover:text-white">Informations reglementaires</a>
+        <a href="#" class="transition hover:text-white">Conditions generales d'utilisation</a>
+      </div>
+      <div>© <%= Time.current.year %> Tous droits reserves</div>
+    </div>
+  </div>
+</footer>
