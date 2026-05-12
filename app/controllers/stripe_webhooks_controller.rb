@@ -23,8 +23,10 @@ class StripeWebhooksController < ApplicationController
 
     if ENV["STRIPE_WEBHOOK_SECRET"].present?
       Stripe::Webhook.construct_event(payload, request.env["HTTP_STRIPE_SIGNATURE"], ENV.fetch("STRIPE_WEBHOOK_SECRET"))
-    else
+    elsif !Rails.env.production?
       Stripe::Event.construct_from(JSON.parse(payload))
+    else
+      raise Stripe::SignatureVerificationError.new("Missing STRIPE_WEBHOOK_SECRET", request.env["HTTP_STRIPE_SIGNATURE"])
     end
   end
 
