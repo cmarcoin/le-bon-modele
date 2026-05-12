@@ -11,4 +11,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  get "qui-sommes-nous", to: "home#about", as: :about
+  get "faq", to: "home#faq", as: :faq
+  get "starter-pack", to: "home#starter_pack", as: :starter_pack
+  get "pack-premium", to: "home#pack_premium", as: :pack_premium
+  get "contact", to: "home#contact", as: :contact
 end

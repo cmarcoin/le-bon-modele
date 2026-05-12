@@ -1,0 +1,44 @@
+<% nav_items = [
+  [ "Accueil", root_path ],
+  [ "Qui sommes nous ?", about_path ],
+  [ "FAQ", faq_path ],
+  [ "Starter Pack", starter_pack_path ],
+  [ "Pack Premium", pack_premium_path ]
+] %>
+
+<header class="site-header" data-controller="site-header" data-site-header-scrolled-class="is-scrolled">
+  <div class="container-site flex items-center justify-between gap-6 px-6 py-4 lg:px-8">
+    <%= link_to root_path, class: "flex shrink-0 items-center", aria: { label: "Le Bon Modèle" } do %>
+      <%= image_tag "/reference-assets/logo.png", alt: "Logo", class: "main-logo", id: "headerLogo" %>
+    <% end %>
+
+    <nav class="hidden items-center gap-2 lg:flex" aria-label="Navigation principale">
+      <% nav_items.each do |label, path| %>
+        <%= link_to label, path, class: class_names("nav-link", "active": current_page?(path)) %>
+      <% end %>
+      <%= link_to "Contact", contact_path, class: "ml-4 rounded-full bg-brand-primary px-6 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
+    </nav>
+
+    <button type="button" class="relative z-[6000] p-2 lg:hidden" aria-label="Ouvrir le menu" data-action="site-header#toggle">
+      <span data-site-header-target="openIcon">
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </span>
+      <span class="hidden" data-site-header-target="closeIcon">
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <div class="mobile-overlay-fixed" data-site-header-target="overlay">
+    <nav class="flex h-full flex-col items-center justify-center gap-8" aria-label="Navigation mobile">
+      <% nav_items.each do |label, path| %>
+        <%= link_to label, path, class: "text-2xl font-bold text-brand-primary", data: { action: "site-header#close" } %>
+      <% end %>
+      <%= link_to "Contact", contact_path, class: "mt-4 rounded-full bg-brand-primary px-10 py-4 font-bold text-white", data: { action: "site-header#close" } %>
+    </nav>
+  </div>
+</header>
