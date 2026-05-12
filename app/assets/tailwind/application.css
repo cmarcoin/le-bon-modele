@@ -96,7 +96,8 @@ img {
 }
 
 .faq-item[data-open="true"] .faq-label,
-.faq-item[data-open="true"] .faq-icon {
+.faq-item[data-open="true"] .faq-icon,
+.faq-item[data-open="true"] .faq-answer {
   color: #ffffff !important;
 }
 
