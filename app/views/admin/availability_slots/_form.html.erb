@@ -1,0 +1,47 @@
+<%= form_with model: [:admin, availability_slot], class: "mt-8 space-y-5" do |form| %>
+  <% if availability_slot.errors.any? %>
+    <div class="rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+      <%= availability_slot.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= form.label :starts_at, "Debut", class: "text-sm font-bold" %>
+      <%= form.datetime_field :starts_at, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+    </div>
+    <div>
+      <%= form.label :ends_at, "Fin", class: "text-sm font-bold" %>
+      <%= form.datetime_field :ends_at, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= form.label :colleague_name, "Collegue", class: "text-sm font-bold" %>
+      <%= form.text_field :colleague_name, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+    </div>
+    <div>
+      <%= form.label :colleague_email, "Email collegue", class: "text-sm font-bold" %>
+      <%= form.email_field :colleague_email, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= form.label :pack_id, "Pack reserve", class: "text-sm font-bold" %>
+      <%= form.collection_select :pack_id, Pack.order(:name), :id, :name, { include_blank: "Tous les packs" }, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+    </div>
+    <div>
+      <%= form.label :timezone, "Fuseau horaire", class: "text-sm font-bold" %>
+      <%= form.text_field :timezone, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+    </div>
+  </div>
+
+  <label class="flex items-center gap-3 font-bold">
+    <%= form.check_box :active, class: "h-5 w-5 accent-brand-primary" %>
+    Creneau actif
+  </label>
+
+  <%= form.submit "Enregistrer", class: "inline-flex min-h-[56px] items-center rounded-full bg-brand-primary px-8 font-bold text-white" %>
+<% end %>

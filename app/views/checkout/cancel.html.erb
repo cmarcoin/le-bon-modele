@@ -1,0 +1,23 @@
+<% content_for :title, "Paiement annule | Le Bon Modele" %>
+
+<%= render "home/header" %>
+
+<main class="pt-28">
+  <section class="px-4 py-16 md:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl rounded-[28px] border border-[#E7E2DC] bg-white p-8 text-center shadow-soft lg:p-12">
+      <p class="text-[20px] font-bold text-brand-coral">Paiement annule</p>
+      <h1 class="mt-3 font-heading text-[42px] font-bold leading-none text-brand-text sm:text-[56px]">Aucun paiement n'a ete enregistre</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-[20px] leading-[1.5] text-brand-text-secondary">
+        Vous pouvez choisir un autre creneau ou relancer la reservation quand vous le souhaitez.
+      </p>
+
+      <% if @booking %>
+        <%= link_to "Reprendre la reservation", new_pack_booking_path(@booking.pack), class: "mt-8 inline-flex min-h-[58px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white" %>
+      <% else %>
+        <%= link_to "Voir les offres", root_path(anchor: "offres"), class: "mt-8 inline-flex min-h-[58px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white" %>
+      <% end %>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

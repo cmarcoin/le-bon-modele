@@ -1,0 +1,8 @@
+<h1>Nouvelle reservation payee</h1>
+
+<p><strong>Pack :</strong> <%= @booking.pack.name %></p>
+<p><strong>Client :</strong> <%= @booking.customer_name %> - <%= @booking.customer_email %></p>
+<p><strong>Telephone :</strong> <%= @booking.customer_phone.presence || "Non renseigne" %></p>
+<p><strong>Rendez-vous :</strong> <%= paris_datetime(@booking.availability_slot.starts_at) %> avec <%= @booking.availability_slot.colleague_name %></p>
+<p><strong>Montant :</strong> <%= euro_price(@booking.amount_cents) %> TTC</p>
+<p><strong>Session Stripe :</strong> <%= @booking.stripe_checkout_session_id %></p>

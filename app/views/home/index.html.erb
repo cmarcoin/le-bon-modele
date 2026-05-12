@@ -106,8 +106,8 @@
       </div>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
-        <%= render "home/offer_card", path: starter_pack_path, icon_path: "/reference-assets/icons/starter-pack.svg", title: "Starter pack", accent_class: "text-brand-accent", objective: "Identifier le modèle qu’il vous faut", description: "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget.", price: "59€" %>
-        <%= render "home/offer_card", path: pack_premium_path, icon_path: "/reference-assets/icons/pack-premium.svg", title: "Pack Premium", accent_class: "text-brand-coral", objective: "Vous accompagner jusqu’à l’achat", description: "Du cadrage de votre besoin jusqu’à l’achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.", price: "299€" %>
+        <%= render "home/offer_card", path: new_pack_booking_path(@starter_pack), icon_path: @starter_pack.icon_path, title: @starter_pack.name, accent_class: @starter_pack.accent_class, objective: "Identifier le modèle qu’il vous faut", description: "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget.", price: euro_price(@starter_pack.price_cents) %>
+        <%= render "home/offer_card", path: new_pack_booking_path(@premium_pack), icon_path: @premium_pack.icon_path, title: @premium_pack.name, accent_class: @premium_pack.accent_class, objective: "Vous accompagner jusqu’à l’achat", description: "Du cadrage de votre besoin jusqu’à l’achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.", price: euro_price(@premium_pack.price_cents) %>
       </div>
     </div>
   </section>

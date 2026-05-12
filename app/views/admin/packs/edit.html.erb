@@ -1,0 +1,46 @@
+<% content_for :title, "Modifier #{@pack.name} | Admin" %>
+
+<%= render "admin/nav" %>
+
+<main class="px-6 py-10">
+  <div class="mx-auto max-w-3xl rounded-[28px] border border-[#E7E2DC] bg-white p-8 shadow-soft">
+    <h1 class="font-heading text-4xl font-bold text-brand-primary">Modifier <%= @pack.name %></h1>
+
+    <%= form_with model: [:admin, @pack], class: "mt-8 space-y-5" do |form| %>
+      <% if @pack.errors.any? %>
+        <div class="rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+          <%= @pack.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.label :name, "Nom", class: "text-sm font-bold" %>
+        <%= form.text_field :name, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+      </div>
+      <div>
+        <%= form.label :objective, "Objectif", class: "text-sm font-bold" %>
+        <%= form.text_field :objective, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+      </div>
+      <div>
+        <%= form.label :description, "Description courte", class: "text-sm font-bold" %>
+        <%= form.text_area :description, rows: 4, class: "mt-2 w-full rounded-[24px] border border-[#E7E2DC] px-5 py-4" %>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <%= form.label :price_cents, "Prix en centimes TTC", class: "text-sm font-bold" %>
+          <%= form.number_field :price_cents, min: 1, step: 1, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+        </div>
+        <div>
+          <%= form.label :duration_minutes, "Duree par rendez-vous", class: "text-sm font-bold" %>
+          <%= form.number_field :duration_minutes, min: 1, step: 1, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
+        </div>
+      </div>
+      <label class="flex items-center gap-3 font-bold">
+        <%= form.check_box :active, class: "h-5 w-5 accent-brand-primary" %>
+        Pack actif
+      </label>
+
+      <%= form.submit "Enregistrer", class: "inline-flex min-h-[56px] items-center rounded-full bg-brand-primary px-8 font-bold text-white" %>
+    <% end %>
+  </div>
+</main>

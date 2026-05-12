@@ -1,0 +1,46 @@
+<% content_for :title, "Reservation ##{@booking.id} | Admin" %>
+
+<%= render "admin/nav" %>
+
+<main class="px-6 py-10">
+  <div class="mx-auto max-w-4xl rounded-[28px] border border-[#E7E2DC] bg-white p-8 shadow-soft">
+    <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-text-secondary">Reservation #<%= @booking.id %></p>
+    <h1 class="mt-2 font-heading text-4xl font-bold text-brand-primary"><%= @booking.customer_name %></h1>
+
+    <dl class="mt-8 grid gap-5 sm:grid-cols-2">
+      <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Pack</dt>
+        <dd class="mt-2 font-bold"><%= @booking.pack.name %></dd>
+      </div>
+      <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Statut</dt>
+        <dd class="mt-2 font-bold"><%= @booking.status %></dd>
+      </div>
+      <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Email</dt>
+        <dd class="mt-2 font-bold"><%= @booking.customer_email %></dd>
+      </div>
+      <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Telephone</dt>
+        <dd class="mt-2 font-bold"><%= @booking.customer_phone.presence || "Non renseigne" %></dd>
+      </div>
+      <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Rendez-vous</dt>
+        <dd class="mt-2 font-bold"><%= paris_datetime(@booking.availability_slot.starts_at) %></dd>
+      </div>
+      <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Montant</dt>
+        <dd class="mt-2 font-bold"><%= euro_price(@booking.amount_cents) %> TTC</dd>
+      </div>
+    </dl>
+
+    <% if @booking.payment_transaction %>
+      <section class="mt-8 rounded-[20px] border border-[#E7E2DC] p-5">
+        <h2 class="font-heading text-2xl font-bold text-brand-text">Transaction Stripe</h2>
+        <p class="mt-4 text-sm"><strong>Session :</strong> <%= @booking.payment_transaction.stripe_checkout_session_id %></p>
+        <p class="mt-2 text-sm"><strong>Payment intent :</strong> <%= @booking.payment_transaction.stripe_payment_intent_id.presence || "En attente" %></p>
+        <p class="mt-2 text-sm"><strong>TVA :</strong> <%= euro_price(@booking.payment_transaction.tax_amount_cents) %></p>
+      </section>
+    <% end %>
+  </div>
+</main>

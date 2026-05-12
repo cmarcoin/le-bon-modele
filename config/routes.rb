@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  devise_for :users, skip: [ :registrations ]
+
+  namespace :admin do
+    root "dashboard#index"
+    resources :packs, only: %i[index edit update]
+    resources :availability_slots
+    resources :bookings, only: %i[index show]
+  end
+
+  resources :packs, param: :slug, only: [] do
+    resources :bookings, only: %i[new create]
+  end
+
+  get "checkout/success", to: "checkout#success", as: :checkout_success
+  get "checkout/cancel", to: "checkout#cancel", as: :checkout_cancel
+  post "stripe/webhooks", to: "stripe_webhooks#create", as: :stripe_webhooks
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

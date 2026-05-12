@@ -1,0 +1,81 @@
+<% content_for :title, "Reservation #{@pack.name} | Le Bon Modele" %>
+
+<%= render "home/header" %>
+
+<main class="pt-28">
+  <section class="px-4 py-10 md:px-6 lg:px-8 lg:py-14">
+    <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+      <aside class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8">
+        <%= image_tag @pack.icon_path, alt: "", class: "h-16 w-12" %>
+        <h1 class="mt-4 font-heading text-[34px] font-bold leading-none <%= @pack.accent_class %> sm:text-[42px]"><%= @pack.name %></h1>
+        <p class="mt-6 text-[20px] font-bold text-brand-primary">Objectif :</p>
+        <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px]"><%= @pack.objective %></p>
+        <p class="mt-6 text-[18px] leading-[1.45] text-brand-text-secondary"><%= @pack.description %></p>
+        <div class="mt-10 rounded-[24px] bg-brand-beige p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-primary">Prix TTC</p>
+          <p class="mt-2 font-heading text-[56px] font-black leading-none tracking-[-0.04em] text-brand-text"><%= euro_price(@pack.price_cents) %></p>
+          <p class="mt-3 text-[16px] leading-[1.5] text-brand-text-secondary">Paiement securise par Stripe. La TVA est calculee automatiquement lorsque Stripe Tax est active.</p>
+        </div>
+      </aside>
+
+      <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
+        <p class="text-[20px] font-bold text-brand-primary">1. Choisissez votre rendez-vous</p>
+        <h2 class="mt-2 font-heading text-[34px] font-bold leading-none text-brand-text sm:text-[44px]">Reservation et paiement</h2>
+
+        <% if @booking.errors.any? %>
+          <div class="mt-6 rounded-[20px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+            <p class="font-bold">Impossible de continuer :</p>
+            <ul class="mt-2 list-disc pl-5">
+              <% @booking.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form_with model: [@pack, @booking], class: "mt-8 space-y-8" do |form| %>
+          <div>
+            <% if @availability_slots.any? %>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <% @availability_slots.each do |slot| %>
+                  <label class="cursor-pointer rounded-[20px] border border-[#E7E2DC] bg-brand-background p-4 transition hover:border-brand-primary hover:bg-white">
+                    <%= form.radio_button :availability_slot_id, slot.id, required: true, class: "mr-2 accent-brand-primary" %>
+                    <span class="font-bold text-brand-text"><%= paris_datetime(slot.starts_at) %></span>
+                    <span class="mt-1 block text-sm text-brand-text-secondary"><%= slot.colleague_name %> - <%= ((slot.ends_at - slot.starts_at) / 60).to_i %> min</span>
+                  </label>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="rounded-[20px] border border-[#E7E2DC] bg-brand-beige p-5">
+                <p class="font-bold text-brand-text">Aucun creneau n'est disponible pour le moment.</p>
+                <p class="mt-2 text-brand-text-secondary">Revenez bientot ou contactez-nous pour ouvrir un nouveau rendez-vous.</p>
+              </div>
+            <% end %>
+          </div>
+
+          <div>
+            <p class="text-[20px] font-bold text-brand-primary">2. Vos coordonnees</p>
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <%= form.label :customer_name, "Nom complet", class: "text-sm font-bold text-brand-text" %>
+                <%= form.text_field :customer_name, required: true, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
+              </div>
+              <div>
+                <%= form.label :customer_email, "Email", class: "text-sm font-bold text-brand-text" %>
+                <%= form.email_field :customer_email, required: true, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
+              </div>
+              <div>
+                <%= form.label :customer_phone, "Telephone", class: "text-sm font-bold text-brand-text" %>
+                <%= form.telephone_field :customer_phone, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
+              </div>
+            </div>
+          </div>
+
+          <%= form.submit "Payer et confirmer le rendez-vous", disabled: @availability_slots.empty?, class: "inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)] disabled:cursor-not-allowed disabled:opacity-50" %>
+        <% end %>
+      </article>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

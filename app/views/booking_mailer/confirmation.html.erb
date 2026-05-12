@@ -1,0 +1,16 @@
+<h1>Votre rendez-vous est confirme</h1>
+
+<p>Bonjour <%= @booking.customer_name %>,</p>
+
+<p>
+  Merci pour votre achat du <strong><%= @booking.pack.name %></strong>.
+  Votre rendez-vous est confirme le
+  <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>
+  avec <%= @booking.availability_slot.colleague_name %>.
+</p>
+
+<p>Montant paye : <strong><%= euro_price(@booking.amount_cents) %> TTC</strong>.</p>
+
+<p>Un compte client a ete cree avec cette adresse email. Vous pourrez utiliser la page de mot de passe oublie pour definir votre mot de passe.</p>
+
+<p>A tres vite,<br>Le Bon Modele</p>

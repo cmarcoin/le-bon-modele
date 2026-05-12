@@ -7,14 +7,14 @@
     <div class="mx-auto max-w-[1280px]">
       <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
         <div class="flex h-full flex-col">
-          <%= image_tag "/reference-assets/icons/pack-premium.svg", alt: "", class: "h-16 w-12" %>
+          <%= image_tag @premium_pack.icon_path, alt: "", class: "h-16 w-12" %>
 
-          <h1 class="mt-4 font-heading text-[34px] font-bold leading-none text-brand-coral sm:text-[42px]">Pack Premium</h1>
+          <h1 class="mt-4 font-heading text-[34px] font-bold leading-none <%= @premium_pack.accent_class %> sm:text-[42px]"><%= @premium_pack.name %></h1>
           <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
 
           <div class="mt-6">
             <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
-            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]">Vous accompagner jusqu’à l’achat</p>
+            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]"><%= @premium_pack.objective %></p>
           </div>
 
           <p class="mt-8 max-w-[1180px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
@@ -55,8 +55,8 @@
           </div>
 
           <div class="mt-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <%= link_to "Je choisis cette offre", contact_path, class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
-            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]">299€</span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">ttc</span></div>
+            <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
+            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]"><%= euro_price(@premium_pack.price_cents) %></span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">ttc</span></div>
           </div>
         </div>
       </article>
