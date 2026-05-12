@@ -31,14 +31,22 @@ export default class extends Controller {
 
     if (answer) {
       answer.style.maxHeight = `${answer.scrollHeight}px`
+      answer.style.color = "#ffffff"
+      answer.querySelectorAll("*").forEach((child) => {
+        child.style.color = "#ffffff"
+      })
     }
 
     icon?.classList.remove("text-brand-primary")
     icon?.classList.add("text-white")
-    if (icon) icon.textContent = "–"
+    if (icon) {
+      icon.textContent = "-"
+      icon.style.color = "#ffffff"
+    }
 
     label?.classList.remove("text-brand-primary")
     label?.classList.add("text-white")
+    if (label) label.style.color = "#ffffff"
   }
 
   closeItem(item) {
@@ -54,13 +62,21 @@ export default class extends Controller {
 
     if (answer) {
       answer.style.maxHeight = "0px"
+      answer.style.color = ""
+      answer.querySelectorAll("*").forEach((child) => {
+        child.style.color = ""
+      })
     }
 
     icon?.classList.remove("text-white")
     icon?.classList.add("text-brand-primary")
-    if (icon) icon.textContent = "+"
+    if (icon) {
+      icon.textContent = "+"
+      icon.style.color = ""
+    }
 
     label?.classList.remove("text-white")
     label?.classList.add("text-brand-primary")
+    if (label) label.style.color = ""
   }
 }
