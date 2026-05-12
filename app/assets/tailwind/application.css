@@ -95,6 +95,11 @@ img {
   display: flex;
 }
 
+.faq-item[data-open="true"] .faq-label,
+.faq-item[data-open="true"] .faq-icon {
+  color: #ffffff !important;
+}
+
 .hero-orbit {
   background: radial-gradient(circle at 70% 20%, rgba(208, 243, 188, 0.75), transparent 34%),
     radial-gradient(circle at 82% 62%, rgba(255, 196, 181, 0.55), transparent 28%);
