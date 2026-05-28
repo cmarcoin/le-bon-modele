@@ -1,33 +1,26 @@
-# Development Dockerfile
+# Use an official Ruby image as a parent image
 FROM ruby:3.4.7
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y \
-  nodejs \
-  postgresql-client \
-  build-essential \
-  libpq-dev \
-  git \
-  && rm -rf /var/lib/apt/lists/*
+# Install dependencies required for Rails and PostgreSQL
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs postgresql-client git
 
-# Set working directory
-WORKDIR /rails
+# Install Foreman globally
+RUN gem install foreman
 
-# Install bundler
-RUN gem install bundler
+# Set the working directory inside the container
+WORKDIR /app
 
-# Copy Gemfile and Gemfile.lock
-COPY Gemfile Gemfile.lock ./
+# Copy the Gemfile and Gemfile.lock into the container
+COPY Gemfile* /app/
 
-# Install gems (including development gems)
+# Install any needed gems
 RUN bundle install
 
-# Copy the rest of the application
-COPY . .
+# Copy the main application
+COPY . /app
 
-# Expose port
+# Expose port 3000 to the outside world
 EXPOSE 3000
 
-# Default command (can be overridden in docker-compose)
+# Start the main process (Rails server)
 CMD ["./bin/dev"]
-

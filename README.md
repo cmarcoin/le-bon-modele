@@ -3,92 +3,96 @@
 A Rails 8.1 application with PostgreSQL, Tailwind CSS, and importmap, running entirely in Docker containers.
 Helps user buy a car without pain
 
-## Prerequisites
+# Local Development
 
-- Docker
-- Docker Compose
+## Setup
 
-## Development Setup
+The project has been dockerized. This means you need to have Docker up and running on your machine to start the project.
 
-### 1. Build and start the containers
+> [!NOTE]  
+> Please note that the dockerfile used by docker compose is `Dockerfile.dev`
+> `Dockerfile` should be used for production
 
-```bash
-docker-compose build
-docker-compose up
+Copy the environment file and set the database variables (same values as in signaux-faibles-v2):
+
+```
+cp .env.example .env
 ```
 
-### 2. Initialize the database
-
-In a new terminal, run:
-
-```bash
-docker-compose run web rails db:create
-docker-compose run web rails db:migrate
+```
+DATABASE_HOST=db
+DATABASE_PORT=5432
+DATABASE_NAME=herve_2
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=password
 ```
 
-### 3. Access the application
+First create start the `db` service by running
 
-Open your browser and navigate to:
-- http://localhost:3000
+```
+docker-compose up -d db
+```
+
+then
+
+```
+docker-compose run web rails db:create db:migrate
+```
+
+This will create the database and run the migrations. For your information, the database is a PostgreSQL database and we use the default configuration for the database connection (host: db, username: postgres, password: password).
+
+Finally start the application by running
+
+```
+docker-compose up --build
+```
+
+If the application still takes a long time to start, or if it fails, check the container logs for any error messages:
+
+```
+docker-compose logs web
+```
+
+If you want to connect a dbms to the local dockerized databases, then use the following connection details :
+
+```
+Host: localhost
+Port: 5433
+Database: herve_2_development
+Username: postgres
+Password: password
+```
+
+The application is available at http://localhost:3001
 
 ## Common Commands
 
 ### Run Rails console
-```bash
+
+```
 docker-compose run web rails console
 ```
 
 ### Run database migrations
-```bash
+
+```
 docker-compose run web rails db:migrate
 ```
 
 ### Run tests
-```bash
+
+```
 docker-compose run web rails test
 ```
 
-### Generate a new controller/model/etc.
-```bash
-docker-compose run web rails generate controller Welcome index
-```
-
-### Run a one-off command
-```bash
-docker-compose run web <command>
-```
-
 ### Stop containers
-```bash
+
+```
 docker-compose down
 ```
 
-### Stop and remove volumes (clean slate)
-```bash
-docker-compose down -v
-```
-
 ### View logs
-```bash
+
+```
 docker-compose logs -f web
 ```
-
-## Project Structure
-
-- `Dockerfile.dev` - Development Docker image
-- `docker-compose.yml` - Orchestrates Rails and PostgreSQL services
-- `Procfile.dev` - Defines web server and Tailwind CSS watcher processes
-
-## Features
-
-- **PostgreSQL** - Database with persistent storage
-- **Tailwind CSS** - Utility-first CSS framework
-- **Importmap** - JavaScript module management
-- **Hotwire** - Turbo and Stimulus for modern web interactions
-
-## Notes
-
-- The database data persists in a Docker volume named `postgres_data`
-- Gem dependencies are cached in a volume named `bundle_cache` for faster rebuilds
-- All code changes are reflected immediately thanks to volume mounting
-- The `./bin/dev` command runs both the Rails server and Tailwind CSS watcher (via Procfile.dev)

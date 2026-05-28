@@ -43,7 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_12_162600) do
     t.string "stripe_checkout_session_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["availability_slot_id"], name: "idx_bookings_active_slot", unique: true, where: "((status)::text = ANY ((ARRAY['pending_payment'::character varying, 'paid'::character varying])::text[]))"
+    t.index ["availability_slot_id"], name: "idx_bookings_active_slot", unique: true, where: "((status)::text = ANY (ARRAY[('pending_payment'::character varying)::text, ('paid'::character varying)::text]))"
     t.index ["availability_slot_id"], name: "index_bookings_on_availability_slot_id"
     t.index ["customer_email"], name: "index_bookings_on_customer_email"
     t.index ["pack_id"], name: "index_bookings_on_pack_id"
