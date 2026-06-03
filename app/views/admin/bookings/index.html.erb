@@ -29,7 +29,12 @@
               <td class="px-5 py-4"><%= paris_datetime(booking.availability_slot.starts_at) %></td>
               <td class="px-5 py-4"><%= booking.status %></td>
               <td class="px-5 py-4 font-bold"><%= euro_price(booking.amount_cents) %></td>
-              <td class="px-5 py-4 text-right"><%= link_to "Voir", admin_booking_path(booking), class: "font-bold text-brand-primary" %></td>
+              <td class="px-5 py-4 text-right">
+                <div class="flex flex-wrap items-center justify-end gap-4">
+                  <%= link_to "Voir", admin_booking_path(booking), class: "font-bold text-brand-primary" %>
+                  <%= button_to "Supprimer", admin_booking_path(booking), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer cette reservation ? Cette action est irreversible." } %>
+                </div>
+              </td>
             </tr>
           <% end %>
         </tbody>

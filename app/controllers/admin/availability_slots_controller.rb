@@ -32,8 +32,13 @@ module Admin
     end
 
     def destroy
-      @availability_slot.update!(active: false)
-      redirect_to admin_availability_slots_path, notice: "Creneau desactive."
+      if @availability_slot.booking.present?
+        redirect_to admin_availability_slots_path, alert: "Ce creneau est reserve. Supprimez la reservation avant de supprimer le creneau."
+        return
+      end
+
+      @availability_slot.destroy!
+      redirect_to admin_availability_slots_path, notice: "Creneau supprime."
     end
 
     private

@@ -30,7 +30,10 @@
               <td class="px-5 py-4"><%= slot.pack&.name || "Tous" %></td>
               <td class="px-5 py-4"><%= slot.booking ? "Reserve" : (slot.active? ? "Disponible" : "Inactif") %></td>
               <td class="px-5 py-4 text-right">
-                <%= link_to "Modifier", edit_admin_availability_slot_path(slot), class: "font-bold text-brand-primary" %>
+                <div class="flex flex-wrap items-center justify-end gap-4">
+                  <%= link_to "Modifier", edit_admin_availability_slot_path(slot), class: "font-bold text-brand-primary" %>
+                  <%= button_to "Supprimer", admin_availability_slot_path(slot), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer ce creneau ? Cette action est irreversible." } %>
+                </div>
               </td>
             </tr>
           <% end %>

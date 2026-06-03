@@ -1,0 +1,13 @@
+<div class="space-y-2 text-center text-sm">
+  <% if devise_mapping.recoverable? && controller_name != "passwords" %>
+    <%= link_to "Mot de passe oublie ?", new_password_path(resource_name), class: "font-bold text-brand-primary transition hover:text-brand-coral" %>
+  <% end %>
+
+  <% if devise_mapping.confirmable? && controller_name != "confirmations" %>
+    <%= link_to "Instructions de confirmation non recues ?", new_confirmation_path(resource_name), class: "block font-bold text-brand-primary transition hover:text-brand-coral" %>
+  <% end %>
+
+  <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != "unlocks" %>
+    <%= link_to "Instructions de deverrouillage non recues ?", new_unlock_path(resource_name), class: "block font-bold text-brand-primary transition hover:text-brand-coral" %>
+  <% end %>
+</div>

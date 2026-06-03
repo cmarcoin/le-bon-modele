@@ -1,0 +1,21 @@
+<div class="relative flex min-h-screen flex-col bg-brand-background">
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="hero-orbit opacity-60"></div>
+  </div>
+
+  <header class="relative z-10 px-6 py-8 lg:px-8">
+    <%= link_to root_path, class: "inline-flex items-center", aria: { label: "Le Bon Modele" } do %>
+      <%= image_tag "/reference-assets/logo.png", alt: "Logo", class: "h-10 w-auto" %>
+    <% end %>
+  </header>
+
+  <main class="relative z-10 flex flex-1 items-center justify-center px-6 pb-10">
+    <div class="w-full max-w-md">
+      <%= yield %>
+    </div>
+  </main>
+
+  <footer class="relative z-10 px-6 pb-10 text-center">
+    <%= link_to "Retour au site", root_path, class: "text-sm font-bold text-brand-text-secondary transition hover:text-brand-primary" %>
+  </footer>
+</div>

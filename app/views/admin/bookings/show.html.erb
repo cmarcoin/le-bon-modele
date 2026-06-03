@@ -42,5 +42,10 @@
         <p class="mt-2 text-sm"><strong>TVA :</strong> <%= euro_price(@booking.payment_transaction.tax_amount_cents) %></p>
       </section>
     <% end %>
+
+    <div class="mt-8 flex flex-wrap gap-4">
+      <%= link_to "Retour aux reservations", admin_bookings_path, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-beige px-6 font-bold text-brand-text" %>
+      <%= button_to "Supprimer la reservation", admin_booking_path(@booking), method: :delete, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white", data: { turbo_confirm: "Supprimer cette reservation ? Cette action est irreversible." } %>
+    </div>
   </div>
 </main>

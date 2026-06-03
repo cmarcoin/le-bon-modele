@@ -33,7 +33,7 @@
           </div>
         <% end %>
 
-        <%= form_with model: [@pack, @booking], class: "mt-8 space-y-8" do |form| %>
+        <%= form_with model: [@pack, @booking], class: "mt-8 space-y-8", data: { turbo: false } do |form| %>
           <div>
             <% if @availability_slots.any? %>
               <div class="grid gap-3 sm:grid-cols-2">

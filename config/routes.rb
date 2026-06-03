@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     root "dashboard#index"
     resources :packs, only: %i[index edit update]
     resources :availability_slots
-    resources :bookings, only: %i[index show]
+    resources :bookings, only: %i[index show destroy]
   end
 
   resources :packs, param: :slug, only: [] do

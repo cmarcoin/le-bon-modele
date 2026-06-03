@@ -63,4 +63,97 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_availability_slots_path
     assert_equal "Jules Delmas", AvailabilitySlot.last.colleague_name
   end
+
+  test "admin can delete availability slot without booking" do
+    sign_in @admin
+    slot = AvailabilitySlot.create!(
+      starts_at: 2.days.from_now.change(hour: 10),
+      ends_at: 2.days.from_now.change(hour: 10, min: 45),
+      timezone: "Europe/Paris",
+      colleague_name: "Charles Marcoin",
+      colleague_email: "charles.marcoin@gmail.com",
+      pack: @pack,
+      active: true
+    )
+
+    assert_difference -> { AvailabilitySlot.count }, -1 do
+      delete admin_availability_slot_path(slot)
+    end
+
+    assert_redirected_to admin_availability_slots_path
+    assert_equal "Creneau supprime.", flash[:notice]
+  end
+
+  test "admin cannot delete availability slot with booking" do
+    sign_in @admin
+    slot = AvailabilitySlot.create!(
+      starts_at: 2.days.from_now.change(hour: 11),
+      ends_at: 2.days.from_now.change(hour: 11, min: 45),
+      timezone: "Europe/Paris",
+      colleague_name: "Charles Marcoin",
+      colleague_email: "charles.marcoin@gmail.com",
+      pack: @pack,
+      active: true
+    )
+    Booking.create!(
+      user: @client,
+      pack: @pack,
+      availability_slot: slot,
+      customer_name: "Client Test",
+      customer_email: @client.email,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "pending_payment"
+    )
+
+    assert_no_difference -> { AvailabilitySlot.count } do
+      delete admin_availability_slot_path(slot)
+    end
+
+    assert_redirected_to admin_availability_slots_path
+    assert_match(/reserve/, flash[:alert])
+  end
+
+  test "admin can delete booking and payment transaction" do
+    sign_in @admin
+    slot = AvailabilitySlot.create!(
+      starts_at: 2.days.from_now.change(hour: 12),
+      ends_at: 2.days.from_now.change(hour: 12, min: 45),
+      timezone: "Europe/Paris",
+      colleague_name: "Charles Marcoin",
+      colleague_email: "charles.marcoin@gmail.com",
+      pack: @pack,
+      active: true
+    )
+    booking = Booking.create!(
+      user: @client,
+      pack: @pack,
+      availability_slot: slot,
+      customer_name: "Client Test",
+      customer_email: @client.email,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "paid"
+    )
+    PaymentTransaction.create!(
+      booking: booking,
+      user: @client,
+      pack: @pack,
+      amount_cents: booking.amount_cents,
+      currency: "eur",
+      status: "paid",
+      stripe_checkout_session_id: "cs_test_#{booking.id}",
+      tax_amount_cents: 0
+    )
+
+    assert_difference -> { Booking.count }, -1 do
+      assert_difference -> { PaymentTransaction.count }, -1 do
+        delete admin_booking_path(booking)
+      end
+    end
+
+    assert_redirected_to admin_bookings_path
+    assert_equal "Reservation supprimee.", flash[:notice]
+    assert slot.reload
+  end
 end
