@@ -21,6 +21,8 @@ services:
     environment:
       RAILS_ENV: development
       PORT: 3000
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
     depends_on:
       - db
     networks:
