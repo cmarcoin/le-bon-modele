@@ -1,5 +1,5 @@
 # Use an official Ruby image as a parent image
-FROM ruby:3.3.11
+FROM ruby:3.3.9
 
 # Install dependencies required for Rails and PostgreSQL
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs postgresql-client git
