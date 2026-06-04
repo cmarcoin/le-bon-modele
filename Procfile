@@ -1,1 +1,3 @@
-web: SOLID_QUEUE_IN_PUMA=true bundle exec puma -C config/puma.rb
+web: bundle exec puma -C config/puma.rb
+worker: bin/jobs
+postdeploy: bundle exec rails db:prepare

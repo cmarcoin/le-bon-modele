@@ -2,32 +2,41 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV['DATABASE_HOST'] %>
-  port: <%= ENV['DATABASE_PORT'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
-  database: <%= ENV['DATABASE_NAME'] %>_development
+  host: <%= ENV["DATABASE_HOST"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  database: <%= ENV["DATABASE_NAME"] %>_development
 
 test:
   <<: *default
-  database: <%= ENV['DATABASE_NAME'] %>_test
+  host: <%= ENV["DATABASE_HOST"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  database: <%= ENV["DATABASE_NAME"] %>_test
 
+# Scalingo: use DATABASE_URL for all production DBs (primary, queue, cache, cable).
+# https://doc.scalingo.com/languages/ruby/rails/solid-queue
 production:
   primary: &primary_production
     <<: *default
     url: <%= ENV["DATABASE_URL"] %>
-  cache:
-    <<: *default
-    url: <%= ENV["CACHE_DATABASE_URL"] || ENV["DATABASE_URL"] %>
-    migrations_paths: db/cache_migrate
+
   queue:
-    <<: *default
-    url: <%= ENV["QUEUE_DATABASE_URL"] || ENV["DATABASE_URL"] %>
+    <<: *primary_production
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/queue_migrate
+
+  cache:
+    <<: *primary_production
+    url: <%= ENV["DATABASE_URL"] %>
+    migrations_paths: db/cache_migrate
+
   cable:
-    <<: *default
-    url: <%= ENV["CABLE_DATABASE_URL"] || ENV["DATABASE_URL"] %>
+    <<: *primary_production
+    url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/cable_migrate

@@ -96,3 +96,17 @@ docker-compose down
 ```
 docker-compose logs -f web
 ```
+
+## Scalingo (staging / production)
+
+See [Solid Queue on Scalingo](https://doc.scalingo.com/languages/ruby/rails/solid-queue).
+
+1. Attach a PostgreSQL add-on so `DATABASE_URL` is set automatically.
+2. Deploy via git push; `postdeploy` runs `rails db:prepare` (primary, queue, cache, and cable schemas).
+3. Scale the worker so background jobs run:
+
+```
+scalingo --app herve-2-staging scale worker:1
+```
+
+The `web` container only runs Puma. Solid Queue runs in the `worker` container (`bin/jobs`), not inside Puma.
