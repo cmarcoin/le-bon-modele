@@ -3,11 +3,11 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.new(pack: @pack)
-    @availability_slots = AvailabilitySlot.available_for(@pack)
+    assign_slot_calendar
   end
 
   def create
-    @availability_slots = AvailabilitySlot.available_for(@pack)
+    assign_slot_calendar
     @booking = Booking.new(booking_params.merge(pack: @pack, amount_cents: @pack.price_cents, currency: @pack.currency))
 
     Booking.transaction do
@@ -43,6 +43,36 @@ class BookingsController < ApplicationController
 
   def booking_params
     params.require(:booking).permit(:availability_slot_id, :customer_name, :customer_email, :customer_phone)
+  end
+
+  def assign_slot_calendar
+    @slots_by_date = grouped_availability_slots
+    @available_dates = @slots_by_date.keys.sort
+    @calendar_today = Time.current.in_time_zone(AvailabilitySlot::DEFAULT_TIMEZONE).to_date
+    @initial_month = parse_calendar_month(params[:month]) || @available_dates.first&.strftime("%Y-%m")
+    @initial_date = parse_calendar_date(params[:date], @available_dates)
+  end
+
+  def grouped_availability_slots
+    AvailabilitySlot.available_for(@pack).group_by do |slot|
+      slot.starts_at.in_time_zone(AvailabilitySlot::DEFAULT_TIMEZONE).to_date
+    end
+  end
+
+  def parse_calendar_month(value)
+    return if value.blank?
+    return value if value.match?(/\A\d{4}-\d{2}\z/)
+
+    nil
+  end
+
+  def parse_calendar_date(value, available_dates)
+    return if value.blank?
+
+    date = Date.iso8601(value)
+    available_dates.include?(date) ? date.iso8601 : nil
+  rescue ArgumentError
+    nil
   end
 
   def find_or_create_client!

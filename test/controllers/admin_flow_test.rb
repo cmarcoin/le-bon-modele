@@ -43,6 +43,32 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "admin can bulk create hourly availability slots" do
+    sign_in @admin
+    start_date = 3.days.from_now.to_date
+    end_date = start_date + 1.day
+
+    assert_difference -> { AvailabilitySlot.count }, 18 do
+      post bulk_create_admin_availability_slots_path, params: {
+        bulk_slot: {
+          start_date: start_date,
+          end_date: end_date,
+          daily_start_time: "09:00",
+          daily_end_time: "18:00",
+          timezone: "Europe/Paris",
+          pack_id: @pack.id
+        }
+      }
+    end
+
+    assert_redirected_to admin_availability_slots_path
+    assert_match(/18 creneau/, flash[:notice])
+
+    slot = AvailabilitySlot.find_by(starts_at: Time.zone.parse("#{start_date} 09:00"))
+    assert_equal @pack.id, slot.pack_id
+    assert_equal 45.minutes, slot.ends_at - slot.starts_at
+  end
+
   test "admin can create exact availability slot" do
     sign_in @admin
 

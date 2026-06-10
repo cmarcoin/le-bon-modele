@@ -34,17 +34,68 @@
         <% end %>
 
         <%= form_with model: [@pack, @booking], class: "mt-8 space-y-8", data: { turbo: false } do |form| %>
-          <div>
-            <% if @availability_slots.any? %>
-              <div class="grid gap-3 sm:grid-cols-2">
-                <% @availability_slots.each do |slot| %>
-                  <label class="cursor-pointer rounded-[20px] border border-[#E7E2DC] bg-brand-background p-4 transition hover:border-brand-primary hover:bg-white">
-                    <%= form.radio_button :availability_slot_id, slot.id, required: true, class: "mr-2 accent-brand-primary" %>
-                    <span class="font-bold text-brand-text"><%= paris_datetime(slot.starts_at) %></span>
-                    <span class="mt-1 block text-sm text-brand-text-secondary"><%= slot.colleague_name %> - <%= ((slot.ends_at - slot.starts_at) / 60).to_i %> min</span>
-                  </label>
-                <% end %>
+          <div
+            data-controller="booking-scheduler"
+            data-booking-scheduler-available-dates-value="<%= @available_dates.map(&:iso8601).to_json %>"
+            data-booking-scheduler-today-value="<%= @calendar_today.iso8601 %>"
+            data-booking-scheduler-initial-month-value="<%= @initial_month %>"
+            data-booking-scheduler-initial-date-value="<%= @initial_date %>"
+          >
+            <% if @slots_by_date.any? %>
+              <div class="overflow-hidden rounded-[24px] border border-[#E7E2DC]">
+                <div class="grid lg:grid-cols-2">
+                  <div class="border-b border-[#E7E2DC] p-5 sm:p-6 lg:border-b-0 lg:border-r">
+                    <p class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Selectionnez une date</p>
+                    <p class="mt-1 text-sm text-brand-text-secondary">Fuseau horaire : Europe/Paris</p>
+
+                    <div class="mt-5 flex items-center justify-between">
+                      <button type="button" data-action="booking-scheduler#previousMonth" class="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition hover:bg-brand-beige" aria-label="Mois precedent">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                      </button>
+                      <p data-booking-scheduler-target="monthLabel" class="font-bold text-brand-text"></p>
+                      <button type="button" data-action="booking-scheduler#nextMonth" class="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition hover:bg-brand-beige" aria-label="Mois suivant">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                      </button>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-7 gap-1 text-center text-[11px] font-bold uppercase tracking-[0.08em] text-brand-text-secondary">
+                      <% %w[LUN. MAR. MER. JEU. VEN. SAM. DIM.].each do |weekday| %>
+                        <span class="py-2"><%= weekday %></span>
+                      <% end %>
+                    </div>
+
+                    <div data-booking-scheduler-target="calendar" class="grid grid-cols-7 gap-1"></div>
+                  </div>
+
+                  <div data-booking-scheduler-target="timesSection" class="p-5 sm:p-6">
+                    <p data-booking-scheduler-target="selectedDayLabel" class="font-bold text-brand-text"></p>
+                    <p class="mt-1 text-sm text-brand-text-secondary"><%= @pack.duration_minutes %> min</p>
+
+                    <div class="mt-4 max-h-[320px] space-y-2 overflow-y-auto pr-1">
+                      <% @slots_by_date.each do |date, slots| %>
+                        <div data-booking-scheduler-target="timePanel" data-date="<%= date.iso8601 %>" class="space-y-3" hidden>
+                          <% slots.each do |slot| %>
+                            <label
+                              data-booking-scheduler-target="timeSlot"
+                              data-time="<%= paris_time(slot.starts_at) %>"
+                              data-date-label="<%= paris_day_label(date) %>"
+                              class="flex cursor-pointer items-center justify-center rounded-full border border-[#E7E2DC] bg-white px-4 py-3 font-bold text-brand-text transition hover:border-brand-primary"
+                            >
+                              <%= form.radio_button :availability_slot_id, slot.id, required: true, class: "sr-only", data: { action: "booking-scheduler#selectTime" } %>
+                              <%= paris_time(slot.starts_at) %>
+                            </label>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <p class="mt-5 rounded-[18px] bg-brand-beige px-4 py-3 text-brand-text">
+                <span class="font-bold text-brand-primary">Selection :</span>
+                <span data-booking-scheduler-target="summary" class="ml-1"></span>
+              </p>
             <% else %>
               <div class="rounded-[20px] border border-[#E7E2DC] bg-brand-beige p-5">
                 <p class="font-bold text-brand-text">Aucun creneau n'est disponible pour le moment.</p>
@@ -71,7 +122,7 @@
             </div>
           </div>
 
-          <%= form.submit "Payer et confirmer le rendez-vous", disabled: @availability_slots.empty?, class: "inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)] disabled:cursor-not-allowed disabled:opacity-50" %>
+          <%= form.submit "Payer et confirmer le rendez-vous", disabled: @slots_by_date.empty?, class: "inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)] disabled:cursor-not-allowed disabled:opacity-50" %>
         <% end %>
       </article>
     </div>

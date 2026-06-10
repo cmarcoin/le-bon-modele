@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
     resources :packs, only: %i[index edit update]
-    resources :availability_slots
+    resources :availability_slots do
+      collection do
+        get :bulk_new
+        post :bulk_create
+      end
+    end
     resources :bookings, only: %i[index show destroy]
   end
 

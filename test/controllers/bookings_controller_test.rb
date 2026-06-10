@@ -28,12 +28,25 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
-  test "shows available exact slots for a pack" do
+  test "shows calendly style month calendar for available slots" do
     get new_pack_booking_path(@pack)
 
     assert_response :success
     assert_select "h2", "Reservation et paiement"
+    assert_select "[data-controller='booking-scheduler']"
+    assert_select "[data-booking-scheduler-target='calendar']"
+    assert_select "[data-booking-scheduler-target='monthLabel']"
     assert_select "input[type=radio][value='#{@slot.id}']"
+  end
+
+  test "supports month and date query params like calendly" do
+    slot_date = @slot.starts_at.in_time_zone("Europe/Paris").to_date
+
+    get new_pack_booking_path(@pack, month: slot_date.strftime("%Y-%m"), date: slot_date.iso8601)
+
+    assert_response :success
+    assert_select "[data-booking-scheduler-initial-month-value='#{slot_date.strftime("%Y-%m")}']"
+    assert_select "[data-booking-scheduler-initial-date-value='#{slot_date.iso8601}']"
   end
 
   test "creates client user booking and payment transaction before redirecting to stripe" do
