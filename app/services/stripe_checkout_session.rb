@@ -1,6 +1,8 @@
 class StripeCheckoutSession
   class ConfigurationError < StandardError; end
 
+  CONSULTING_TAX_CODE = "txcd_20060048"
+
   def self.create_for(booking, base_url)
     new(booking, base_url).create
   end
@@ -15,7 +17,10 @@ class StripeCheckoutSession
 
     Stripe::Checkout::Session.create(
       mode: "payment",
+      locale: "fr",
       customer_email: booking.customer_email,
+      customer_creation: "always",
+      billing_address_collection: "required",
       client_reference_id: booking.id,
       success_url: "#{base_url}/checkout/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "#{base_url}/checkout/cancel?booking_id=#{booking.id}",
@@ -42,7 +47,8 @@ class StripeCheckoutSession
         tax_behavior: "inclusive",
         product_data: {
           name: booking.pack.name,
-          description: booking.pack.objective
+          description: booking.pack.objective,
+          tax_code: CONSULTING_TAX_CODE
         }
       }
     }
