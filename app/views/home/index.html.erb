@@ -3,9 +3,9 @@
 <%= render "home/header" %>
 
 <main class="overflow-hidden pt-24">
-  <section class="relative px-8 py-16 lg:px-12 lg:py-20">
+  <section class="relative px-8 py-16 lg:px-12 lg:py-20" id="js-fade-delay">
     <dotlottie-wc src="/reference-assets/intro.lottie" autoplay class="HeroHome_Animation__intro"></dotlottie-wc>
-    <div class="mx-auto grid max-w-[1280px] items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <div class="mx-auto mt-16 grid max-w-[1280px] items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
       <div>
         <h1 class="max-w-[980px] font-heading text-[44px] leading-[1.05] sm:text-[56px] lg:text-[50px]">
           <span class="mr-2 inline-block align-middle font-semibold text-brand-primary">Choisissez</span>
@@ -32,7 +32,7 @@
     </div>
   </section>
 
-  <section id="approche" class="px-8 py-16 lg:px-12 lg:py-20">
+  <section id="approche" class="px-8 py-16 lg:px-12 lg:py-16">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
         <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Notre approche</h2>
@@ -62,15 +62,12 @@
   <section class="px-8 py-10 lg:px-12 lg:py-16">
     <div class="mx-auto max-w-[980px] rounded-[20px] bg-brand-beige p-6">
       <div class="flex min-h-[280px] items-center justify-center rounded-[16px] border border-brand-border bg-white/70 text-center">
-        <div>
-          <p class="font-heading text-2xl font-bold text-brand-primary">Illustration comparaison</p>
-          <p class="mt-2 text-sm text-brand-text-secondary">Zone visuelle à remplacer</p>
-        </div>
+        <%= image_tag "/reference-assets/hp.png", width: 1600, height: 1200, alt: "Illustration de recherche de voiture", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
 
-  <section class="px-8 py-16 lg:px-12 lg:py-20" data-controller="budget">
+  <section class="px-8 py-0 lg:px-12 lg:py-0" data-controller="budget">
     <div class="mx-auto max-w-[1280px] text-center">
       <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Un budget, plusieurs réalités</h2>
       <p class="mt-3 text-brand-text-secondary">
@@ -78,23 +75,25 @@
         selon le modèle, le niveau d’équipement et le kilométrage.
       </p>
 
-      <div class="mt-8 flex items-center justify-center gap-8">
+      <div class="mt-2 flex items-center justify-center gap-8">
         <button type="button" class="text-[24px] font-bold text-brand-primary" data-budget-target="purchaseLabel" data-action="budget#showPurchase">Achat</button>
-        <button type="button" aria-pressed="false" class="group relative h-[60px] w-[180px] rounded-full border-2 border-brand-coral bg-white transition-all duration-200 ease-out active:scale-95" data-budget-target="modeToggle" data-action="budget#toggle">
-          <span class="absolute left-1 top-1 h-[48px] w-[48px] rounded-full bg-brand-coral transition-transform duration-200 ease-out group-active:scale-110" data-budget-target="modeKnob"></span>
+        <button type="button" aria-pressed="false" class="switch-shimmer group relative h-[60px] w-[180px] rounded-full border-2 border-brand-coral bg-white shadow-md transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-lg active:scale-95" data-budget-target="modeToggle" data-action="budget#toggle">
+          <span id="modeKnob" class="absolute left-1 top-1 h-[48px] w-[48px] rounded-full transition-all duration-200 ease-out group-active:scale-110" data-budget-target="modeKnob"></span>
         </button>
-        <button type="button" class="text-[24px] font-bold text-brand-primary opacity-50" data-budget-target="leasingLabel" data-action="budget#showLeasing">Leasing (LOA)</button>
+        <button type="button" class="text-[24px] font-bold text-brand-primary" data-budget-target="leasingLabel" data-action="budget#showLeasing">Leasing (LOA)</button>
       </div>
 
-      <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-budget-target="cards"></div>
+      <div class="mt-4 grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-budget-target="cards"></div>
 
       <div class="mx-auto mt-8 max-w-4xl">
-        <div class="mb-2 flex items-center justify-between text-xl font-bold text-brand-text">
-          <span data-budget-target="minLabel">5000€</span>
-          <span data-budget-target="maxLabel">50 000€</span>
+        <div class="flex items-center gap-6">
+          <span class="text-[24px] font-bold text-brand-text-secondary" data-budget-target="minLabel">5000€</span>
+          <div class="flex-grow">
+            <input type="range" min="5000" max="50000" value="5000" step="5000" class="budget-track h-4 w-full appearance-none rounded-full bg-transparent" data-budget-target="range" data-action="input->budget#rangeChanged">
+          </div>
+          <span class="text-[24px] font-bold text-brand-text-secondary" data-budget-target="maxLabel">50 000€</span>
         </div>
-        <p class="mb-4 text-xl font-bold text-brand-primary" data-budget-target="currentLabel">5000€</p>
-        <input type="range" min="5000" max="50000" value="5000" step="5000" class="budget-track h-2 w-full appearance-none rounded-full bg-transparent" data-budget-target="range" data-action="input->budget#rangeChanged">
+        <p class="sr-only" data-budget-target="currentLabel">5000€</p>
       </div>
     </div>
   </section>

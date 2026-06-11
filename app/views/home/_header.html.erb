@@ -7,16 +7,23 @@
 ] %>
 
 <header class="site-header" data-controller="site-header" data-site-header-scrolled-class="is-scrolled">
-  <div class="container-site flex items-center justify-between gap-6 px-6 py-4 lg:px-8">
+  <div class="site-header-nav">
+    <div class="container-site flex items-center justify-between gap-6 px-2 py-4 lg:px-0">
     <%= link_to root_path, class: "flex shrink-0 items-center", aria: { label: "Le Bon Modèle" } do %>
       <%= image_tag "/reference-assets/logo.png", alt: "Logo", class: "main-logo", id: "headerLogo" %>
     <% end %>
 
-    <nav class="hidden items-center gap-2 lg:flex" aria-label="Navigation principale">
+    <nav class="hidden items-center gap-4 lg:flex" aria-label="Navigation principale">
       <% nav_items.each do |label, path| %>
         <%= link_to label, path, class: class_names("nav-link", "active": current_page?(path)) %>
       <% end %>
-      <%= link_to "Contact", contact_path, class: "ml-4 rounded-full bg-brand-primary px-6 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
+      <%= link_to contact_path, class: "group inline-flex min-h-[48px] items-center justify-center gap-3 rounded-full border-2 border-brand-primary bg-white px-8 text-[18px] font-bold text-brand-primary transition-all duration-200 ease-out hover:-translate-y-[2px] hover:scale-[1.02] hover:bg-brand-primary hover:text-white" do %>
+        Contact
+        <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-[2px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+          <path d="M3 7l9 6 9-6"></path>
+        </svg>
+      <% end %>
     </nav>
 
     <button type="button" class="relative z-[6000] p-2 lg:hidden" aria-label="Ouvrir le menu" data-action="site-header#toggle">
@@ -31,6 +38,7 @@
         </svg>
       </span>
     </button>
+    </div>
   </div>
 
   <div class="mobile-overlay-fixed" data-site-header-target="overlay">
