@@ -2,7 +2,7 @@ class AvailabilitySlotBulkCreator
   SLOT_DURATION = 45.minutes
   SLOT_INTERVAL = 1.hour
 
-  DEFAULT_COLLEAGUE_NAME = "Equipe Le Bon Modele"
+  DEFAULT_COLLEAGUE_NAME = "Équipe Le Bon Modèle"
   DEFAULT_COLLEAGUE_EMAIL = "contact@lebonmodele.com"
 
   Result = Struct.new(:created_count, :skipped_count, :errors, keyword_init: true) do
@@ -61,17 +61,17 @@ class AvailabilitySlotBulkCreator
 
   def validate
     errors = []
-    errors << "La date de debut est obligatoire." if @start_date.blank?
+    errors << "La date de début est obligatoire." if @start_date.blank?
     errors << "La date de fin est obligatoire." if @end_date.blank?
-    errors << "L'heure de debut est obligatoire." if @daily_start_time.blank?
+    errors << "L'heure de début est obligatoire." if @daily_start_time.blank?
     errors << "L'heure de fin est obligatoire." if @daily_end_time.blank?
     return errors if errors.any?
 
-    errors << "La date de fin doit etre apres la date de debut." if @end_date < @start_date
+    errors << "La date de fin doit être après la date de début." if @end_date < @start_date
 
     start_minutes = time_to_minutes(@daily_start_time)
     end_minutes = time_to_minutes(@daily_end_time)
-    errors << "L'heure de fin doit etre apres l'heure de debut." if end_minutes <= start_minutes
+    errors << "L'heure de fin doit être après l'heure de début." if end_minutes <= start_minutes
 
     errors << "Fuseau horaire inconnu." if ActiveSupport::TimeZone[@timezone].blank?
 

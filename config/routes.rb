@@ -39,4 +39,5 @@ Rails.application.routes.draw do
   get "starter-pack", to: "home#starter_pack", as: :starter_pack
   get "pack-premium", to: "home#pack_premium", as: :pack_premium
   get "contact", to: "home#contact", as: :contact
+  post "contact", to: "home#submit_contact", as: :submit_contact
 end

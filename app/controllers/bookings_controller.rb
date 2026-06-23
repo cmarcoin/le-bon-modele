@@ -40,7 +40,7 @@ class BookingsController < ApplicationController
     render :new, status: :unprocessable_entity
   rescue Stripe::StripeError => error
     cancel_booking_on_failure!
-    @booking.errors.add(:base, "Le paiement Stripe n'a pas pu etre initialise: #{error.message}")
+    @booking.errors.add(:base, "Le paiement Stripe n'a pas pu être initialisé : #{error.message}")
     render :new, status: :unprocessable_entity
   rescue ActiveRecord::RecordNotUnique
     cancel_booking_on_failure!

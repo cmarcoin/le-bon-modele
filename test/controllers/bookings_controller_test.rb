@@ -32,7 +32,7 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     get new_pack_booking_path(@pack)
 
     assert_response :success
-    assert_select "h2", "Reservation et paiement"
+    assert_select "h2", "Réservation et paiement"
     assert_select "[data-controller='booking-scheduler']"
     assert_select "[data-booking-scheduler-target='calendar']"
     assert_select "[data-booking-scheduler-target='monthLabel']"

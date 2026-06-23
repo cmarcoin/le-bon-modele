@@ -29,7 +29,7 @@ class AvailabilitySlotBulkCreatorTest < ActiveSupport::TestCase
       starts_at: Time.zone.parse("2026-06-10 09:00"),
       ends_at: Time.zone.parse("2026-06-10 09:45"),
       timezone: "Europe/Paris",
-      colleague_name: "Equipe Le Bon Modele",
+      colleague_name: "Équipe Le Bon Modèle",
       colleague_email: "contact@lebonmodele.com"
     )
 
@@ -55,6 +55,6 @@ class AvailabilitySlotBulkCreatorTest < ActiveSupport::TestCase
     ).call
 
     assert_not result.success?
-    assert_includes result.errors, "La date de fin doit etre apres la date de debut."
+    assert_includes result.errors, "La date de fin doit être après la date de début."
   end
 end

@@ -12,7 +12,7 @@ class StripeCheckoutSession
 
   def create
     raise ConfigurationError, "STRIPE_SECRET_KEY est manquant." if ENV["STRIPE_SECRET_KEY"].blank?
-    raise ConfigurationError, "Le pack n'est pas synchronise avec Stripe. Lancez rails stripe:sync_packs." unless booking.pack.stripe_ready?
+    raise ConfigurationError, "Le pack n'est pas synchronisé avec Stripe. Lancez rails stripe:sync_packs." unless booking.pack.stripe_ready?
 
     Stripe::Checkout::Session.create(
       mode: "payment",

@@ -14,7 +14,7 @@ module Admin
       @availability_slot = AvailabilitySlot.new(slot_params)
 
       if @availability_slot.save
-        redirect_to admin_availability_slots_path, notice: "Creneau ajoute."
+        redirect_to admin_availability_slots_path, notice: "Créneau ajouté."
       else
         render :new, status: :unprocessable_entity
       end
@@ -25,7 +25,7 @@ module Admin
 
     def update
       if @availability_slot.update(slot_params)
-        redirect_to admin_availability_slots_path, notice: "Creneau mis a jour."
+        redirect_to admin_availability_slots_path, notice: "Créneau mis à jour."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -33,12 +33,12 @@ module Admin
 
     def destroy
       if @availability_slot.active_booking.present?
-        redirect_to admin_availability_slots_path, alert: "Ce creneau est reserve. Supprimez la reservation avant de supprimer le creneau."
+        redirect_to admin_availability_slots_path, alert: "Ce créneau est réservé. Supprimez la réservation avant de supprimer le créneau."
         return
       end
 
       @availability_slot.destroy!
-      redirect_to admin_availability_slots_path, notice: "Creneau supprime."
+      redirect_to admin_availability_slots_path, notice: "Créneau supprimé."
     end
 
     def bulk_new
@@ -50,8 +50,8 @@ module Admin
       result = AvailabilitySlotBulkCreator.new(**bulk_creator_attributes).call
 
       if result.success?
-        notice = "#{result.created_count} creneau(x) ajoute(s)."
-        notice += " #{result.skipped_count} deja existant(s), ignores." if result.skipped_count.positive?
+        notice = "#{result.created_count} créneau(x) ajouté(s)."
+        notice += " #{result.skipped_count} déjà existant(s), ignorés." if result.skipped_count.positive?
         redirect_to admin_availability_slots_path, notice: notice
       else
         @bulk_errors = result.errors

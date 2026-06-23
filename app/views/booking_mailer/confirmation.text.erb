@@ -5,9 +5,9 @@ Bonjour <%= @booking.customer_name %>,
 Merci pour votre achat du <%= @booking.pack.name %>.
 Votre rendez-vous est confirmé le <%= paris_datetime(@booking.availability_slot.starts_at) %> avec <%= @booking.availability_slot.colleague_name %>.
 
-Montant paye : <%= euro_price(@booking.amount_cents) %> TTC.
+Montant payé : <%= euro_price(@booking.amount_cents) %> TTC.
 
-Un compte client a été créé avec cette adresse email. Vous pourrez utiliser la page de mot de passe oublie pour définir votre mot de passe.
+Un compte client a été créé avec cette adresse email. Vous pourrez utiliser la page de mot de passe oublié pour définir votre mot de passe.
 
-A tres vite,
-Le Bon Modele
+À très vite,
+Le Bon Modèle

@@ -30,6 +30,6 @@ class AvailabilitySlot < ApplicationRecord
   def ends_after_start
     return if starts_at.blank? || ends_at.blank?
 
-    errors.add(:ends_at, "doit etre apres le debut") if ends_at <= starts_at
+    errors.add(:ends_at, "doit être après le début") if ends_at <= starts_at
   end
 end

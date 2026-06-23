@@ -15,7 +15,7 @@ module Admin
         @booking.reload.destroy!
       end
 
-      redirect_to admin_bookings_path, notice: "Reservation supprimee."
+      redirect_to admin_bookings_path, notice: "Réservation supprimée."
     end
 
     private

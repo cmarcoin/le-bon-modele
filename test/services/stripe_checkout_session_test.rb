@@ -79,6 +79,6 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
       StripeCheckoutSession.create_for(@booking, "http://localhost:3001")
     end
 
-    assert_match(/synchronise/, error.message)
+    assert_match(/synchronisé/, error.message)
   end
 end

@@ -22,7 +22,7 @@
             <% if pack.stripe_ready? %>
               Stripe: <%= pack.stripe_product_id %> / <%= pack.stripe_price_id %>
             <% else %>
-              Stripe: non synchronise
+              Stripe: non synchronisé
             <% end %>
           </p>
           <%= link_to "Modifier", edit_admin_pack_path(pack), class: "mt-6 inline-flex min-h-[48px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>

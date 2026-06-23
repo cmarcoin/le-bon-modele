@@ -4,7 +4,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   setup do
     Pack.find_or_create_by!(slug: "starter-pack") do |pack|
       pack.name = "Starter Pack"
-      pack.objective = "Identifier le modele qu'il vous faut"
+      pack.objective = "Identifier le modèle qu'il vous faut"
       pack.description = "Starter description"
       pack.price_cents = 5_900
       pack.currency = "eur"
@@ -15,7 +15,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     Pack.find_or_create_by!(slug: "pack-premium") do |pack|
       pack.name = "Pack Premium"
-      pack.objective = "Vous accompagner jusqu'a l'achat"
+      pack.objective = "Vous accompagner jusqu'à l'achat"
       pack.description = "Premium description"
       pack.price_cents = 29_900
       pack.currency = "eur"
@@ -43,7 +43,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
       faq_path => "Questions fréquentes",
       starter_pack_path => "Starter Pack",
       pack_premium_path => "Pack Premium",
-      contact_path => "Vous etes perdu"
+      contact_path => "Vous êtes perdu"
     }.each do |path, heading|
       get path
 

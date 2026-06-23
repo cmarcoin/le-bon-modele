@@ -7,8 +7,8 @@
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 class="font-heading text-4xl font-bold text-brand-primary">Agenda</h1>
       <div class="flex flex-wrap gap-3">
-        <%= link_to "Generer des creneaux", bulk_new_admin_availability_slots_path, class: "inline-flex min-h-[52px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
-        <%= link_to "Ajouter un creneau", new_admin_availability_slot_path, class: "inline-flex min-h-[52px] items-center rounded-full border border-[#E7E2DC] px-6 font-bold text-brand-text" %>
+        <%= link_to "Générer des créneaux", bulk_new_admin_availability_slots_path, class: "inline-flex min-h-[52px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
+        <%= link_to "Ajouter un créneau", new_admin_availability_slot_path, class: "inline-flex min-h-[52px] items-center rounded-full border border-[#E7E2DC] px-6 font-bold text-brand-text" %>
       </div>
     </div>
 
@@ -16,9 +16,9 @@
       <table class="w-full min-w-[900px] text-left">
         <thead class="bg-brand-beige text-sm uppercase tracking-[0.12em] text-brand-text-secondary">
           <tr>
-            <th class="px-5 py-4">Debut</th>
+            <th class="px-5 py-4">Début</th>
             <th class="px-5 py-4">Fin</th>
-            <th class="px-5 py-4">Collegue</th>
+            <th class="px-5 py-4">Collègue</th>
             <th class="px-5 py-4">Pack</th>
             <th class="px-5 py-4">Statut</th>
             <th class="px-5 py-4"></th>
@@ -31,11 +31,11 @@
               <td class="px-5 py-4"><%= paris_datetime(slot.ends_at) %></td>
               <td class="px-5 py-4"><%= slot.colleague_name %></td>
               <td class="px-5 py-4"><%= slot.pack&.name || "Tous" %></td>
-              <td class="px-5 py-4"><%= slot.active_booking ? "Reserve" : (slot.active? ? "Disponible" : "Inactif") %></td>
+              <td class="px-5 py-4"><%= slot.active_booking ? "Réservé" : (slot.active? ? "Disponible" : "Inactif") %></td>
               <td class="px-5 py-4 text-right">
                 <div class="flex flex-wrap items-center justify-end gap-4">
                   <%= link_to "Modifier", edit_admin_availability_slot_path(slot), class: "font-bold text-brand-primary" %>
-                  <%= button_to "Supprimer", admin_availability_slot_path(slot), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer ce creneau ? Cette action est irreversible." } %>
+                  <%= button_to "Supprimer", admin_availability_slot_path(slot), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer ce créneau ? Cette action est irréversible." } %>
                 </div>
               </td>
             </tr>

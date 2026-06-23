@@ -1,4 +1,4 @@
-<% content_for :title, "Contact | Le Bon Modele" %>
+<% content_for :title, "Contact | Le Bon Modèle" %>
 
 <%= render "home/header" %>
 
@@ -7,16 +7,17 @@
     <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.9fr_1.1fr]">
       <div>
         <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-coral">Contact</p>
-        <h1 class="mt-4 font-heading text-5xl font-black leading-[0.95] text-brand-primary">Vous etes perdu ? Parlons-en.</h1>
+        <h1 class="mt-4 font-heading text-5xl font-black leading-[0.95] text-brand-primary">Vous êtes perdu ? Parlons-en.</h1>
         <p class="mt-6 text-lg leading-8 text-brand-text-secondary">
-          Decrivez votre situation, votre budget et vos contraintes. Nous vous repondons pour vous orienter vers l'accompagnement le plus adapte.
+          Décrivez votre situation, votre budget et vos contraintes. Nous vous répondons pour vous orienter vers l'accompagnement le plus adapté.
         </p>
+        <%= image_tag "/reference-assets/perdu.gif", alt: "Illustration d'une personne perdue", class: "mt-8 h-auto w-full max-w-md", loading: "lazy" %>
       </div>
 
       <div class="rounded-[28px] bg-white p-6 shadow-brand sm:p-8">
         <div class="grid gap-4 sm:grid-cols-2">
           <a href="mailto:bonjour@lebonmodele.fr" class="rounded-[20px] border border-brand-primary/10 bg-brand-beige p-5 shadow-soft transition hover:border-brand-primary">
-            <span class="text-sm font-bold text-brand-primary">Nous ecrire</span>
+            <span class="text-sm font-bold text-brand-primary">Nous écrire</span>
             <span class="mt-2 block text-brand-text-secondary">bonjour@lebonmodele.fr</span>
           </a>
           <a href="tel:+33000000000" class="rounded-[20px] border border-brand-primary/10 bg-brand-primary-light p-5 shadow-soft transition hover:border-brand-primary">
@@ -25,17 +26,40 @@
           </a>
         </div>
 
-        <form class="mt-8 grid gap-5">
+        <%= form_with model: @contact_inquiry, url: submit_contact_path, class: "mt-8 grid gap-5" do |form| %>
+          <% if @contact_inquiry.errors.any? %>
+            <div class="rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+              <ul class="list-disc pl-5 text-sm">
+                <% @contact_inquiry.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
           <div class="grid gap-5 sm:grid-cols-2">
-            <label class="grid gap-2 text-sm font-bold text-brand-primary">Prenom<input class="rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" type="text" name="first_name"></label>
-            <label class="grid gap-2 text-sm font-bold text-brand-primary">Email<input class="rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" type="email" name="email"></label>
+            <div>
+              <%= form.label :first_name, "Prénom", class: "grid gap-2 text-sm font-bold text-brand-primary" %>
+              <%= form.text_field :first_name, required: true, class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+            </div>
+            <div>
+              <%= form.label :email, "Email", class: "grid gap-2 text-sm font-bold text-brand-primary" %>
+              <%= form.email_field :email, required: true, class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+            </div>
           </div>
-          <label class="grid gap-2 text-sm font-bold text-brand-primary">Votre besoin<textarea class="min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" name="message"></textarea></label>
-          <button type="button" class="inline-flex min-h-[60px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft">
-            Envoyer ma demande
-          </button>
-          <p class="text-sm text-brand-text-secondary">Ce formulaire est pret visuellement ; branchez votre outil de reception pour activer l'envoi.</p>
-        </form>
+
+          <div>
+            <%= form.label :message, "Votre besoin", class: "grid gap-2 text-sm font-bold text-brand-primary" %>
+            <%= form.text_area :message, required: true, rows: 6, class: "w-full min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+          </div>
+
+          <div class="hidden" aria-hidden="true">
+            <%= form.label :company, "Entreprise" %>
+            <%= form.text_field :company, tabindex: "-1", autocomplete: "off" %>
+          </div>
+
+          <%= form.submit "Envoyer ma demande", class: "inline-flex min-h-[60px] cursor-pointer items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
+        <% end %>
       </div>
     </div>
   </section>

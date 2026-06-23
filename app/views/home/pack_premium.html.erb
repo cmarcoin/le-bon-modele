@@ -28,10 +28,10 @@
               <% [
                 "Questionnaire préparatoire pour cadrer votre situation, vos usages et vos priorités",
                 "Entretien n°1 (60 min) avec Charles et Jules, nos deux experts, pour identifier le modèle de voiture qui correspond vraiment à votre quotidien et à votre budget",
-                "Elaboration d’une liste réduite de 2/3 modèles",
+                "Élaboration d’une liste réduite de 2/3 modèles",
                 "Entretien n°2 (60 min) pour valider le choix du modèle et cadrer la stratégie de recherche",
                 "Recherche, tri et analyse des offres sur le marché du neuf et de l’occasion",
-                "Elaboration d’une liste réduite de 4/5 offres, avec un comparatif détaillé et nos recommandations",
+                "Élaboration d’une liste réduite de 4/5 offres, avec un comparatif détaillé et nos recommandations",
                 "Entretien n°3 (60 min) pour passer les annonces en revue, approfondir les recherches le cas échéant, arbitrer les produits annexes (assurance, garanties, entretien) et accompagner jusqu’à la finalisation de l’achat"
               ].each do |item| %>
                 <li class="flex items-start gap-4"><span class="mt-[2px] text-[24px] leading-none text-brand-accent">✓</span><span><%= item %></span></li>
@@ -45,7 +45,7 @@
           </div>
 
           <div class="mt-10">
-            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">La jungle des annonces, c’est notre problème, plus le vôtre</h2>
+            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">La jungle des annonces, c’est notre problème, pas le vôtre</h2>
             <ul class="mt-6 list-disc space-y-3 pl-6 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
               <li>Nous définissons le modèle de voiture et les équipements qu’il vous faut</li>
               <li>Puis nous cherchons, trions et analysons les offres du marché (neuf &amp; occasion). Nous décortiquons les prix, évaluons la fiabilité des annonces, repérons les fausses bonnes affaires et les angles morts. Nous creusons jusqu’à trouver les meilleures offres</li>
@@ -56,7 +56,7 @@
 
           <div class="mt-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
-            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]"><%= euro_price(@premium_pack.price_cents) %></span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">ttc</span></div>
+            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]"><%= euro_price(@premium_pack.price_cents) %></span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">TTC</span></div>
           </div>
         </div>
       </article>

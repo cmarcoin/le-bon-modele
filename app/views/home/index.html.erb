@@ -26,8 +26,8 @@
         </div>
       </div>
 
-      <div>
-        <%= image_tag "/reference-assets/perdu.gif", width: 1600, height: 1200, alt: "Illustration de recherche de voiture", class: "h-auto w-full", loading: "lazy" %>
+      <div class="bg-brand-background">
+        <%= image_tag "/reference-assets/famille-voitures.png", width: 1600, height: 1200, alt: "Illustration de voitures pour toute la famille", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
@@ -104,7 +104,7 @@
   <section class="px-8 py-16 lg:px-12 lg:py-20">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Avis Clients</h2>
+        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Avis clients</h2>
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-3">
@@ -114,7 +114,7 @@
           [ "Passat XXXX de XXXX", "à Anne & Fabrice F.", "Avec deux enfants et des trajets fréquents le week-end, nous devions trouver une voiture familiale." ]
         ].each do |model, customer, quote| %>
           <article class="rounded-[20px] bg-white p-6 shadow-brand">
-            <p class="text-sm font-bold text-brand-primary">On a trouvé la parfaite :</p>
+            <p class="text-sm font-bold text-brand-primary">On a trouvé la voiture parfaite :</p>
             <h3 class="mt-2 font-heading text-xl font-bold text-brand-text"><%= model %></h3>
             <p class="text-sm text-brand-text-secondary"><%= customer %></p>
             <p class="mt-4 text-sm leading-6 text-brand-text-secondary"><%= quote %></p>

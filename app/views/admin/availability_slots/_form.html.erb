@@ -7,7 +7,7 @@
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <%= form.label :starts_at, "Debut", class: "text-sm font-bold" %>
+      <%= form.label :starts_at, "Début", class: "text-sm font-bold" %>
       <%= form.datetime_field :starts_at, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
     </div>
     <div>
@@ -18,18 +18,18 @@
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <%= form.label :colleague_name, "Collegue", class: "text-sm font-bold" %>
+      <%= form.label :colleague_name, "Collègue", class: "text-sm font-bold" %>
       <%= form.text_field :colleague_name, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
     </div>
     <div>
-      <%= form.label :colleague_email, "Email collegue", class: "text-sm font-bold" %>
+      <%= form.label :colleague_email, "Email collègue", class: "text-sm font-bold" %>
       <%= form.email_field :colleague_email, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
     </div>
   </div>
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <%= form.label :pack_id, "Pack reserve", class: "text-sm font-bold" %>
+      <%= form.label :pack_id, "Pack réservé", class: "text-sm font-bold" %>
       <%= form.collection_select :pack_id, Pack.order(:name), :id, :name, { include_blank: "Tous les packs" }, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
     </div>
     <div>
@@ -40,7 +40,7 @@
 
   <label class="flex items-center gap-3 font-bold">
     <%= form.check_box :active, class: "h-5 w-5 accent-brand-primary" %>
-    Creneau actif
+    Créneau actif
   </label>
 
   <%= form.submit "Enregistrer", class: "inline-flex min-h-[56px] items-center rounded-full bg-brand-primary px-8 font-bold text-white" %>

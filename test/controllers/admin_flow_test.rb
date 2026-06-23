@@ -62,7 +62,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_availability_slots_path
-    assert_match(/18 creneau/, flash[:notice])
+    assert_match(/18 créneau/, flash[:notice])
 
     slot = AvailabilitySlot.find_by(starts_at: Time.zone.parse("#{start_date} 09:00"))
     assert_equal @pack.id, slot.pack_id
@@ -107,7 +107,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_availability_slots_path
-    assert_equal "Creneau supprime.", flash[:notice]
+    assert_equal "Créneau supprimé.", flash[:notice]
   end
 
   test "admin cannot delete availability slot with booking" do
@@ -137,7 +137,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_availability_slots_path
-    assert_match(/reserve/, flash[:alert])
+    assert_match(/réservé/, flash[:alert])
   end
 
   test "admin can delete booking and payment transaction" do
@@ -179,7 +179,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_bookings_path
-    assert_equal "Reservation supprimee.", flash[:notice]
+    assert_equal "Réservation supprimée.", flash[:notice]
     assert slot.reload
   end
 end

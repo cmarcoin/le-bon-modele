@@ -4,8 +4,8 @@
 #
 Pack.find_or_create_by!(slug: "starter-pack") do |pack|
   pack.name = "Starter pack"
-  pack.objective = "Identifier le modele qu'il vous faut"
-  pack.description = "Passez 90 min avec nos deux experts auto pour identifier le bon modele de voiture a acheter, celui qui correspond vraiment a vos besoins, vos contraintes et votre budget."
+  pack.objective = "Identifier le modèle qu'il vous faut"
+  pack.description = "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget."
   pack.price_cents = 5_900
   pack.currency = "eur"
   pack.duration_minutes = 45
@@ -16,8 +16,8 @@ end
 
 Pack.find_or_create_by!(slug: "pack-premium") do |pack|
   pack.name = "Pack Premium"
-  pack.objective = "Vous accompagner jusqu'a l'achat"
-  pack.description = "Du cadrage de votre besoin jusqu'a l'achat de votre voiture, nos deux experts auto vous accompagnent a chaque etape."
+  pack.objective = "Vous accompagner jusqu'à l'achat"
+  pack.description = "Du cadrage de votre besoin jusqu'à l'achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape."
   pack.price_cents = 29_900
   pack.currency = "eur"
   pack.duration_minutes = 45
@@ -29,7 +29,7 @@ end
 if ENV["STRIPE_SECRET_KEY"].present?
   Pack.find_each do |pack|
     StripePackSync.sync!(pack)
-    puts "Stripe synchronise pour #{pack.slug}"
+    puts "Stripe synchronisé pour #{pack.slug}"
   end
 end
 

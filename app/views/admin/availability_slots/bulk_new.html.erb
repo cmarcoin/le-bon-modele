@@ -1,11 +1,11 @@
-<% content_for :title, "Generer des creneaux | Admin" %>
+<% content_for :title, "Générer des créneaux | Admin" %>
 
 <%= render "admin/nav" %>
 
 <main class="px-6 py-10">
   <div class="mx-auto max-w-3xl rounded-[28px] border border-[#E7E2DC] bg-white p-8 shadow-soft">
-    <h1 class="font-heading text-4xl font-bold text-brand-primary">Generer des creneaux</h1>
-    <p class="mt-3 text-brand-text-secondary">Creneaux de 45 minutes, demarrage toutes les heures (style Calendly).</p>
+    <h1 class="font-heading text-4xl font-bold text-brand-primary">Générer des créneaux</h1>
+    <p class="mt-3 text-brand-text-secondary">Créneaux de 45 minutes, démarrage toutes les heures (style Calendly).</p>
 
     <% if @bulk_errors.present? %>
       <div class="mt-6 rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
@@ -16,7 +16,7 @@
     <%= form_with url: bulk_create_admin_availability_slots_path, scope: :bulk_slot, method: :post, class: "mt-8 space-y-5" do |form| %>
       <div class="grid gap-4 sm:grid-cols-2">
         <div>
-          <%= form.label :start_date, "Date de debut", class: "text-sm font-bold" %>
+          <%= form.label :start_date, "Date de début", class: "text-sm font-bold" %>
           <%= form.date_field :start_date, value: @bulk_form[:start_date], class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
         </div>
         <div>
@@ -27,7 +27,7 @@
 
       <div class="grid gap-4 sm:grid-cols-2">
         <div>
-          <%= form.label :daily_start_time, "Heure de debut (chaque jour)", class: "text-sm font-bold" %>
+          <%= form.label :daily_start_time, "Heure de début (chaque jour)", class: "text-sm font-bold" %>
           <%= form.time_field :daily_start_time, value: @bulk_form[:daily_start_time], class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
         </div>
         <div>
@@ -38,7 +38,7 @@
 
       <div class="grid gap-4 sm:grid-cols-2">
         <div>
-          <%= form.label :pack_id, "Pack reserve", class: "text-sm font-bold" %>
+          <%= form.label :pack_id, "Pack réservé", class: "text-sm font-bold" %>
           <%= form.collection_select :pack_id, Pack.order(:name), :id, :name, { selected: @bulk_form[:pack_id], include_blank: "Tous les packs" }, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
         </div>
         <div>
@@ -48,7 +48,7 @@
       </div>
 
       <div class="flex flex-wrap gap-4">
-        <%= form.submit "Generer les creneaux", class: "inline-flex min-h-[56px] items-center rounded-full bg-brand-primary px-8 font-bold text-white" %>
+        <%= form.submit "Générer les créneaux", class: "inline-flex min-h-[56px] items-center rounded-full bg-brand-primary px-8 font-bold text-white" %>
         <%= link_to "Annuler", admin_availability_slots_path, class: "inline-flex min-h-[56px] items-center rounded-full border border-[#E7E2DC] px-8 font-bold text-brand-text" %>
       </div>
     <% end %>

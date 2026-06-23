@@ -1,10 +1,10 @@
-<% content_for :title, "Reservations | Admin" %>
+<% content_for :title, "Réservations | Admin" %>
 
 <%= render "admin/nav" %>
 
 <main class="px-6 py-10">
   <div class="mx-auto max-w-[1280px]">
-    <h1 class="font-heading text-4xl font-bold text-brand-primary">Reservations</h1>
+    <h1 class="font-heading text-4xl font-bold text-brand-primary">Réservations</h1>
 
     <div class="mt-8 overflow-hidden rounded-[28px] border border-[#E7E2DC] bg-white shadow-soft">
       <table class="w-full min-w-[980px] text-left">
@@ -32,7 +32,7 @@
               <td class="px-5 py-4 text-right">
                 <div class="flex flex-wrap items-center justify-end gap-4">
                   <%= link_to "Voir", admin_booking_path(booking), class: "font-bold text-brand-primary" %>
-                  <%= button_to "Supprimer", admin_booking_path(booking), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer cette reservation ? Cette action est irreversible." } %>
+                  <%= button_to "Supprimer", admin_booking_path(booking), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer cette réservation ? Cette action est irréversible." } %>
                 </div>
               </td>
             </tr>

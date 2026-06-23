@@ -1,0 +1,7 @@
+<h1>Nouveau message de contact</h1>
+
+<p><strong>Prénom :</strong> <%= @contact_inquiry.first_name %></p>
+<p><strong>Email :</strong> <%= @contact_inquiry.email %></p>
+
+<p><strong>Message :</strong></p>
+<p><%= simple_format(@contact_inquiry.message) %></p>

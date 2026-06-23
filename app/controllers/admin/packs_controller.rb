@@ -12,7 +12,7 @@ module Admin
     def update
       if @pack.update(pack_params)
         sync_pack_to_stripe!
-        redirect_to admin_packs_path, notice: "Pack mis a jour."
+        redirect_to admin_packs_path, notice: "Pack mis à jour."
       else
         render :edit, status: :unprocessable_entity
       end
