@@ -18,6 +18,13 @@
           </div>
           <p class="mt-6 font-heading text-5xl font-black text-brand-text"><%= euro_price(pack.price_cents) %></p>
           <p class="mt-2 text-brand-text-secondary"><%= pack.duration_minutes %> min par rendez-vous</p>
+          <p class="mt-4 text-sm text-brand-text-secondary">
+            <% if pack.stripe_ready? %>
+              Stripe: <%= pack.stripe_product_id %> / <%= pack.stripe_price_id %>
+            <% else %>
+              Stripe: non synchronise
+            <% end %>
+          </p>
           <%= link_to "Modifier", edit_admin_pack_path(pack), class: "mt-6 inline-flex min-h-[48px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
         </article>
       <% end %>

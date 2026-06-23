@@ -12,6 +12,10 @@ class BookingsController < ApplicationController
 
     Booking.transaction do
       @booking.user = find_or_create_client!
+      Booking.release_pending_for_retry!(
+        slot_id: @booking.availability_slot_id,
+        customer_email: @booking.customer_email
+      )
       @booking.save!
       checkout_session = StripeCheckoutSession.create_for(@booking, request.base_url)
       @booking.update!(stripe_checkout_session_id: checkout_session.id)
@@ -27,11 +31,20 @@ class BookingsController < ApplicationController
       )
       redirect_to checkout_session.url, allow_other_host: true
     end
-  rescue ActiveRecord::RecordInvalid, StripeCheckoutSession::ConfigurationError => error
+  rescue ActiveRecord::RecordInvalid
+    cancel_booking_on_failure!
+    render :new, status: :unprocessable_entity
+  rescue StripeCheckoutSession::ConfigurationError => error
+    cancel_booking_on_failure!
     @booking.errors.add(:base, error.message)
     render :new, status: :unprocessable_entity
   rescue Stripe::StripeError => error
+    cancel_booking_on_failure!
     @booking.errors.add(:base, "Le paiement Stripe n'a pas pu etre initialise: #{error.message}")
+    render :new, status: :unprocessable_entity
+  rescue ActiveRecord::RecordNotUnique
+    cancel_booking_on_failure!
+    @booking.errors.add(:availability_slot, "n'est plus disponible")
     render :new, status: :unprocessable_entity
   end
 
@@ -73,6 +86,12 @@ class BookingsController < ApplicationController
     available_dates.include?(date) ? date.iso8601 : nil
   rescue ArgumentError
     nil
+  end
+
+  def cancel_booking_on_failure!
+    return unless @booking&.persisted? && @booking.pending_payment?
+
+    @booking.cancel_reservation!
   end
 
   def find_or_create_client!

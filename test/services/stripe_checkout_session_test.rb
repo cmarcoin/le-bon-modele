@@ -11,7 +11,9 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
       currency: "eur",
       duration_minutes: 45,
       icon_path: "/reference-assets/icons/starter-pack.svg",
-      accent_class: "text-brand-accent"
+      accent_class: "text-brand-accent",
+      stripe_product_id: "prod_test",
+      stripe_price_id: "price_test"
     )
     @slot = AvailabilitySlot.create!(
       pack: @pack,
@@ -38,7 +40,6 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
       currency: @pack.currency,
       status: "pending_payment"
     )
-    @captured_params = nil
     captured_params = nil
     @original_create = Stripe::Checkout::Session.method(:create)
     Stripe::Checkout::Session.define_singleton_method(:create) do |params|
@@ -54,18 +55,30 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
     ENV.delete("STRIPE_SECRET_KEY")
   end
 
-  test "creates checkout session with french vat settings" do
+  test "creates checkout session with stripe tax settings" do
     StripeCheckoutSession.create_for(@booking, "http://localhost:3001")
     captured_params = @captured_params_ref.call
 
     assert_equal "fr", captured_params[:locale]
+    assert_equal "buyer@example.com", captured_params[:customer_email]
     assert_equal "always", captured_params[:customer_creation]
+    assert_equal [ "card" ], captured_params[:payment_method_types]
     assert_equal "required", captured_params[:billing_address_collection]
-    assert_nil captured_params[:customer_update]
+    assert_nil captured_params[:shipping_address_collection]
     assert_equal({ enabled: true }, captured_params[:automatic_tax])
 
     line_item = captured_params[:line_items].first
-    assert_equal "inclusive", line_item[:price_data][:tax_behavior]
-    assert_equal StripeCheckoutSession::CONSULTING_TAX_CODE, line_item[:price_data][:product_data][:tax_code]
+    assert_equal 1, line_item[:quantity]
+    assert_equal "price_test", line_item[:price]
+  end
+
+  test "raises when pack is not synced with stripe" do
+    @pack.update!(stripe_product_id: nil, stripe_price_id: nil)
+
+    error = assert_raises(StripeCheckoutSession::ConfigurationError) do
+      StripeCheckoutSession.create_for(@booking, "http://localhost:3001")
+    end
+
+    assert_match(/synchronise/, error.message)
   end
 end

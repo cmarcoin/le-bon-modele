@@ -14,7 +14,7 @@ class StripeBookingConfirmation
     payment_transaction = booking.payment_transaction
 
     Booking.transaction do
-      booking.update!(status: "paid", paid_at: Time.current)
+      booking.update!(billing_attributes.merge(status: "paid", paid_at: Time.current))
       payment_transaction.update!(
         status: "paid",
         stripe_payment_intent_id: session.payment_intent,
@@ -37,5 +37,41 @@ class StripeBookingConfirmation
     return 0 if details.blank?
 
     details.respond_to?(:amount_tax) ? details.amount_tax.to_i : details[:amount_tax].to_i
+  end
+
+  def billing_attributes
+    address = customer_address
+    return {} if address.blank?
+
+    {
+      billing_line1: address_value(address, :line1),
+      billing_postal_code: address_value(address, :postal_code),
+      billing_city: address_value(address, :city),
+      billing_country: address_value(address, :country)
+    }.compact_blank
+  end
+
+  def customer_address
+    customer_details = session_value(:customer_details)
+    if customer_details.present?
+      billing = customer_details.respond_to?(:address) ? customer_details.address : customer_details[:address]
+      return billing if address_value(billing, :country).present?
+    end
+
+    session_value(:shipping_details, :address)
+  end
+
+  def session_value(*keys)
+    keys.reduce(session) do |value, key|
+      break if value.blank?
+
+      value.respond_to?(key) ? value.public_send(key) : value[key]
+    end
+  end
+
+  def address_value(address, key)
+    return if address.blank?
+
+    address.respond_to?(key) ? address.public_send(key) : address[key]
   end
 end

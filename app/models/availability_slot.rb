@@ -2,7 +2,8 @@ class AvailabilitySlot < ApplicationRecord
   DEFAULT_TIMEZONE = "Europe/Paris"
 
   belongs_to :pack, optional: true
-  has_one :booking, dependent: :restrict_with_exception
+  has_many :bookings, dependent: :restrict_with_exception
+  has_one :active_booking, -> { occupying_slot }, class_name: "Booking", inverse_of: :availability_slot
 
   normalizes :colleague_email, with: ->(email) { email.to_s.strip.downcase }
 
@@ -16,7 +17,7 @@ class AvailabilitySlot < ApplicationRecord
     active
       .upcoming
       .where(pack_id: [ nil, pack.id ])
-      .where.missing(:booking)
+      .where.not(id: Booking.occupying_slot.select(:availability_slot_id))
       .order(:starts_at)
   }
 

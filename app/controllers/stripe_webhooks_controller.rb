@@ -21,12 +21,12 @@ class StripeWebhooksController < ApplicationController
   def stripe_event
     payload = request.raw_post
 
-    if ENV["STRIPE_WEBHOOK_SECRET"].present?
+    if Rails.env.production?
+      raise Stripe::SignatureVerificationError.new("Missing STRIPE_WEBHOOK_SECRET", request.env["HTTP_STRIPE_SIGNATURE"]) if ENV["STRIPE_WEBHOOK_SECRET"].blank?
+
       Stripe::Webhook.construct_event(payload, request.env["HTTP_STRIPE_SIGNATURE"], ENV.fetch("STRIPE_WEBHOOK_SECRET"))
-    elsif !Rails.env.production?
-      Stripe::Event.construct_from(JSON.parse(payload))
     else
-      raise Stripe::SignatureVerificationError.new("Missing STRIPE_WEBHOOK_SECRET", request.env["HTTP_STRIPE_SIGNATURE"])
+      Stripe::Event.construct_from(JSON.parse(payload))
     end
   end
 
@@ -34,7 +34,7 @@ class StripeWebhooksController < ApplicationController
     booking = Booking.find_by(stripe_checkout_session_id: session.id)
     return unless booking&.pending_payment?
 
-    booking.update!(status: "canceled")
-    booking.payment_transaction&.update!(status: "canceled", stripe_payload: session.to_h)
+    booking.cancel_reservation!
+    booking.payment_transaction&.update!(stripe_payload: session.to_h)
   end
 end

@@ -3,7 +3,7 @@ module Admin
     before_action :set_slot, only: %i[edit update destroy]
 
     def index
-      @availability_slots = AvailabilitySlot.includes(:pack, :booking).order(starts_at: :desc)
+      @availability_slots = AvailabilitySlot.includes(:pack, :active_booking).order(starts_at: :desc)
     end
 
     def new
@@ -32,7 +32,7 @@ module Admin
     end
 
     def destroy
-      if @availability_slot.booking.present?
+      if @availability_slot.active_booking.present?
         redirect_to admin_availability_slots_path, alert: "Ce creneau est reserve. Supprimez la reservation avant de supprimer le creneau."
         return
       end

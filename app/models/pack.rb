@@ -20,4 +20,8 @@ class Pack < ApplicationRecord
   def price_euros
     price_cents / 100
   end
+
+  def stripe_ready?
+    stripe_product_id.present? && stripe_price_id.present?
+  end
 end

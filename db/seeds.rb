@@ -26,6 +26,13 @@ Pack.find_or_create_by!(slug: "pack-premium") do |pack|
   pack.active = true
 end
 
+if ENV["STRIPE_SECRET_KEY"].present?
+  Pack.find_each do |pack|
+    StripePackSync.sync!(pack)
+    puts "Stripe synchronise pour #{pack.slug}"
+  end
+end
+
 if ENV["ADMIN_INITIAL_PASSWORD"].present?
   User::ADMIN_EMAILS.each do |email|
     User.find_or_create_by!(email:) do |user|

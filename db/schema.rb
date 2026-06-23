@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_12_162600) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_12_150000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_12_162600) do
   create_table "bookings", force: :cascade do |t|
     t.integer "amount_cents", null: false
     t.bigint "availability_slot_id", null: false
+    t.string "billing_city"
+    t.string "billing_country", default: "FR", null: false
+    t.string "billing_line1"
+    t.string "billing_postal_code"
     t.datetime "created_at", null: false
     t.string "currency", default: "eur", null: false
     t.string "customer_email", null: false
@@ -64,8 +68,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_12_162600) do
     t.string "objective", null: false
     t.integer "price_cents", null: false
     t.string "slug", null: false
+    t.string "stripe_price_id"
+    t.string "stripe_product_id"
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_packs_on_slug", unique: true
+    t.index ["stripe_price_id"], name: "index_packs_on_stripe_price_id", unique: true
+    t.index ["stripe_product_id"], name: "index_packs_on_stripe_product_id", unique: true
     t.check_constraint "duration_minutes > 0", name: "packs_duration_minutes_positive"
     t.check_constraint "price_cents > 0", name: "packs_price_cents_positive"
   end

@@ -80,4 +80,57 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "cs_test_123", booking.stripe_checkout_session_id
     assert_equal 5_900, booking.payment_transaction.amount_cents
   end
+
+  test "allows retrying checkout after a failed stripe initialization" do
+    Booking.create!(
+      user: User.create!(email: "buyer@example.com", name: "Buyer Test", password: "password123456", role: "client"),
+      pack: @pack,
+      availability_slot: @slot,
+      customer_name: "Buyer Test",
+      customer_email: "buyer@example.com",
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "pending_payment"
+    )
+
+    fake_session = FakeCheckoutSession.new(id: "cs_test_456", url: "https://checkout.stripe.test/retry")
+    original_create_for = StripeCheckoutSession.method(:create_for)
+    StripeCheckoutSession.define_singleton_method(:create_for) { |_booking, _base_url| fake_session }
+
+    begin
+      assert_difference -> { Booking.occupying_slot.count }, 0 do
+        post pack_bookings_path(@pack), params: {
+          booking: {
+            availability_slot_id: @slot.id,
+            customer_name: "Buyer Test",
+            customer_email: "buyer@example.com",
+            customer_phone: "0600000000"
+          }
+        }
+      end
+    ensure
+      StripeCheckoutSession.define_singleton_method(:create_for, original_create_for)
+    end
+
+    booking = Booking.occupying_slot.last
+    assert_redirected_to "https://checkout.stripe.test/retry"
+    assert_equal "cs_test_456", booking.stripe_checkout_session_id
+    assert_equal 1, Booking.where(availability_slot_id: @slot.id, status: "canceled").count
+  end
+
+  test "canceled bookings free the slot for a new reservation" do
+    user = User.create!(email: "buyer@example.com", name: "Buyer Test", password: "password123456", role: "client")
+    Booking.create!(
+      user: user,
+      pack: @pack,
+      availability_slot: @slot,
+      customer_name: "Buyer Test",
+      customer_email: "buyer@example.com",
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "canceled"
+    )
+
+    assert_includes AvailabilitySlot.available_for(@pack), @slot
+  end
 end

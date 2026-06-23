@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 const OFFERS = {
   purchase: {
     min: 5000,
-    max: 50000,
+    max: 20000,
     step: 5000,
     unit: "€",
     values: {
@@ -14,62 +14,49 @@ const OFFERS = {
         ["SUV Compact Ancien", "SUV ancien accessible avec position de conduite haute.", "80 000 - 120 000 km", "2010 - 2014", "5000€", "/reference-assets/modeles/suv-ancien.png"]
       ],
       10000: [
-        ["Citadine récente", "Citadine moderne, faible coût d’usage et équipement plus confortable.", "50 000 - 90 000 km", "2015 - 2018", "10 000€", "/reference-assets/modeles/citadine-recente.jpg"],
-        ["Break compact", "Format polyvalent pour famille ou longs trajets.", "90 000 - 140 000 km", "2013 - 2017", "10 000€", "/reference-assets/modeles/break.jpg"],
-        ["SUV urbain", "Position de conduite haute, gabarit compact, usage quotidien facile.", "100 000 - 140 000 km", "2014 - 2017", "10 000€", "/reference-assets/modeles/suv-urbain.jpg"],
-        ["Berline confort", "Bonne routière, idéale pour les trajets réguliers avec plus de confort.", "110 000 - 150 000 km", "2014 - 2018", "10 000€", "/reference-assets/modeles/berline-confort.jpg"]
+        ["Citadine récente", "Citadine moderne, faible coût d’usage et équipement plus confortable.", "50 000 - 90 000 km", "2015 - 2018", "10 000€", "/reference-assets/modeles/citadine-recente.png"],
+        ["Break compact", "Format polyvalent pour famille ou longs trajets.", "90 000 - 140 000 km", "2013 - 2017", "10 000€", "/reference-assets/modeles/break.png"],
+        ["SUV urbain", "Position de conduite haute, gabarit compact, usage quotidien facile.", "100 000 - 140 000 km", "2014 - 2017", "10 000€", "/reference-assets/modeles/suv-urbain.png"],
+        ["Berline confort", "Bonne routière, idéale pour les trajets réguliers avec plus de confort.", "110 000 - 150 000 km", "2014 - 2018", "10 000€", "/reference-assets/modeles/berline-confort.png"]
       ],
       15000: [
-        ["Compacte bien équipée", "Bon équilibre entre modernité, équipements et coût global.", "40 000 - 80 000 km", "2017 - 2020", "15 000€", "/reference-assets/modeles/compacte.jpg"],
-        ["SUV compact récent", "Polyvalent, rassurant et adapté à un usage familial modéré.", "60 000 - 100 000 km", "2018 - 2020", "15 000€", "/reference-assets/modeles/suv-compact.jpg"],
-        ["Monospace récent", "Grand volume intérieur et vraie praticité pour les familles.", "70 000 - 110 000 km", "2016 - 2019", "15 000€", "/reference-assets/modeles/monospace-recent.jpg"],
-        ["Break routier", "Parfait pour avaler les kilomètres avec coffre généreux.", "80 000 - 120 000 km", "2017 - 2020", "15 000€", "/reference-assets/modeles/break-routier.jpg"]
+        ["Compacte bien équipée", "Bon équilibre entre modernité, équipements et coût global.", "40 000 - 80 000 km", "2017 - 2020", "15 000€", "/reference-assets/modeles/compacte.png"],
+        ["SUV compact récent", "Polyvalent, rassurant et adapté à un usage familial modéré.", "60 000 - 100 000 km", "2018 - 2020", "15 000€", "/reference-assets/modeles/suv-compact.png"],
+        ["Monospace récent", "Grand volume intérieur et vraie praticité pour les familles.", "70 000 - 110 000 km", "2016 - 2019", "15 000€", "/reference-assets/modeles/monospace-recent.png"],
+        ["Break routier", "Parfait pour avaler les kilomètres avec coffre généreux.", "80 000 - 120 000 km", "2017 - 2020", "15 000€", "/reference-assets/modeles/break-routier.png"]
       ],
       20000: [
-        ["SUV familial", "Compromis solide entre espace, image et polyvalence.", "40 000 - 80 000 km", "2019 - 2022", "20 000€", "/reference-assets/modeles/suv-familial.jpg"],
-        ["Berline récente", "Confort de route supérieur avec motorisations plus modernes.", "35 000 - 75 000 km", "2019 - 2022", "20 000€", "/reference-assets/modeles/berline-recente.jpg"],
-        ["Compacte premium", "Finition plus valorisante et équipements plus complets.", "45 000 - 85 000 km", "2018 - 2021", "20 000€", "/reference-assets/modeles/compacte-premium.jpg"],
-        ["Break moderne", "Solution idéale pour ceux qui veulent du coffre sans SUV.", "50 000 - 90 000 km", "2019 - 2022", "20 000€", "/reference-assets/modeles/break-moderne.jpg"]
-      ],
-      25000: [],
-      30000: [],
-      35000: [],
-      40000: [],
-      45000: [],
-      50000: []
+        ["SUV familial", "Compromis solide entre espace, image et polyvalence.", "40 000 - 80 000 km", "2019 - 2022", "20 000€", "/reference-assets/modeles/suv-familial.png"],
+        ["Berline récente", "Confort de route supérieur avec motorisations plus modernes.", "35 000 - 75 000 km", "2019 - 2022", "20 000€", "/reference-assets/modeles/berline-recente.png"],
+        ["Compacte premium", "Finition plus valorisante et équipements plus complets.", "45 000 - 85 000 km", "2018 - 2021", "20 000€", "/reference-assets/modeles/compacte-premium.png"],
+        ["Break moderne", "Solution idéale pour ceux qui veulent du coffre sans SUV.", "50 000 - 90 000 km", "2019 - 2022", "20 000€", "/reference-assets/modeles/break-moderne.png"]
+      ]
     }
   },
   leasing: {
     min: 100,
-    max: 1000,
+    max: 300,
     step: 100,
     unit: "€/mois",
     values: {
       100: [
-        ["Citadine LOA économique", "Petit budget mensuel pour accéder à une voiture récente.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-citadine.jpg"],
-        ["Compacte LOA", "Solution simple pour un usage quotidien sans gros achat initial.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-compacte.jpg"],
-        ["SUV urbain LOA", "Format compact avec l’avantage d’un véhicule récent.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-suv.jpg"],
-        ["Hybride compacte LOA", "Accès plus facile à une motorisation moderne.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-hybride.jpg"]
+        ["Citadine LOA économique", "Petit budget mensuel pour accéder à une voiture récente.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-citadine.png"],
+        ["Compacte LOA", "Solution simple pour un usage quotidien sans gros achat initial.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-compacte.png"],
+        ["SUV urbain LOA", "Format compact avec l’avantage d’un véhicule récent.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-suv.png"],
+        ["Hybride compacte LOA", "Accès plus facile à une motorisation moderne.", "Très faible", "Récent", "100€/mois", "/reference-assets/modeles/loa-hybride.png"]
       ],
       200: [
-        ["SUV compact LOA", "Mensualité plus confortable pour viser une voiture mieux équipée.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-suv-compact.jpg"],
-        ["Berline récente LOA", "Confort supérieur avec budget mensuel maîtrisé.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-berline.jpg"],
-        ["Break familial LOA", "Bon compromis famille / budget sans achat direct.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-break.jpg"],
-        ["Hybride LOA", "Accès à une solution plus moderne avec mensualité intermédiaire.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-hybride-2.jpg"]
+        ["SUV compact LOA", "Mensualité plus confortable pour viser une voiture mieux équipée.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-suv-compact.png"],
+        ["Berline récente LOA", "Confort supérieur avec budget mensuel maîtrisé.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-berline.png"],
+        ["Break familial LOA", "Bon compromis famille / budget sans achat direct.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-break.png"],
+        ["Hybride LOA", "Accès à une solution plus moderne avec mensualité intermédiaire.", "Très faible", "Récent", "200€/mois", "/reference-assets/modeles/loa-hybride-2.png"]
       ],
       300: [
-        ["SUV récent LOA +", "Mensualité plus haute pour un modèle plus récent et mieux fini.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-suv-plus.jpg"],
-        ["Grande compacte LOA", "Plus d’équipement et de choix de finitions.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-grande-compacte.jpg"],
-        ["Familiale moderne LOA", "Bonne solution pour passer sur une voiture récente sans achat total.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-familiale.jpg"],
-        ["Hybride bien équipée LOA", "Niveau de finition plus élevé avec meilleur lissage budgétaire.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-hybride-premium.jpg"]
-      ],
-      400: [],
-      500: [],
-      600: [],
-      700: [],
-      800: [],
-      900: [],
-      1000: []
+        ["SUV récent LOA +", "Mensualité plus haute pour un modèle plus récent et mieux fini.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-suv-plus.png"],
+        ["Grande compacte LOA", "Plus d’équipement et de choix de finitions.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-grande-compacte.png"],
+        ["Familiale moderne LOA", "Bonne solution pour passer sur une voiture récente sans achat total.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-familiale.png"],
+        ["Hybride bien équipée LOA", "Niveau de finition plus élevé avec meilleur lissage budgétaire.", "Très faible", "Récent", "300€/mois", "/reference-assets/modeles/loa-hybride-premium.png"]
+      ]
     }
   }
 }

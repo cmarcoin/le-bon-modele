@@ -1,8 +1,6 @@
 class StripeCheckoutSession
   class ConfigurationError < StandardError; end
 
-  CONSULTING_TAX_CODE = "txcd_20060048"
-
   def self.create_for(booking, base_url)
     new(booking, base_url).create
   end
@@ -14,18 +12,20 @@ class StripeCheckoutSession
 
   def create
     raise ConfigurationError, "STRIPE_SECRET_KEY est manquant." if ENV["STRIPE_SECRET_KEY"].blank?
+    raise ConfigurationError, "Le pack n'est pas synchronise avec Stripe. Lancez rails stripe:sync_packs." unless booking.pack.stripe_ready?
 
     Stripe::Checkout::Session.create(
       mode: "payment",
       locale: "fr",
       customer_email: booking.customer_email,
       customer_creation: "always",
+      payment_method_types: [ "card" ],
       billing_address_collection: "required",
+      automatic_tax: { enabled: true },
+      line_items: [ line_item ],
       client_reference_id: booking.id,
       success_url: "#{base_url}/checkout/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "#{base_url}/checkout/cancel?booking_id=#{booking.id}",
-      automatic_tax: { enabled: true },
-      line_items: [ line_item ],
       metadata: {
         booking_id: booking.id,
         pack_id: booking.pack_id,
@@ -41,16 +41,7 @@ class StripeCheckoutSession
   def line_item
     {
       quantity: 1,
-      price_data: {
-        currency: booking.currency,
-        unit_amount: booking.amount_cents,
-        tax_behavior: "inclusive",
-        product_data: {
-          name: booking.pack.name,
-          description: booking.pack.objective,
-          tax_code: CONSULTING_TAX_CODE
-        }
-      }
+      price: booking.pack.stripe_price_id
     }
   end
 end

@@ -31,7 +31,7 @@
               <td class="px-5 py-4"><%= paris_datetime(slot.ends_at) %></td>
               <td class="px-5 py-4"><%= slot.colleague_name %></td>
               <td class="px-5 py-4"><%= slot.pack&.name || "Tous" %></td>
-              <td class="px-5 py-4"><%= slot.booking ? "Reserve" : (slot.active? ? "Disponible" : "Inactif") %></td>
+              <td class="px-5 py-4"><%= slot.active_booking ? "Reserve" : (slot.active? ? "Disponible" : "Inactif") %></td>
               <td class="px-5 py-4 text-right">
                 <div class="flex flex-wrap items-center justify-end gap-4">
                   <%= link_to "Modifier", edit_admin_availability_slot_path(slot), class: "font-bold text-brand-primary" %>
