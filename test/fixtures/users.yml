@@ -1,7 +1,7 @@
 admin:
-  email: charles.marcoin@gmail.com
+  email: delmas.jules@gmail.com
   encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
-  name: Charles Marcoin
+  name: Jules Delmas
   role: admin
 
 client:

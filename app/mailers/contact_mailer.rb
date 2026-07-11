@@ -1,13 +1,13 @@
 class ContactMailer < ApplicationMailer
-  RECIPIENT = ENV.fetch("CONTACT_RECIPIENT", "charles.marcoin@gmail.com")
+  RECIPIENT = ENV.fetch("CONTACT_RECIPIENT", "contact@lebonmodele.fr")
 
-  def inquiry(contact_inquiry)
-    @contact_inquiry = contact_inquiry
+  def inquiry(first_name:, email:, message:)
+    @contact_inquiry = ContactInquiry.new(first_name:, email:, message:)
 
     mail(
       to: RECIPIENT,
-      reply_to: contact_inquiry.email,
-      subject: "Contact Le Bon Modèle — #{contact_inquiry.first_name}"
+      reply_to: email,
+      subject: "Contact Le Bon Modèle — #{first_name}"
     )
   end
 end

@@ -3,7 +3,7 @@ class AvailabilitySlotBulkCreator
   SLOT_INTERVAL = 1.hour
 
   DEFAULT_COLLEAGUE_NAME = "Équipe Le Bon Modèle"
-  DEFAULT_COLLEAGUE_EMAIL = "contact@lebonmodele.com"
+  DEFAULT_COLLEAGUE_EMAIL = "contact@lebonmodele.fr"
 
   Result = Struct.new(:created_count, :skipped_count, :errors, keyword_init: true) do
     def success?

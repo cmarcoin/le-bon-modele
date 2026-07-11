@@ -70,8 +70,8 @@ module Admin
         timezone: AvailabilitySlot::DEFAULT_TIMEZONE,
         starts_at: Time.zone.tomorrow.change(hour: 10),
         ends_at: Time.zone.tomorrow.change(hour: 10, min: 45),
-        colleague_name: "Charles Marcoin",
-        colleague_email: "charles.marcoin@gmail.com"
+        colleague_name: "Équipe Le Bon Modèle",
+        colleague_email: "contact@lebonmodele.fr"
       }
     end
 

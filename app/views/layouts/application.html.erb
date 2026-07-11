@@ -22,11 +22,10 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js" type="module"></script>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-brand-background font-body text-brand-text antialiased">
+  <body class="flex min-h-screen flex-col bg-brand-background font-body text-brand-text antialiased">
     <%= yield %>
   </body>
 </html>

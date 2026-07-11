@@ -31,6 +31,11 @@ html {
   width: 100%;
 }
 
+main {
+  flex: 1;
+  overflow: hidden;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -112,17 +117,29 @@ img {
   color: #ffffff !important;
 }
 
+section:has(.HeroHome_Animation__intro) {
+  overflow: hidden;
+}
+
 .HeroHome_Animation__intro {
   display: flex;
   justify-content: center;
   left: 50%;
+  max-height: 100vh;
   min-width: 4000px;
+  overflow: hidden;
   pointer-events: none;
   position: absolute;
-  top: 0%;
+  top: 0;
   transform: translate(-53%, 0%);
   width: 460vw;
   z-index: -1;
+}
+
+.HeroHome_Animation__intro img {
+  display: block;
+  height: auto;
+  width: 100%;
 }
 
 .hero-orbit {

@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   ADMIN_EMAILS = %w[
-    charles.marcoin@gmail.com
     delmas.jules@gmail.com
   ].freeze
 

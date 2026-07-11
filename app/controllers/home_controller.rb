@@ -24,7 +24,11 @@ class HomeController < ApplicationController
     @contact_inquiry = ContactInquiry.new(contact_inquiry_params)
 
     if @contact_inquiry.valid?
-      ContactMailer.inquiry(@contact_inquiry).deliver_later
+      ContactMailer.inquiry(
+        first_name: @contact_inquiry.first_name,
+        email: @contact_inquiry.email,
+        message: @contact_inquiry.message
+      ).deliver_later
       redirect_to contact_path, notice: "Merci, votre message a bien été envoyé. Nous vous répondrons rapidement."
     else
       flash.now[:alert] = "Veuillez corriger les champs indiqués."

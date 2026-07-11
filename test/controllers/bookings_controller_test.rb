@@ -24,7 +24,7 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
       ends_at: 2.days.from_now.change(hour: 10, min: 45),
       timezone: "Europe/Paris",
       colleague_name: "Charles Marcoin",
-      colleague_email: "charles.marcoin@gmail.com"
+      colleague_email: "contact@lebonmodele.fr"
     )
   end
 

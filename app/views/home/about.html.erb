@@ -3,7 +3,8 @@
 <%= render "home/header" %>
 
 <main class="pt-28">
-  <section class="px-6 py-14 lg:px-12">
+  <section class="relative px-6 py-14 lg:px-12">
+    <%= render "home/background_pattern" %>
     <div class="mx-auto max-w-[1280px]">
       <div class="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div class="rounded-[28px] bg-brand-primary p-8 text-white shadow-brand">
@@ -28,7 +29,7 @@
       </div>
 
       <div class="mt-12">
-        <%= image_tag "/reference-assets/yogi.webp", width: 1417, height: 650, alt: "Yogi, la mascotte du Bon Modèle", class: "h-auto w-full", loading: "lazy" %>
+        <%= image_tag "/reference-assets/yogi.svg", width: 1417, height: 650, alt: "Yogi, la mascotte du Bon Modèle", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
