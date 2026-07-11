@@ -30,6 +30,8 @@ production:
     <<: *primary_production
     url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/queue_migrate
+    # Solid Queue needs one connection per worker thread plus 2 (polling + heartbeat).
+    pool: <%= ENV.fetch("SOLID_QUEUE_THREADS", 3).to_i + 2 %>
 
   cache:
     <<: *primary_production
