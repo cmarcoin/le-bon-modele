@@ -117,29 +117,29 @@ img {
   color: #ffffff !important;
 }
 
-section:has(.HeroHome_Animation__intro) {
-  overflow: hidden;
+body:has(.page-background-bands) > :not(.site-header) {
+  position: relative;
+  z-index: 1;
 }
 
-.HeroHome_Animation__intro {
-  display: flex;
-  justify-content: center;
-  left: 50%;
-  max-height: 100vh;
-  min-width: 4000px;
+main:has(.page-background-bands) > :not(.page-background-bands) {
+  position: relative;
+  z-index: 1;
+}
+
+.page-background-bands {
+  background: repeating-linear-gradient(
+    -32deg,
+    #faf3eb 0,
+    #faf3eb 30vw,
+    #fbfaf9 30vw,
+    #fbfaf9 60vw
+  );
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
-  position: absolute;
-  top: 0;
-  transform: translate(-53%, 0%);
-  width: 460vw;
-  z-index: -1;
-}
-
-.HeroHome_Animation__intro img {
-  display: block;
-  height: auto;
-  width: 100%;
+  position: fixed;
+  z-index: 0;
 }
 
 .hero-orbit {

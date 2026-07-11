@@ -2,9 +2,9 @@
 
 <%= render "home/header" %>
 
-<main class="pt-28">
+<main class="relative pt-28">
+  <%= render "home/background_pattern" %>
   <section class="relative px-4 py-10 md:px-6 lg:px-8 lg:py-14">
-    <%= render "home/background_pattern" %>
     <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.85fr_1.15fr]">
       <aside class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8">
         <%= image_tag @pack.icon_path, alt: "", class: "h-16 w-12" %>
