@@ -4,25 +4,31 @@
 
 <main class="pt-28">
   <section class="px-6 py-14 lg:px-12">
-    <div class="mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-      <div class="rounded-[28px] bg-brand-primary p-8 text-white shadow-brand">
-        <p class="text-sm font-bold uppercase tracking-[0.2em] text-white/70">Notre mission</p>
-        <h1 class="mt-4 font-heading text-5xl font-black leading-[0.95]">Rendre l'achat auto lisible.</h1>
-        <p class="mt-6 text-lg leading-8 text-white/80">
-          Le Bon Modèle aide les acheteurs à poser les bonnes questions avant de choisir un modèle, une annonce ou un financement.
-        </p>
+    <div class="mx-auto max-w-[1280px]">
+      <div class="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="rounded-[28px] bg-brand-primary p-8 text-white shadow-brand">
+          <p class="text-sm font-bold uppercase tracking-[0.2em] text-white/70">Notre mission</p>
+          <h1 class="mt-4 font-heading text-5xl font-black leading-[0.95]">Rendre l'achat auto lisible.</h1>
+          <p class="mt-6 text-lg leading-8 text-white/80">
+            Le Bon Modèle aide les acheteurs à poser les bonnes questions avant de choisir un modèle, une annonce ou un financement.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-heading text-4xl font-bold text-brand-primary">Deux experts, aucun intérêt à vous vendre une voiture.</h2>
+          <p class="mt-6 text-lg leading-8 text-brand-text-secondary">
+            Charles et Jules accompagnent les conducteurs qui veulent acheter avec méthode. Ils comparent les modèles, lisent les annonces, cadrent les compromis et traduisent le marché auto en décisions simples.
+          </p>
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-brand bg-white p-5 shadow-brand"><strong class="block text-3xl text-brand-accent">0</strong><span class="text-sm text-brand-text-secondary">commission vendeur</span></div>
+            <div class="rounded-brand bg-white p-5 shadow-brand"><strong class="block text-3xl text-brand-coral">2</strong><span class="text-sm text-brand-text-secondary">regards experts</span></div>
+            <div class="rounded-brand bg-white p-5 shadow-brand"><strong class="block text-3xl text-brand-primary">1</strong><span class="text-sm text-brand-text-secondary">choix clair</span></div>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <h2 class="font-heading text-4xl font-bold text-brand-primary">Deux experts, aucun intérêt à vous vendre une voiture.</h2>
-        <p class="mt-6 text-lg leading-8 text-brand-text-secondary">
-          Charles et Jules accompagnent les conducteurs qui veulent acheter avec méthode. Ils comparent les modèles, lisent les annonces, cadrent les compromis et traduisent le marché auto en décisions simples.
-        </p>
-        <div class="mt-8 grid gap-4 sm:grid-cols-3">
-          <div class="rounded-brand bg-white p-5 shadow-brand"><strong class="block text-3xl text-brand-accent">0</strong><span class="text-sm text-brand-text-secondary">commission vendeur</span></div>
-          <div class="rounded-brand bg-white p-5 shadow-brand"><strong class="block text-3xl text-brand-coral">2</strong><span class="text-sm text-brand-text-secondary">regards experts</span></div>
-          <div class="rounded-brand bg-white p-5 shadow-brand"><strong class="block text-3xl text-brand-primary">1</strong><span class="text-sm text-brand-text-secondary">choix clair</span></div>
-        </div>
+      <div class="mt-12">
+        <%= image_tag "/reference-assets/yogi.webp", width: 1417, height: 650, alt: "Yogi, la mascotte du Bon Modèle", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
