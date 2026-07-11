@@ -3,9 +3,9 @@
 <%= render "home/header" %>
 
 <main class="overflow-hidden pt-24">
-  <section class="relative px-8 py-16 lg:px-12 lg:py-20">
+  <section class="relative px-8 pt-16 pb-8 lg:px-12 lg:pt-20 lg:pb-10">
     <dotlottie-wc src="/reference-assets/intro.lottie" autoplay class="HeroHome_Animation__intro"></dotlottie-wc>
-    <div class="mx-auto grid max-w-[1280px] items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <div class="mx-auto grid max-w-[1280px] items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
       <div>
         <h1 class="max-w-[980px] font-heading text-[44px] leading-[1.05] sm:text-[56px] lg:text-[50px]">
           <span class="mr-2 inline-block align-middle font-semibold text-brand-primary">Choisissez</span>
@@ -14,20 +14,20 @@
           <span class="font-semibold text-brand-primary">Pas celui qu’on cherche à vous vendre.</span>
         </h1>
 
-        <p class="mt-10 max-w-[920px] text-[22px] leading-[1.45] text-brand-text-secondary sm:text-[24px]">
+        <p class="mt-6 max-w-[920px] text-[22px] leading-[1.45] text-brand-text-secondary sm:text-[24px]">
           Bien acheter, c’est être bien conseillé. Avec Le Bon Modèle, deux experts
           indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus
           adaptée à votre quotidien et à votre budget.
         </p>
 
-        <div class="mt-16 flex flex-wrap gap-10 text-[18px] font-semibold text-brand-text-secondary">
+        <div class="mt-8 flex flex-wrap gap-10 text-[18px] font-semibold text-brand-text-secondary">
           <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Sans commission</span>
           <span class="inline-flex items-center gap-3"><span class="text-brand-accent">✓</span>Experts indépendants</span>
         </div>
       </div>
 
-      <div class="bg-brand-background">
-        <%= image_tag "/reference-assets/famille-voitures.png", width: 1600, height: 1200, alt: "Illustration de voitures pour toute la famille", class: "h-auto w-full", loading: "lazy" %>
+      <div class="flex items-center justify-center bg-brand-background lg:justify-end">
+        <%= image_tag "/reference-assets/famille-voitures.png", width: 1181, height: 614, alt: "Illustration de voitures pour toute la famille", class: "h-auto w-full max-w-none scale-105 lg:scale-110 lg:origin-center", loading: "lazy" %>
       </div>
     </div>
   </section>
