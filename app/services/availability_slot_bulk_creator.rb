@@ -2,24 +2,19 @@ class AvailabilitySlotBulkCreator
   SLOT_DURATION = 45.minutes
   SLOT_INTERVAL = 1.hour
 
-  DEFAULT_COLLEAGUE_NAME = "Équipe Le Bon Modèle"
-  DEFAULT_COLLEAGUE_EMAIL = "contact@lebonmodele.fr"
-
   Result = Struct.new(:created_count, :skipped_count, :errors, keyword_init: true) do
     def success?
       errors.empty?
     end
   end
 
-  def initialize(start_date:, end_date:, daily_start_time:, daily_end_time:, timezone: AvailabilitySlot::DEFAULT_TIMEZONE, pack_id: nil, colleague_name: DEFAULT_COLLEAGUE_NAME, colleague_email: DEFAULT_COLLEAGUE_EMAIL)
+  def initialize(start_date:, end_date:, daily_start_time:, daily_end_time:, timezone: AvailabilitySlot::DEFAULT_TIMEZONE, pack_id: nil)
     @start_date = start_date
     @end_date = end_date
     @daily_start_time = daily_start_time
     @daily_end_time = daily_end_time
     @timezone = timezone
     @pack_id = pack_id.presence
-    @colleague_name = colleague_name
-    @colleague_email = colleague_email
   end
 
   def call
@@ -42,8 +37,6 @@ class AvailabilitySlotBulkCreator
             starts_at: slot_time,
             ends_at: slot_time + SLOT_DURATION,
             timezone: @timezone,
-            colleague_name: @colleague_name,
-            colleague_email: @colleague_email,
             pack_id: @pack_id,
             active: true
           )

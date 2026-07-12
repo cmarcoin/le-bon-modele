@@ -44,6 +44,7 @@
     <% end %>
 
     <div class="mt-8 flex flex-wrap gap-4">
+      <%= link_to "Ajouter à Google Calendar", google_calendar_url_for(@booking), target: "_blank", rel: "noopener", class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
       <%= link_to "Retour aux réservations", admin_bookings_path, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-beige px-6 font-bold text-brand-text" %>
       <%= button_to "Supprimer la réservation", admin_booking_path(@booking), method: :delete, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white", data: { turbo_confirm: "Supprimer cette réservation ? Cette action est irréversible." } %>
     </div>

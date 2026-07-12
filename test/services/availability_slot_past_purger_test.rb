@@ -83,8 +83,6 @@ class AvailabilitySlotPastPurgerTest < ActiveSupport::TestCase
       starts_at: starts_at,
       ends_at: starts_at + 45.minutes,
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )

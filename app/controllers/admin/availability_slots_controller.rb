@@ -81,14 +81,12 @@ module Admin
       {
         timezone: AvailabilitySlot::DEFAULT_TIMEZONE,
         starts_at: Time.zone.tomorrow.change(hour: 10),
-        ends_at: Time.zone.tomorrow.change(hour: 10, min: 45),
-        colleague_name: "Équipe Le Bon Modèle",
-        colleague_email: "contact@lebonmodele.fr"
+        ends_at: Time.zone.tomorrow.change(hour: 10, min: 45)
       }
     end
 
     def slot_params
-      params.require(:availability_slot).permit(:starts_at, :ends_at, :timezone, :colleague_name, :colleague_email, :pack_id, :active)
+      params.require(:availability_slot).permit(:starts_at, :ends_at, :timezone, :pack_id, :active)
     end
 
     def default_bulk_form_attributes

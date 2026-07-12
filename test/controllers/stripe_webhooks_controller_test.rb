@@ -18,9 +18,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     @slot = AvailabilitySlot.create!(
       starts_at: 2.days.from_now.change(hour: 10),
       ends_at: 2.days.from_now.change(hour: 10, min: 45),
-      timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr"
+      timezone: "Europe/Paris"
     )
     @booking = Booking.create!(
       user: users(:client),

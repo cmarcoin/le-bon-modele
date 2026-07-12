@@ -118,8 +118,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
           starts_at: 3.days.from_now.change(hour: 14),
           ends_at: 3.days.from_now.change(hour: 14, min: 45),
           timezone: "Europe/Paris",
-          colleague_name: "Jules Delmas",
-          colleague_email: "delmas.jules@gmail.com",
           pack_id: @pack.id,
           active: true
         }
@@ -127,7 +125,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_availability_slots_path
-    assert_equal "Jules Delmas", AvailabilitySlot.last.colleague_name
+    assert_equal @pack.id, AvailabilitySlot.last.pack_id
   end
 
   test "admin can delete availability slot without booking" do
@@ -136,8 +134,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
       starts_at: 2.days.from_now.change(hour: 10),
       ends_at: 2.days.from_now.change(hour: 10, min: 45),
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )
@@ -156,8 +152,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
       starts_at: 2.days.from_now.change(hour: 11),
       ends_at: 2.days.from_now.change(hour: 11, min: 45),
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )
@@ -186,8 +180,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
       starts_at: 2.days.ago.change(hour: 10),
       ends_at: 2.days.ago.change(hour: 10, min: 45),
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )
@@ -195,8 +187,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
       starts_at: 2.days.from_now.change(hour: 10),
       ends_at: 2.days.from_now.change(hour: 10, min: 45),
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )
@@ -204,8 +194,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
       starts_at: 2.days.ago.change(hour: 11),
       ends_at: 2.days.ago.change(hour: 11, min: 45),
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )
@@ -246,8 +234,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
       starts_at: 2.days.from_now.change(hour: 12),
       ends_at: 2.days.from_now.change(hour: 12, min: 45),
       timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr",
       pack: @pack,
       active: true
     )

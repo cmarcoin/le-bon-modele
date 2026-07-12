@@ -5,10 +5,7 @@ class AvailabilitySlot < ApplicationRecord
   has_many :bookings, dependent: :restrict_with_exception
   has_one :active_booking, -> { occupying_slot }, class_name: "Booking", inverse_of: :availability_slot
 
-  normalizes :colleague_email, with: ->(email) { email.to_s.strip.downcase }
-
-  validates :starts_at, :ends_at, :timezone, :colleague_name, :colleague_email, presence: true
-  validates :colleague_email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :starts_at, :ends_at, :timezone, presence: true
   validate :ends_after_start
 
   scope :active, -> { where(active: true) }
@@ -24,7 +21,7 @@ class AvailabilitySlot < ApplicationRecord
   }
 
   def title
-    "#{starts_at.in_time_zone(timezone).strftime("%d/%m/%Y %H:%M")} avec #{colleague_name}"
+    starts_at.in_time_zone(timezone).strftime("%d/%m/%Y %H:%M")
   end
 
   private

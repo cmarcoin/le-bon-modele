@@ -18,17 +18,6 @@
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <%= form.label :colleague_name, "Collègue", class: "text-sm font-bold" %>
-      <%= form.text_field :colleague_name, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
-    </div>
-    <div>
-      <%= form.label :colleague_email, "Email collègue", class: "text-sm font-bold" %>
-      <%= form.email_field :colleague_email, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
-    </div>
-  </div>
-
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div>
       <%= form.label :pack_id, "Pack réservé", class: "text-sm font-bold" %>
       <%= form.collection_select :pack_id, Pack.order(:name), :id, :name, { include_blank: "Tous les packs" }, class: "mt-2 w-full rounded-full border border-[#E7E2DC] px-5 py-4" %>
     </div>

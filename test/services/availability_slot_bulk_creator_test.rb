@@ -28,9 +28,7 @@ class AvailabilitySlotBulkCreatorTest < ActiveSupport::TestCase
     AvailabilitySlot.create!(
       starts_at: Time.zone.parse("2026-06-10 09:00"),
       ends_at: Time.zone.parse("2026-06-10 09:45"),
-      timezone: "Europe/Paris",
-      colleague_name: "Équipe Le Bon Modèle",
-      colleague_email: "contact@lebonmodele.fr"
+      timezone: "Europe/Paris"
     )
 
     result = AvailabilitySlotBulkCreator.new(

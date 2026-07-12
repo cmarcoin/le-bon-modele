@@ -12,8 +12,7 @@
       <% if @booking&.paid? %>
         <p class="mx-auto mt-6 max-w-2xl text-[20px] leading-[1.5] text-brand-text-secondary">
           Merci <%= @booking.customer_name %>. Nous avons bien reçu votre paiement pour <%= @booking.pack.name %>.
-          Rendez-vous le <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>
-          avec <%= @booking.availability_slot.colleague_name %>.
+          Rendez-vous le <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>.
         </p>
         <p class="mt-4 text-brand-text-secondary">Un email de confirmation vient de vous être envoyé.</p>
       <% else %>

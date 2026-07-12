@@ -28,7 +28,7 @@
           <% @upcoming_slots.each do |slot| %>
             <div class="rounded-[18px] bg-brand-beige p-4">
               <p class="font-bold"><%= paris_datetime(slot.starts_at) %></p>
-              <p class="text-sm text-brand-text-secondary"><%= slot.colleague_name %> - <%= slot.pack&.name || "Tous les packs" %></p>
+              <p class="text-sm text-brand-text-secondary"><%= slot.pack&.name || "Tous les packs" %></p>
             </div>
           <% end %>
         </div>

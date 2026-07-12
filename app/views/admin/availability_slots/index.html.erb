@@ -19,7 +19,6 @@
           <tr>
             <th class="px-5 py-4">Début</th>
             <th class="px-5 py-4">Fin</th>
-            <th class="px-5 py-4">Collègue</th>
             <th class="px-5 py-4">Pack</th>
             <th class="px-5 py-4">Statut</th>
             <th class="px-5 py-4"></th>
@@ -30,7 +29,6 @@
             <tr>
               <td class="px-5 py-4 font-bold"><%= paris_datetime(slot.starts_at) %></td>
               <td class="px-5 py-4"><%= paris_datetime(slot.ends_at) %></td>
-              <td class="px-5 py-4"><%= slot.colleague_name %></td>
               <td class="px-5 py-4"><%= slot.pack&.name || "Tous" %></td>
               <td class="px-5 py-4"><%= slot.active_booking ? "Réservé" : (slot.active? ? "Disponible" : "Inactif") %></td>
               <td class="px-5 py-4 text-right">

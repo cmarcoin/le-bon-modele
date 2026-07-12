@@ -3,6 +3,6 @@ Nouvelle réservation payée
 Pack : <%= @booking.pack.name %>
 Client : <%= @booking.customer_name %> - <%= @booking.customer_email %>
 Téléphone : <%= @booking.customer_phone.presence || "Non renseigné" %>
-Rendez-vous : <%= paris_datetime(@booking.availability_slot.starts_at) %> avec <%= @booking.availability_slot.colleague_name %>
+Rendez-vous : <%= paris_datetime(@booking.availability_slot.starts_at) %>
 Montant : <%= euro_price(@booking.amount_cents) %> TTC
 Session Stripe : <%= @booking.stripe_checkout_session_id %>

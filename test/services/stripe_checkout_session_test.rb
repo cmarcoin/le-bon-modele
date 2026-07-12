@@ -19,9 +19,7 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
       pack: @pack,
       starts_at: 2.days.from_now.change(hour: 10),
       ends_at: 2.days.from_now.change(hour: 10, min: 45),
-      timezone: "Europe/Paris",
-      colleague_name: "Charles Marcoin",
-      colleague_email: "contact@lebonmodele.fr"
+      timezone: "Europe/Paris"
     )
     @user = User.create!(
       email: "buyer@example.com",
