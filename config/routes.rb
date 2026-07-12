@@ -3,7 +3,15 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#index"
-    resources :packs, only: %i[index edit update]
+    resources :packs, only: %i[index edit update] do
+      collection do
+        post :sync_stripe
+      end
+
+      member do
+        post :sync_stripe
+      end
+    end
     resources :availability_slots do
       collection do
         get :bulk_new

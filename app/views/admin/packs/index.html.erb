@@ -4,7 +4,10 @@
 
 <main class="px-6 py-10">
   <div class="mx-auto max-w-[1280px]">
-    <h1 class="font-heading text-4xl font-bold text-brand-primary">Packs</h1>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="font-heading text-4xl font-bold text-brand-primary">Packs</h1>
+      <%= button_to "Synchroniser tout avec Stripe", sync_stripe_admin_packs_path, method: :post, form: { class: "inline" }, class: "inline-flex min-h-[52px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
+    </div>
 
     <div class="mt-8 grid gap-6 lg:grid-cols-2">
       <% @packs.each do |pack| %>
@@ -25,7 +28,10 @@
               Stripe: non synchronisé
             <% end %>
           </p>
-          <%= link_to "Modifier", edit_admin_pack_path(pack), class: "mt-6 inline-flex min-h-[48px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <%= link_to "Modifier", edit_admin_pack_path(pack), class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
+            <%= button_to "Synchroniser Stripe", sync_stripe_admin_pack_path(pack), method: :post, form: { class: "inline" }, class: "inline-flex min-h-[48px] items-center rounded-full border border-[#E7E2DC] px-6 font-bold text-brand-text" %>
+          </div>
         </article>
       <% end %>
     </div>

@@ -17,6 +17,46 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test "admin can sync all packs with stripe" do
+    sign_in @admin
+    ENV["STRIPE_SECRET_KEY"] = "sk_test_123"
+
+    StripePackSync.stub(:sync!, ->(pack) { pack.update!(stripe_product_id: "prod_#{pack.slug}", stripe_price_id: "price_#{pack.slug}") }) do
+      post sync_stripe_admin_packs_path
+    end
+
+    assert_redirected_to admin_packs_path
+    assert_equal "pack-premium synchronisé avec Stripe.", flash[:notice]
+    assert @pack.reload.stripe_ready?
+  ensure
+    ENV.delete("STRIPE_SECRET_KEY")
+  end
+
+  test "admin can sync one pack with stripe" do
+    sign_in @admin
+    ENV["STRIPE_SECRET_KEY"] = "sk_test_123"
+
+    StripePackSync.stub(:sync!, ->(pack) { pack.update!(stripe_product_id: "prod_#{pack.slug}", stripe_price_id: "price_#{pack.slug}") }) do
+      post sync_stripe_admin_pack_path(@pack)
+    end
+
+    assert_redirected_to admin_packs_path
+    assert_equal "pack-premium synchronisé avec Stripe.", flash[:notice]
+    assert @pack.reload.stripe_ready?
+  ensure
+    ENV.delete("STRIPE_SECRET_KEY")
+  end
+
+  test "admin stripe sync fails without stripe secret key" do
+    sign_in @admin
+    ENV.delete("STRIPE_SECRET_KEY")
+
+    post sync_stripe_admin_packs_path
+
+    assert_redirected_to admin_packs_path
+    assert_match(/STRIPE_SECRET_KEY est manquant/, flash[:alert])
+  end
+
   test "admin can update pack price" do
     sign_in @admin
 
