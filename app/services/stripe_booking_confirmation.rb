@@ -33,7 +33,11 @@ class StripeBookingConfirmation
   attr_reader :session
 
   def tax_amount_cents
-    details = session.respond_to?(:total_details) ? session.total_details : session[:total_details]
+    details = if session.respond_to?(:total_details)
+      session.total_details
+    elsif session.is_a?(Hash)
+      session[:total_details]
+    end
     return 0 if details.blank?
 
     details.respond_to?(:amount_tax) ? details.amount_tax.to_i : details[:amount_tax].to_i
@@ -65,13 +69,21 @@ class StripeBookingConfirmation
     keys.reduce(session) do |value, key|
       break if value.blank?
 
-      value.respond_to?(key) ? value.public_send(key) : value[key]
+      if value.respond_to?(key)
+        value.public_send(key)
+      elsif value.is_a?(Hash)
+        value[key]
+      end
     end
   end
 
   def address_value(address, key)
     return if address.blank?
 
-    address.respond_to?(key) ? address.public_send(key) : address[key]
+    if address.respond_to?(key)
+      address.public_send(key)
+    elsif address.is_a?(Hash)
+      address[key]
+    end
   end
 end

@@ -123,4 +123,10 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
 
     assert_match(/synchronisé/, error.message)
   end
+
+  test "trusted_checkout_url accepts stripe checkout host only" do
+    assert StripeCheckoutSession.trusted_checkout_url?("https://checkout.stripe.com/c/pay/cs_test")
+    assert_not StripeCheckoutSession.trusted_checkout_url?("https://checkout.stripe.test/session")
+    assert_not StripeCheckoutSession.trusted_checkout_url?("http://checkout.stripe.com/c/pay/cs_test")
+  end
 end

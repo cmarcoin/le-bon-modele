@@ -12,7 +12,10 @@ class PendingPaymentMaintenanceJob < ApplicationJob
     )
 
     if sync_result.canceled_count.positive?
-      BookingMailer.admin_pending_payment_cleanup(sync_result).deliver_later
+      BookingMailer.admin_pending_payment_cleanup(
+        canceled_count: sync_result.canceled_count,
+        confirmed_count: sync_result.confirmed_count
+      ).deliver_later
     end
   end
 end

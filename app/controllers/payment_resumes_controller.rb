@@ -13,6 +13,11 @@ class PaymentResumesController < ApplicationController
     end
 
     checkout_url = StripeCheckoutSession.checkout_url_for(@booking, request.base_url)
+    unless StripeCheckoutSession.trusted_checkout_url?(checkout_url)
+      redirect_to root_path, alert: "Le lien de paiement reçu n'est pas valide."
+      return
+    end
+
     redirect_to checkout_url, allow_other_host: true
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     redirect_to root_path, alert: "Lien de paiement invalide ou expiré."

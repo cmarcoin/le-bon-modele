@@ -102,12 +102,13 @@ class PendingPaymentBookingSyncTest < ActiveSupport::TestCase
   end
 
   def stub_stripe_retrieve(payment_status:, status:, payment_intent: nil, expires_at: nil)
-    session = Struct.new(:id, :payment_status, :status, :payment_intent, :expires_at, :to_h, keyword_init: true).new(
+    session = Struct.new(:id, :payment_status, :status, :payment_intent, :expires_at, :customer_details, :to_h, keyword_init: true).new(
       id: "cs_sync_pending",
       payment_status: payment_status,
       status: status,
       payment_intent: payment_intent,
       expires_at: expires_at,
+      customer_details: nil,
       to_h: { id: "cs_sync_pending", payment_status: payment_status, status: status }
     )
 

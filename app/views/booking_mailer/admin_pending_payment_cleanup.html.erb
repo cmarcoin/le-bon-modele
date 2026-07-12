@@ -1,13 +1,13 @@
 <p>
-  Le job de maintenance a libéré <strong><%= @result.canceled_count %></strong>
-  réservation<%= @result.canceled_count > 1 ? "s" : "" %> en attente de paiement
+  Le job de maintenance a libéré <strong><%= @canceled_count %></strong>
+  réservation<%= @canceled_count > 1 ? "s" : "" %> en attente de paiement
   dont la session Stripe avait expiré.
 </p>
 
-<% if @result.confirmed_count.positive? %>
+<% if @confirmed_count.positive? %>
   <p>
-    <strong><%= @result.confirmed_count %></strong>
-    réservation<%= @result.confirmed_count > 1 ? "s ont" : " a" %> également été confirmée<%= @result.confirmed_count > 1 ? "s" : "" %>
+    <strong><%= @confirmed_count %></strong>
+    réservation<%= @confirmed_count > 1 ? "s ont" : " a" %> également été confirmée<%= @confirmed_count > 1 ? "s" : "" %>
     automatiquement après détection d'un paiement reçu.
   </p>
 <% end %>

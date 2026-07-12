@@ -19,8 +19,9 @@ class BookingMailer < ApplicationMailer
     mail(to: booking.customer_email, subject: "Finalisez votre réservation Le Bon Modèle")
   end
 
-  def admin_pending_payment_cleanup(result)
-    @result = result
+  def admin_pending_payment_cleanup(canceled_count:, confirmed_count:)
+    @canceled_count = canceled_count
+    @confirmed_count = confirmed_count
     mail(to: ADMIN_RECIPIENTS, subject: "Créneaux libérés — paiements en attente expirés")
   end
 end

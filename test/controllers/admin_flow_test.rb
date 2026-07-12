@@ -275,12 +275,13 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     sign_in @admin
     booking = create_pending_booking_for_admin(session_id: "cs_admin_sync")
 
-    session = Struct.new(:id, :payment_status, :status, :payment_intent, :expires_at, :to_h, keyword_init: true).new(
+    session = Struct.new(:id, :payment_status, :status, :payment_intent, :expires_at, :customer_details, :to_h, keyword_init: true).new(
       id: "cs_admin_sync",
       payment_status: "paid",
       status: "complete",
       payment_intent: "pi_admin_sync",
       expires_at: 30.minutes.from_now.to_i,
+      customer_details: nil,
       to_h: { id: "cs_admin_sync", payment_status: "paid" }
     )
     Stripe::Checkout::Session.define_singleton_method(:retrieve) { |_id| session }

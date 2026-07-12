@@ -9,6 +9,7 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
+    include ActionMailer::TestHelper
   end
 end
 

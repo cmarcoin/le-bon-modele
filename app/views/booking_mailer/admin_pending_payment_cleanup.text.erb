@@ -1,6 +1,6 @@
-Le job de maintenance a libéré <%= @result.canceled_count %> réservation(s) en attente de paiement dont la session Stripe avait expiré.
-<% if @result.confirmed_count.positive? %>
-<%= @result.confirmed_count %> réservation(s) ont également été confirmée(s) automatiquement après détection d'un paiement reçu.
+Le job de maintenance a libéré <%= @canceled_count %> réservation(s) en attente de paiement dont la session Stripe avait expiré.
+<% if @confirmed_count.positive? %>
+<%= @confirmed_count %> réservation(s) ont également été confirmée(s) automatiquement après détection d'un paiement reçu.
 <% end %>
 
 Voir les réservations en attente : <%= admin_bookings_url(status: "pending_payment") %>

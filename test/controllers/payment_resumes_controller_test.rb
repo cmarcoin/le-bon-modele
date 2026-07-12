@@ -50,7 +50,7 @@ class PaymentResumesControllerTest < ActionDispatch::IntegrationTest
   test "redirects to open stripe checkout session" do
     open_session = Struct.new(:id, :url, :status, :expires_at, :to_h, keyword_init: true).new(
       id: "cs_resume_open",
-      url: "https://checkout.stripe.test/resume",
+      url: "https://checkout.stripe.com/c/pay/cs_resume_open",
       status: "open",
       expires_at: 30.minutes.from_now.to_i,
       to_h: { id: "cs_resume_open", status: "open" }
@@ -59,7 +59,23 @@ class PaymentResumesControllerTest < ActionDispatch::IntegrationTest
 
     get resume_payment_path(token: @booking.payment_resume_token)
 
-    assert_redirected_to "https://checkout.stripe.test/resume"
+    assert_redirected_to "https://checkout.stripe.com/c/pay/cs_resume_open"
+  end
+
+  test "rejects untrusted checkout url" do
+    open_session = Struct.new(:id, :url, :status, :expires_at, :to_h, keyword_init: true).new(
+      id: "cs_resume_open",
+      url: "https://evil.example/phish",
+      status: "open",
+      expires_at: 30.minutes.from_now.to_i,
+      to_h: { id: "cs_resume_open", status: "open" }
+    )
+    Stripe::Checkout::Session.define_singleton_method(:retrieve) { |_id| open_session }
+
+    get resume_payment_path(token: @booking.payment_resume_token)
+
+    assert_redirected_to root_path
+    assert_equal "Le lien de paiement reçu n'est pas valide.", flash[:alert]
   end
 
   test "rejects invalid token" do

@@ -2,6 +2,7 @@ class StripeCheckoutSession
   class ConfigurationError < StandardError; end
 
   SESSION_EXPIRY = 60.minutes
+  TRUSTED_CHECKOUT_HOST = "checkout.stripe.com"
 
   def self.create_for(booking, base_url)
     new(booking, base_url).create
@@ -9,6 +10,13 @@ class StripeCheckoutSession
 
   def self.checkout_url_for(booking, base_url)
     new(booking, base_url).checkout_url
+  end
+
+  def self.trusted_checkout_url?(url)
+    uri = URI.parse(url.to_s)
+    uri.scheme == "https" && uri.host == TRUSTED_CHECKOUT_HOST
+  rescue URI::InvalidURIError
+    false
   end
 
   def initialize(booking, base_url)

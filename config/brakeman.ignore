@@ -1,0 +1,8 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "4c2d06b19489e9d45d3f270f15f2fbef532a409adb8843ee3bba1ad23e3e629d",
+      "note": "Checkout URL is fetched from Stripe and restricted to https://checkout.stripe.com before redirect."
+    }
+  ]
+}
