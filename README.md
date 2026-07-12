@@ -102,11 +102,31 @@ docker-compose logs -f web
 See [Solid Queue on Scalingo](https://doc.scalingo.com/languages/ruby/rails/solid-queue).
 
 1. Attach a PostgreSQL add-on so `DATABASE_URL` is set automatically.
-2. Deploy via git push; `postdeploy` runs `rails db:prepare` (primary and queue schemas).
-3. Scale the worker so background jobs run:
+2. Set connection limits (recommended on Starter 512M / low connection plans):
+
+```
+scalingo --app herve-2-staging env-set RAILS_MAX_THREADS=3 SOLID_QUEUE_THREADS=2
+```
+
+3. Deploy via git push; `postdeploy` runs `rails db:prepare` (primary and queue schemas).
+4. Scale the worker so background jobs run:
 
 ```
 scalingo --app herve-2-staging scale worker:1
 ```
 
 The `web` container only runs Puma. Solid Queue runs in the `worker` container (`bin/jobs`), not inside Puma.
+
+### Deploy fails with "remaining connection slots are reserved"
+
+Scalingo starts new containers before running `postdeploy`, while old ones are still running. On small PostgreSQL plans (~30 connections), that temporarily doubles connection usage.
+
+If deploys still fail after lowering pool sizes:
+
+```
+scalingo --app herve-2-staging scale worker:0
+git push scalingo main
+scalingo --app herve-2-staging scale worker:1
+```
+
+Or upgrade the PostgreSQL add-on for more connections. Check usage in the database dashboard (`current_connections` vs `max_connections`).

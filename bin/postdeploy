@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Use a single connection for migrations. Scalingo runs postdeploy while old and new
+# containers coexist, so Postgres connection slots can be exhausted during deploy.
+export RAILS_MAX_THREADS=1
+
+max_attempts=12
+wait_seconds=5
+
+for attempt in $(seq 1 "$max_attempts"); do
+  if bundle exec rails db:prepare; then
+    exit 0
+  fi
+
+  if [ "$attempt" -eq "$max_attempts" ]; then
+    echo "db:prepare failed after ${max_attempts} attempts."
+    exit 1
+  fi
+
+  echo "db:prepare failed (attempt ${attempt}/${max_attempts}), retrying in ${wait_seconds}s..."
+  sleep "$wait_seconds"
+done

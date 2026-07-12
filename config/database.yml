@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("DB_POOL", ENV.fetch("RAILS_MAX_THREADS", 3)) %>
 
 development:
   <<: *default
@@ -33,8 +33,8 @@ production:
     <<: *primary_production
     url: <%= ENV["DATABASE_URL"] %>
     migrations_paths: db/queue_migrate
-    # Solid Queue needs one connection per worker thread plus 2 (polling + heartbeat).
-    pool: <%= ENV.fetch("SOLID_QUEUE_THREADS", 3).to_i + 2 %>
+    # Solid Queue: one connection per worker thread plus 2 (polling + heartbeat).
+    pool: <%= ENV.fetch("SOLID_QUEUE_DB_POOL", ENV.fetch("SOLID_QUEUE_THREADS", 2).to_i + 2) %>
 
   # cache:
   #   <<: *primary_production
