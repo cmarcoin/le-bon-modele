@@ -35,19 +35,56 @@ flowchart TD
 
 ### Actions admin
 
-Sur chaque réservation en attente de paiement :
+Sur la fiche d'une réservation **En attente de paiement**, trois actions sont disponibles.
 
-- **Synchroniser avec Stripe** — récupère un paiement orphelin
-- **Renvoyer le lien de paiement** — relance manuelle par email
-- **Libérer le créneau** — annulation manuelle
+#### Synchroniser avec Stripe
 
-Le dashboard et la liste des réservations incluent un filtre « En attente de paiement ».
+Interroge Stripe pour connaître l'état réel de la session de paiement, puis met à jour la réservation en conséquence. À utiliser quand l'application et Stripe ne sont plus d'accord.
 
-### Commande manuelle
+**Cas typique — paiement orphelin** : le client a bien payé sur Stripe, mais la réservation est restée en attente chez nous. Cela arrive si le webhook Stripe n'a pas été reçu (panne réseau, mauvaise configuration, déploiement en cours) ou si la page de confirmation n'a pas pu finaliser la transaction.
+
+Dans ce cas, le bouton détecte le paiement côté Stripe et passe la réservation en **Payée** (emails de confirmation envoyés automatiquement).
+
+**Autre cas — session expirée** : le client n'a jamais payé et la session Stripe a expiré (après 60 min). Le bouton annule la réservation et **libère le créneau**.
+
+**Si rien ne change** : Stripe indique que le paiement est toujours en cours (session ouverte, non payée). Aucune action nécessaire — attendre ou utiliser « Renvoyer le lien de paiement ».
+
+> Action ciblée : **une seule réservation** à la fois, depuis l'interface admin.
+
+#### Renvoyer le lien de paiement
+
+Envoie immédiatement un email au client avec un lien sécurisé pour reprendre le paiement, sans ressaisir le formulaire. Utile si le client a abandonné, n'a pas reçu la relance automatique, ou demande de l'aide.
+
+#### Libérer le créneau
+
+Annule manuellement la réservation et rend le créneau disponible pour d'autres clients. À utiliser quand on sait que le client ne finalisera pas (erreur, doublon, changement de planning), sans attendre l'expiration automatique.
+
+Le dashboard et la liste des réservations incluent un filtre **En attente de paiement** pour repérer rapidement ces cas.
+
+### Maintenance automatique vs commande manuelle
+
+En production, un job tourne **toutes les 15 minutes** (`PendingPaymentMaintenanceJob` via Solid Queue) et effectue la même logique de synchronisation sur **toutes** les réservations en attente, plus l'envoi des relances email (1 h après la création). L'admin reçoit un email quand des créneaux sont libérés automatiquement.
+
+La commande ci-dessous est l'équivalent **manuel** de ce job — utile en local, en secours si le worker ne tourne pas, ou après un incident :
 
 ```
 docker-compose run web rails bookings:maintain_pending_payments
 ```
+
+Elle affiche un résumé :
+
+```
+Confirmées : 1    ← paiements orphelins rattrapés
+Annulées   : 2    ← sessions expirées, créneaux libérés
+Inchangées : 0    ← toujours en attente de paiement
+Relances envoyées : 1
+```
+
+| | Bouton admin « Synchroniser » | `rails bookings:maintain_pending_payments` |
+|---|---|---|
+| **Portée** | Une réservation choisie | Toutes les réservations en attente |
+| **Relances email** | Non (bouton séparé « Renvoyer le lien ») | Oui, pour les réservations éligibles |
+| **Quand l'utiliser** | Un cas précis repéré en admin | Maintenance globale, test local, rattrapage après incident |
 
 # Local Development
 
