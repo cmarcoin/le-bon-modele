@@ -1,3 +1,4 @@
+# Preserved for Solid Cable re-enablement. Not loaded while cable is disabled in database.yml.
 ActiveRecord::Schema[7.1].define(version: 1) do
   create_table "solid_cable_messages", force: :cascade do |t|
     t.binary "channel", limit: 1024, null: false

@@ -102,7 +102,7 @@ docker-compose logs -f web
 See [Solid Queue on Scalingo](https://doc.scalingo.com/languages/ruby/rails/solid-queue).
 
 1. Attach a PostgreSQL add-on so `DATABASE_URL` is set automatically.
-2. Deploy via git push; `postdeploy` runs `rails db:prepare` (primary, queue, cache, and cable schemas).
+2. Deploy via git push; `postdeploy` runs `rails db:prepare` (primary and queue schemas).
 3. Scale the worker so background jobs run:
 
 ```

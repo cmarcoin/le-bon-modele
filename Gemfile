@@ -27,10 +27,16 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
+# Solid Queue: background jobs (deliver_later, recurring tasks).
 gem "solid_queue"
-gem "solid_cable"
+
+# Disabled to reduce PostgreSQL connection usage on Scalingo (see config/database.yml).
+# To re-enable Solid Cache / Solid Cable:
+#   1. Uncomment the gems below and run `bundle install`
+#   2. Uncomment cache/cable in config/database.yml, config/environments/production.rb, config/cable.yml, config/cache.yml
+#   3. Run `bin/rails db:prepare` (schemas in db/cache_schema.rb and db/cable_schema.rb are kept)
+# gem "solid_cache"
+# gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

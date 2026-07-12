@@ -11,6 +11,7 @@ development:
 test:
   <<: *default
 
-production:
-  database: cache
-  <<: *default
+# Solid Cache only. Uncomment when re-enabling Solid Cache (see Gemfile, database.yml).
+# production:
+#   database: cache
+#   <<: *default

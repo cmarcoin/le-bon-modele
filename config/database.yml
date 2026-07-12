@@ -19,8 +19,11 @@ test:
   password: <%= ENV["DATABASE_PASSWORD"] %>
   database: <%= ENV["DATABASE_NAME"] %>_test
 
-# Scalingo: use DATABASE_URL for all production DBs (primary, queue, cache, cable).
+# Scalingo: use DATABASE_URL for production DBs (primary + queue).
 # https://doc.scalingo.com/languages/ruby/rails/solid-queue
+#
+# Solid Cache / Solid Cable are disabled (see Gemfile). To restore, uncomment cache and cable below,
+# re-enable the gems, and run `bin/rails db:prepare`.
 production:
   primary: &primary_production
     <<: *default
@@ -33,12 +36,12 @@ production:
     # Solid Queue needs one connection per worker thread plus 2 (polling + heartbeat).
     pool: <%= ENV.fetch("SOLID_QUEUE_THREADS", 3).to_i + 2 %>
 
-  cache:
-    <<: *primary_production
-    url: <%= ENV["DATABASE_URL"] %>
-    migrations_paths: db/cache_migrate
+  # cache:
+  #   <<: *primary_production
+  #   url: <%= ENV["DATABASE_URL"] %>
+  #   migrations_paths: db/cache_migrate
 
-  cable:
-    <<: *primary_production
-    url: <%= ENV["DATABASE_URL"] %>
-    migrations_paths: db/cable_migrate
+  # cable:
+  #   <<: *primary_production
+  #   url: <%= ENV["DATABASE_URL"] %>
+  #   migrations_paths: db/cable_migrate
