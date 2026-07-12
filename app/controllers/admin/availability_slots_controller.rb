@@ -59,6 +59,18 @@ module Admin
       end
     end
 
+    def purge_past
+      result = AvailabilitySlotPastPurger.new.call
+
+      notice = if result.deleted_count.positive?
+        "#{result.deleted_count} créneau(x) passé(s) supprimé(s)."
+      else
+        "Aucun créneau passé non réservé à supprimer."
+      end
+
+      redirect_to admin_availability_slots_path, notice: notice
+    end
+
     private
 
     def set_slot

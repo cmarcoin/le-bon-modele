@@ -180,6 +180,66 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert_match(/réservé/, flash[:alert])
   end
 
+  test "admin can purge past unbooked availability slots" do
+    sign_in @admin
+    past_slot = AvailabilitySlot.create!(
+      starts_at: 2.days.ago.change(hour: 10),
+      ends_at: 2.days.ago.change(hour: 10, min: 45),
+      timezone: "Europe/Paris",
+      colleague_name: "Charles Marcoin",
+      colleague_email: "contact@lebonmodele.fr",
+      pack: @pack,
+      active: true
+    )
+    future_slot = AvailabilitySlot.create!(
+      starts_at: 2.days.from_now.change(hour: 10),
+      ends_at: 2.days.from_now.change(hour: 10, min: 45),
+      timezone: "Europe/Paris",
+      colleague_name: "Charles Marcoin",
+      colleague_email: "contact@lebonmodele.fr",
+      pack: @pack,
+      active: true
+    )
+    booked_past_slot = AvailabilitySlot.create!(
+      starts_at: 2.days.ago.change(hour: 11),
+      ends_at: 2.days.ago.change(hour: 11, min: 45),
+      timezone: "Europe/Paris",
+      colleague_name: "Charles Marcoin",
+      colleague_email: "contact@lebonmodele.fr",
+      pack: @pack,
+      active: true
+    )
+    Booking.create!(
+      user: @client,
+      pack: @pack,
+      availability_slot: booked_past_slot,
+      customer_name: "Client Test",
+      customer_email: @client.email,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "paid"
+    )
+
+    assert_difference -> { AvailabilitySlot.count }, -1 do
+      post purge_past_admin_availability_slots_path
+    end
+
+    assert_redirected_to admin_availability_slots_path
+    assert_match(/1 créneau/, flash[:notice])
+    assert_not AvailabilitySlot.exists?(past_slot.id)
+    assert AvailabilitySlot.exists?(future_slot.id)
+    assert AvailabilitySlot.exists?(booked_past_slot.id)
+  end
+
+  test "admin purge past shows message when nothing to delete" do
+    sign_in @admin
+
+    post purge_past_admin_availability_slots_path
+
+    assert_redirected_to admin_availability_slots_path
+    assert_equal "Aucun créneau passé non réservé à supprimer.", flash[:notice]
+  end
+
   test "admin can delete booking and payment transaction" do
     sign_in @admin
     slot = AvailabilitySlot.create!(

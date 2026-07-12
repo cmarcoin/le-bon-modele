@@ -9,6 +9,7 @@
       <div class="flex flex-wrap gap-3">
         <%= link_to "Générer des créneaux", bulk_new_admin_availability_slots_path, class: "inline-flex min-h-[52px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
         <%= link_to "Ajouter un créneau", new_admin_availability_slot_path, class: "inline-flex min-h-[52px] items-center rounded-full border border-[#E7E2DC] px-6 font-bold text-brand-text" %>
+        <%= button_to "Purger les créneaux passés", purge_past_admin_availability_slots_path, method: :post, form: { class: "inline" }, class: "inline-flex min-h-[52px] items-center rounded-full border border-brand-coral px-6 font-bold text-brand-coral", data: { turbo_confirm: "Supprimer tous les créneaux passés non réservés ? Cette action est irréversible." } %>
       </div>
     </div>
 

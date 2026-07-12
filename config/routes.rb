@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       collection do
         get :bulk_new
         post :bulk_create
+        post :purge_past
       end
     end
     resources :bookings, only: %i[index show destroy]
