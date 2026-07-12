@@ -21,7 +21,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     sign_in @admin
     ENV["STRIPE_SECRET_KEY"] = "sk_test_123"
 
-    StripePackSync.stub(:sync!, ->(pack) { pack.update!(stripe_product_id: "prod_#{pack.slug}", stripe_price_id: "price_#{pack.slug}") }) do
+    with_stubbed_stripe_pack_sync do
       post sync_stripe_admin_packs_path
     end
 
@@ -36,7 +36,7 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     sign_in @admin
     ENV["STRIPE_SECRET_KEY"] = "sk_test_123"
 
-    StripePackSync.stub(:sync!, ->(pack) { pack.update!(stripe_product_id: "prod_#{pack.slug}", stripe_price_id: "price_#{pack.slug}") }) do
+    with_stubbed_stripe_pack_sync do
       post sync_stripe_admin_pack_path(@pack)
     end
 
@@ -221,5 +221,19 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_bookings_path
     assert_equal "Réservation supprimée.", flash[:notice]
     assert slot.reload
+  end
+
+  private
+
+  def with_stubbed_stripe_pack_sync
+    original_sync = StripePackSync.method(:sync!)
+    StripePackSync.define_singleton_method(:sync!) do |pack|
+      pack.update!(stripe_product_id: "prod_#{pack.slug}", stripe_price_id: "price_#{pack.slug}")
+      pack
+    end
+
+    yield
+  ensure
+    StripePackSync.singleton_class.define_method(:sync!, original_sync)
   end
 end
