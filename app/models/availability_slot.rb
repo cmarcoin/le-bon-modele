@@ -12,7 +12,9 @@ class AvailabilitySlot < ApplicationRecord
   validate :ends_after_start
 
   scope :active, -> { where(active: true) }
+  scope :past, -> { where(starts_at: ...Time.current) }
   scope :upcoming, -> { where(starts_at: Time.current..) }
+  scope :unbooked, -> { where.missing(:active_booking) }
   scope :available_for, ->(pack) {
     active
       .upcoming
