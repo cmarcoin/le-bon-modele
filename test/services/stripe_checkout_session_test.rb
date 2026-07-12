@@ -64,10 +64,54 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
     assert_equal "required", captured_params[:billing_address_collection]
     assert_nil captured_params[:shipping_address_collection]
     assert_equal({ enabled: true }, captured_params[:automatic_tax])
+    assert captured_params[:expires_at].present?
+    assert captured_params[:expires_at] > Time.current.to_i
 
     line_item = captured_params[:line_items].first
     assert_equal 1, line_item[:quantity]
     assert_equal "price_test", line_item[:price]
+  end
+
+  test "reuses open checkout session url" do
+    open_session = Struct.new(:id, :url, :status, :expires_at, keyword_init: true).new(
+      id: "cs_test_123",
+      url: "https://checkout.stripe.test/open",
+      status: "open",
+      expires_at: 30.minutes.from_now.to_i
+    )
+    @booking.update!(stripe_checkout_session_id: "cs_test_123")
+
+    Stripe::Checkout::Session.define_singleton_method(:retrieve) { |_id| open_session }
+
+    url = StripeCheckoutSession.checkout_url_for(@booking, "http://localhost:3001")
+    assert_equal "https://checkout.stripe.test/open", url
+  end
+
+  test "creates new checkout session when previous one expired" do
+    expired_session = Struct.new(:id, :url, :status, :expires_at, :to_h, keyword_init: true).new(
+      id: "cs_test_old",
+      url: "https://checkout.stripe.test/old",
+      status: "expired",
+      expires_at: 1.hour.ago.to_i,
+      to_h: { id: "cs_test_old", status: "expired" }
+    )
+    @booking.update!(stripe_checkout_session_id: "cs_test_old")
+    PaymentTransaction.create!(
+      booking: @booking,
+      user: @user,
+      pack: @pack,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      stripe_checkout_session_id: "cs_test_old"
+    )
+
+    Stripe::Checkout::Session.define_singleton_method(:retrieve) { |_id| expired_session }
+
+    url = StripeCheckoutSession.checkout_url_for(@booking, "http://localhost:3001")
+
+    assert_equal "https://checkout.stripe.test/session", url
+    assert_equal "cs_test_123", @booking.reload.stripe_checkout_session_id
+    assert_equal "cs_test_123", @booking.payment_transaction.stripe_checkout_session_id
   end
 
   test "raises when pack is not synced with stripe" do

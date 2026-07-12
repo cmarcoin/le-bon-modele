@@ -43,4 +43,10 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_includes url, CGI.escape("Client : Jean Dupont")
     assert_includes url, CGI.escape("jean@example.com")
   end
+
+  test "booking_status_label returns french labels" do
+    assert_equal "En attente de paiement", booking_status_label("pending_payment")
+    assert_equal "Payée", booking_status_label("paid")
+    assert_equal "Annulée", booking_status_label("canceled")
+  end
 end

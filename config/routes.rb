@@ -19,7 +19,13 @@ Rails.application.routes.draw do
         post :purge_past
       end
     end
-    resources :bookings, only: %i[index show destroy]
+    resources :bookings, only: %i[index show destroy] do
+      member do
+        post :sync_stripe
+        post :release_slot
+        post :resend_payment_link
+      end
+    end
   end
 
   resources :packs, param: :slug, only: [] do
@@ -28,6 +34,7 @@ Rails.application.routes.draw do
 
   get "checkout/success", to: "checkout#success", as: :checkout_success
   get "checkout/cancel", to: "checkout#cancel", as: :checkout_cancel
+  get "paiement/reprendre/:token", to: "payment_resumes#show", as: :resume_payment
   post "stripe/webhooks", to: "stripe_webhooks#create", as: :stripe_webhooks
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

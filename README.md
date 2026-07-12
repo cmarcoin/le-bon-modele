@@ -3,6 +3,52 @@
 A Rails 8.1 application with PostgreSQL, Tailwind CSS, and importmap, running entirely in Docker containers.
 Helps user buy a car without pain
 
+## Gestion des paiements en attente (`pending_payment`)
+
+Une réservation passe en `pending_payment` dès que le client valide le formulaire, avant la confirmation Stripe. Le créneau est bloqué tant que le paiement n'est pas finalisé ou que la session n'a pas expiré.
+
+### Flux
+
+```mermaid
+flowchart TD
+    A[Réservation créée] --> B[pending_payment]
+    B --> C{Client paie ?}
+    C -->|Oui| D[paid + emails]
+    C -->|Abandon < 1h| E[Créneau bloqué]
+    E --> F[Relance email à 1h]
+    F --> G{Client clique le lien ?}
+    G -->|Oui| C
+    G -->|Non| H[Session expire à 60 min]
+    H --> I[Job maintenance annule]
+    I --> J[canceled + créneau libéré]
+    B --> K[Admin: sync / relance / libérer]
+```
+
+### Mécanismes automatiques
+
+- **Sessions Stripe** : expiration après 60 minutes (`expires_at`)
+- **Relance client** : email automatique 1 h après la création, avec lien sécurisé `/paiement/reprendre/:token` (valable 7 jours)
+- **Job récurrent** (`PendingPaymentMaintenanceJob`, toutes les 15 min) :
+  - confirme les réservations payées non synchronisées
+  - annule les sessions expirées et libère les créneaux
+  - notifie l'admin quand des créneaux sont libérés
+
+### Actions admin
+
+Sur chaque réservation en attente de paiement :
+
+- **Synchroniser avec Stripe** — récupère un paiement orphelin
+- **Renvoyer le lien de paiement** — relance manuelle par email
+- **Libérer le créneau** — annulation manuelle
+
+Le dashboard et la liste des réservations incluent un filtre « En attente de paiement ».
+
+### Commande manuelle
+
+```
+docker-compose run web rails bookings:maintain_pending_payments
+```
+
 # Local Development
 
 ## Setup

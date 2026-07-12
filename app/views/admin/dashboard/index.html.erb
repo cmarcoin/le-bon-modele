@@ -6,7 +6,7 @@
   <div class="mx-auto max-w-[1280px]">
     <h1 class="font-heading text-4xl font-bold text-brand-primary">Dashboard</h1>
 
-    <div class="mt-8 grid gap-6 lg:grid-cols-3">
+    <div class="mt-8 grid gap-6 lg:grid-cols-4">
       <%= link_to admin_packs_path, class: "rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft" do %>
         <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-text-secondary">Packs</p>
         <p class="mt-3 font-heading text-4xl font-black text-brand-text"><%= @packs.count %></p>
@@ -19,7 +19,35 @@
         <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-text-secondary">Réservations récentes</p>
         <p class="mt-3 font-heading text-4xl font-black text-brand-text"><%= @recent_bookings.count %></p>
       <% end %>
+      <%= link_to admin_bookings_path(status: "pending_payment"), class: "rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft #{@pending_payment_count.positive? ? 'ring-2 ring-brand-coral/40' : ''}" do %>
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-text-secondary">En attente de paiement</p>
+        <p class="mt-3 font-heading text-4xl font-black <%= @pending_payment_count.positive? ? 'text-brand-coral' : 'text-brand-text' %>"><%= @pending_payment_count %></p>
+      <% end %>
     </div>
+
+    <% if @pending_payment_count.positive? %>
+      <section class="mt-8 rounded-[28px] border border-brand-coral/30 bg-brand-coral/5 p-6 shadow-soft">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="font-heading text-2xl font-bold text-brand-coral">Paiements en attente</h2>
+            <p class="mt-2 text-sm text-brand-text-secondary">
+              <%= @pending_payment_count %> réservation<%= @pending_payment_count > 1 ? "s" : "" %> bloque<%= @pending_payment_count > 1 ? "nt" : "" %> un créneau sans paiement confirmé.
+            </p>
+          </div>
+          <%= link_to "Voir tout", admin_bookings_path(status: "pending_payment"), class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white" %>
+        </div>
+        <div class="mt-5 space-y-3">
+          <% @pending_payment_bookings.each do |booking| %>
+            <%= link_to admin_booking_path(booking), class: "block rounded-[18px] bg-white p-4" do %>
+              <p class="font-bold"><%= booking.customer_name %> — <%= booking.pack.name %></p>
+              <p class="text-sm text-brand-text-secondary">
+                <%= paris_datetime(booking.availability_slot.starts_at) %> — <%= euro_price(booking.amount_cents) %>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
 
     <div class="mt-10 grid gap-8 lg:grid-cols-2">
       <section class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft">
@@ -40,7 +68,7 @@
           <% @recent_bookings.each do |booking| %>
             <%= link_to admin_booking_path(booking), class: "block rounded-[18px] bg-brand-beige p-4" do %>
               <p class="font-bold"><%= booking.customer_name %> - <%= booking.pack.name %></p>
-              <p class="text-sm text-brand-text-secondary"><%= booking.status %> - <%= euro_price(booking.amount_cents) %></p>
+              <p class="text-sm text-brand-text-secondary"><%= booking_status_label(booking.status) %> — <%= euro_price(booking.amount_cents) %></p>
             <% end %>
           <% end %>
         </div>

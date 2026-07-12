@@ -1,0 +1,17 @@
+<p>
+  Le job de maintenance a libéré <strong><%= @result.canceled_count %></strong>
+  réservation<%= @result.canceled_count > 1 ? "s" : "" %> en attente de paiement
+  dont la session Stripe avait expiré.
+</p>
+
+<% if @result.confirmed_count.positive? %>
+  <p>
+    <strong><%= @result.confirmed_count %></strong>
+    réservation<%= @result.confirmed_count > 1 ? "s ont" : " a" %> également été confirmée<%= @result.confirmed_count > 1 ? "s" : "" %>
+    automatiquement après détection d'un paiement reçu.
+  </p>
+<% end %>
+
+<p>
+  <%= link_to "Voir les réservations en attente", admin_bookings_url(status: "pending_payment") %>
+</p>

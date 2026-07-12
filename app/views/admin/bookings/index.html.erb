@@ -4,7 +4,21 @@
 
 <main class="px-6 py-10">
   <div class="mx-auto max-w-[1280px]">
-    <h1 class="font-heading text-4xl font-bold text-brand-primary">Réservations</h1>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="font-heading text-4xl font-bold text-brand-primary">Réservations</h1>
+      <% if @pending_payment_count.positive? %>
+        <p class="rounded-full bg-brand-coral/10 px-4 py-2 text-sm font-bold text-brand-coral">
+          <%= @pending_payment_count %> en attente de paiement
+        </p>
+      <% end %>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <%= link_to "Toutes", admin_bookings_path,
+          class: "rounded-full px-4 py-2 text-sm font-bold #{params[:status].blank? ? 'bg-brand-primary text-white' : 'bg-brand-beige text-brand-text'}" %>
+      <%= link_to "En attente de paiement", admin_bookings_path(status: "pending_payment"),
+          class: "rounded-full px-4 py-2 text-sm font-bold #{params[:status] == 'pending_payment' ? 'bg-brand-primary text-white' : 'bg-brand-beige text-brand-text'}" %>
+    </div>
 
     <div class="mt-8 overflow-hidden rounded-[28px] border border-[#E7E2DC] bg-white shadow-soft">
       <table class="w-full min-w-[980px] text-left">
@@ -27,7 +41,9 @@
               </td>
               <td class="px-5 py-4"><%= booking.pack.name %></td>
               <td class="px-5 py-4"><%= paris_datetime(booking.availability_slot.starts_at) %></td>
-              <td class="px-5 py-4"><%= booking.status %></td>
+              <td class="px-5 py-4 font-bold <%= booking_status_class(booking.status) %>">
+                <%= booking_status_label(booking.status) %>
+              </td>
               <td class="px-5 py-4 font-bold"><%= euro_price(booking.amount_cents) %></td>
               <td class="px-5 py-4 text-right">
                 <div class="flex flex-wrap items-center justify-end gap-4">

@@ -6,7 +6,7 @@ class CheckoutController < ApplicationController
 
   def cancel
     @booking = Booking.find_by(id: params[:booking_id])
-    @booking&.update!(status: "canceled") if @booking&.pending_payment?
+    @booking&.cancel_reservation! if @booking&.pending_payment?
   end
 
   private

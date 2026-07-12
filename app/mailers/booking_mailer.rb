@@ -12,4 +12,15 @@ class BookingMailer < ApplicationMailer
     @booking = booking
     mail(to: ADMIN_RECIPIENTS, subject: "Nouvelle réservation payée - #{booking.pack.name}")
   end
+
+  def payment_reminder(booking)
+    @booking = booking
+    @resume_url = resume_payment_url(token: booking.payment_resume_token)
+    mail(to: booking.customer_email, subject: "Finalisez votre réservation Le Bon Modèle")
+  end
+
+  def admin_pending_payment_cleanup(result)
+    @result = result
+    mail(to: ADMIN_RECIPIENTS, subject: "Créneaux libérés — paiements en attente expirés")
+  end
 end

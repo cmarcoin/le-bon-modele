@@ -1,6 +1,8 @@
 require "test_helper"
 
 class AdminFlowTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @admin = users(:admin)
     @client = users(:client)
@@ -269,7 +271,110 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert slot.reload
   end
 
+  test "admin can sync pending booking when stripe reports paid" do
+    sign_in @admin
+    booking = create_pending_booking_for_admin(session_id: "cs_admin_sync")
+
+    session = Struct.new(:id, :payment_status, :status, :payment_intent, :expires_at, :to_h, keyword_init: true).new(
+      id: "cs_admin_sync",
+      payment_status: "paid",
+      status: "complete",
+      payment_intent: "pi_admin_sync",
+      expires_at: 30.minutes.from_now.to_i,
+      to_h: { id: "cs_admin_sync", payment_status: "paid" }
+    )
+    Stripe::Checkout::Session.define_singleton_method(:retrieve) { |_id| session }
+
+    post sync_stripe_admin_booking_path(booking)
+
+    assert_redirected_to admin_booking_path(booking)
+    assert_equal "Paiement confirmé — la réservation est maintenant payée.", flash[:notice]
+    assert_equal "paid", booking.reload.status
+  end
+
+  test "admin can release pending booking slot" do
+    sign_in @admin
+    booking = create_pending_booking_for_admin
+
+    post release_slot_admin_booking_path(booking)
+
+    assert_redirected_to admin_bookings_path(status: "pending_payment")
+    assert_equal "Créneau libéré — la réservation a été annulée.", flash[:notice]
+    assert_equal "canceled", booking.reload.status
+  end
+
+  test "admin can resend payment link for pending booking" do
+    sign_in @admin
+    booking = create_pending_booking_for_admin
+
+    assert_enqueued_emails 1 do
+      post resend_payment_link_admin_booking_path(booking)
+    end
+
+    assert_redirected_to admin_booking_path(booking)
+    assert_equal "Lien de paiement renvoyé à #{booking.customer_email}.", flash[:notice]
+    assert_not_nil booking.reload.payment_reminder_sent_at
+  end
+
+  test "admin bookings index filters pending payment status" do
+    sign_in @admin
+    pending_booking = create_pending_booking_for_admin
+    paid_slot = AvailabilitySlot.create!(
+      starts_at: 3.days.from_now.change(hour: 12),
+      ends_at: 3.days.from_now.change(hour: 12, min: 45),
+      timezone: "Europe/Paris",
+      pack: @pack,
+      active: true
+    )
+    Booking.create!(
+      user: @client,
+      pack: @pack,
+      availability_slot: paid_slot,
+      customer_name: "Client Test",
+      customer_email: @client.email,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "paid"
+    )
+
+    get admin_bookings_path(status: "pending_payment")
+
+    assert_response :success
+    assert_select "td", text: /En attente de paiement/
+    assert_select "a[href=?]", admin_booking_path(pending_booking)
+  end
+
   private
+
+  def create_pending_booking_for_admin(session_id: "cs_admin_pending")
+    slot = AvailabilitySlot.create!(
+      starts_at: 2.days.from_now.change(hour: 14),
+      ends_at: 2.days.from_now.change(hour: 14, min: 45),
+      timezone: "Europe/Paris",
+      pack: @pack,
+      active: true
+    )
+    booking = Booking.create!(
+      user: @client,
+      pack: @pack,
+      availability_slot: slot,
+      customer_name: "Client Test",
+      customer_email: @client.email,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "pending_payment",
+      stripe_checkout_session_id: session_id
+    )
+    PaymentTransaction.create!(
+      booking: booking,
+      user: @client,
+      pack: @pack,
+      amount_cents: booking.amount_cents,
+      currency: "eur",
+      stripe_checkout_session_id: session_id
+    )
+    booking
+  end
 
   def with_stubbed_stripe_pack_sync
     original_sync = StripePackSync.method(:sync!)

@@ -3,6 +3,22 @@ module ApplicationHelper
     number_to_currency(cents.to_i / 100.0, unit: "€", separator: ",", delimiter: " ", format: "%n%u", precision: cents.to_i % 100 == 0 ? 0 : 2)
   end
 
+  def booking_status_label(status)
+    {
+      "pending_payment" => "En attente de paiement",
+      "paid" => "Payée",
+      "canceled" => "Annulée"
+    }.fetch(status, status)
+  end
+
+  def booking_status_class(status)
+    {
+      "pending_payment" => "text-brand-coral",
+      "paid" => "text-brand-primary",
+      "canceled" => "text-brand-text-secondary"
+    }.fetch(status, "text-brand-text")
+  end
+
   def paris_datetime(time)
     time.in_time_zone("Europe/Paris").strftime("%d/%m/%Y a %H:%M")
   end

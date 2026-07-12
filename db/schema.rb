@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_12_160000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_12_170000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_160000) do
     t.string "customer_phone"
     t.bigint "pack_id", null: false
     t.datetime "paid_at"
+    t.datetime "payment_reminder_sent_at"
     t.string "status", default: "pending_payment", null: false
     t.string "stripe_checkout_session_id"
     t.datetime "updated_at", null: false
@@ -49,6 +50,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_160000) do
     t.index ["availability_slot_id"], name: "index_bookings_on_availability_slot_id"
     t.index ["customer_email"], name: "index_bookings_on_customer_email"
     t.index ["pack_id"], name: "index_bookings_on_pack_id"
+    t.index ["payment_reminder_sent_at"], name: "index_bookings_on_payment_reminder_sent_at"
     t.index ["status"], name: "index_bookings_on_status"
     t.index ["stripe_checkout_session_id"], name: "index_bookings_on_stripe_checkout_session_id", unique: true
     t.index ["user_id"], name: "index_bookings_on_user_id"

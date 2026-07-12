@@ -1,5 +1,7 @@
 class Booking < ApplicationRecord
   STATUSES = %w[pending_payment paid canceled].freeze
+  PAYMENT_REMINDER_DELAY = 1.hour
+  PAYMENT_RESUME_TOKEN_EXPIRY = 7.days
 
   belongs_to :user
   belongs_to :pack
@@ -17,6 +19,12 @@ class Booking < ApplicationRecord
 
   scope :latest, -> { order(created_at: :desc) }
   scope :occupying_slot, -> { where(status: %w[pending_payment paid]) }
+  scope :pending_payment, -> { where(status: "pending_payment") }
+  scope :due_for_payment_reminder, -> {
+    pending_payment
+      .where(payment_reminder_sent_at: nil)
+      .where(created_at: ..PAYMENT_REMINDER_DELAY.ago)
+  }
 
   def paid?
     status == "paid"
@@ -24,6 +32,10 @@ class Booking < ApplicationRecord
 
   def pending_payment?
     status == "pending_payment"
+  end
+
+  def payment_resume_token
+    signed_id(purpose: :payment_resume, expires_in: PAYMENT_RESUME_TOKEN_EXPIRY)
   end
 
   def self.release_pending_for_retry!(slot_id:, customer_email:)

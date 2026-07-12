@@ -1,0 +1,22 @@
+<h1>Finalisez votre réservation</h1>
+
+<p>Bonjour <%= @booking.customer_name %>,</p>
+
+<p>
+  Vous avez commencé une réservation pour le <strong><%= @booking.pack.name %></strong>,
+  prévue le <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>,
+  mais le paiement n'a pas encore été finalisé.
+</p>
+
+<p>
+  Votre créneau reste réservé pour le moment. Pour confirmer votre rendez-vous,
+  finalisez le paiement de <strong><%= euro_price(@booking.amount_cents) %> TTC</strong>.
+</p>
+
+<p>
+  <%= link_to "Finaliser mon paiement", @resume_url %>
+</p>
+
+<p>Ce lien est valable 7 jours. Passé ce délai, le créneau sera libéré.</p>
+
+<p>À très vite,<br>Le Bon Modèle</p>
