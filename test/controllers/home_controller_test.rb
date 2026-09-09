@@ -51,4 +51,23 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
       assert_select "body", /#{Regexp.escape(heading)}/
     end
   end
+
+  test "starter pack page follows the four-step layout" do
+    starter = Pack.find_by!(slug: "starter-pack")
+
+    get starter_pack_path
+
+    assert_response :success
+    assert_select "h2", text: "Votre accompagnement en 4 étapes"
+    assert_select "h3", text: "Questionnaire préparatoire"
+    assert_select "h3", text: "Premier entretien avec Charles et Jules"
+    assert_select "h3", text: "Liste réduite de 2 à 3 modèles"
+    assert_select "h3", text: "Entretien de suivi avec Charles et Jules"
+    assert_select ".starter-pack-duration", text: /60 min/
+    assert_select ".starter-pack-duration", text: /30 min/
+    assert_select "p", text: "On clarifie vos vrais besoins"
+    assert_select "strong", text: "Nous transformons une idée floue en choix clair"
+    assert_select "img[src='/reference-assets/starter-pack-illustration.png']"
+    assert_select "a[href='#{new_pack_booking_path(starter)}']", text: "Je choisis cette offre"
+  end
 end
