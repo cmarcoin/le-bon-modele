@@ -1,0 +1,20 @@
+<% step = local_assigns.fetch(:step) %>
+
+<li class="starter-pack-step">
+  <span class="starter-pack-step-number" aria-hidden="true"><%= step[:number] %></span>
+  <div class="min-w-0 flex-1">
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+      <h4 class="font-heading text-[18px] font-bold text-brand-text sm:text-[20px]"><%= step[:title] %></h4>
+      <% if step[:duration] %>
+        <span class="starter-pack-duration">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 7v5l3 2"></path>
+          </svg>
+          <%= step[:duration] %>
+        </span>
+      <% end %>
+    </div>
+    <p class="mt-2 text-[16px] leading-[1.5] text-brand-text-secondary sm:text-[17px]"><%= step[:body] %></p>
+  </div>
+</li>

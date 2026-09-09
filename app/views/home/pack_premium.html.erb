@@ -6,61 +6,126 @@
   <%= render "home/background_pattern" %>
   <section class="relative px-4 py-10 md:px-6 lg:px-8 lg:py-14">
     <div class="mx-auto max-w-[1280px]">
-      <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
-        <div class="flex h-full flex-col">
+      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-12 xl:gap-16">
+        <article>
           <%= image_tag @premium_pack.icon_path, alt: "", class: "h-16 w-12" %>
 
-          <h1 class="mt-4 font-heading text-[34px] font-bold leading-none <%= @premium_pack.accent_class %> sm:text-[42px]"><%= @premium_pack.name %></h1>
+          <h1 class="mt-4 font-heading text-[34px] font-bold leading-none text-brand-accent sm:text-[42px]"><%= @premium_pack.name %></h1>
           <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
 
           <div class="mt-6">
             <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
-            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[44px]"><%= @premium_pack.objective %></p>
+            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[40px]">Choisir le bon modèle, puis trouver la meilleure offre</p>
           </div>
 
-          <p class="mt-8 max-w-[1180px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
+          <p class="mt-6 max-w-[640px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
             Du cadrage de votre besoin jusqu’à l’achat de votre voiture, nos deux
-            experts auto vous accompagnent à chaque étape
+            experts auto vous accompagnent à chaque étape.
           </p>
 
           <div class="mt-10">
-            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">Ce qui est inclus :</h2>
-            <ul class="mt-6 space-y-4 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
+            <h2 class="font-heading text-[22px] font-bold text-brand-accent sm:text-[26px]">Votre accompagnement en 2 grandes phases</h2>
+
+            <h3 class="mt-8 font-heading text-[18px] font-bold text-brand-accent sm:text-[20px]">Phase 1 — Choisir le bon modèle</h3>
+            <ol class="mt-2">
               <% [
-                "Questionnaire préparatoire pour cadrer votre situation, vos usages et vos priorités",
-                "Entretien n°1 (45 min) avec Charles et Jules, nos deux experts, pour identifier le modèle de voiture qui correspond vraiment à votre quotidien et à votre budget",
-                "Élaboration d’une liste réduite de 2/3 modèles",
-                "Entretien n°2 (45 min) pour valider le choix du modèle et cadrer la stratégie de recherche",
-                "Recherche, tri et analyse des offres sur le marché du neuf et de l’occasion",
-                "Élaboration d’une liste réduite de 4/5 offres, avec un comparatif détaillé et nos recommandations",
-                "Entretien n°3 (45 min) pour passer les annonces en revue, approfondir les recherches le cas échéant, arbitrer les produits annexes (assurance, garanties, entretien) et accompagner jusqu’à la finalisation de l’achat"
-              ].each do |item| %>
-                <li class="flex items-start gap-4"><span class="mt-[2px] text-[24px] leading-none text-brand-accent">✓</span><span><%= item %></span></li>
+                {
+                  number: "1",
+                  title: "Questionnaire préparatoire",
+                  body: "Nous vous envoyons un questionnaire pour préparer le premier entretien, afin de cadrer votre situation, vos usages et vos priorités."
+                },
+                {
+                  number: "2",
+                  title: "Entretien n°1 avec Charles et Jules",
+                  body: "Un échange en visio ou par téléphone.",
+                  duration: "60 min"
+                },
+                {
+                  number: "3",
+                  title: "Liste réduite de 2 à 3 modèles",
+                  body: "Nous sélectionnons les modèles les plus adaptés à vos besoins. Vous recevez un document de synthèse avec nos recommandations, des repères de prix et les points de vigilance à connaître."
+                },
+                {
+                  number: "4",
+                  title: "Entretien n°2 avec Charles et Jules",
+                  body: "Nous échangeons sur les véhicules sélectionnés et validons ensemble le modèle à acheter.",
+                  duration: "60 min"
+                }
+              ].each do |step| %>
+                <%= render "home/pack_step", step: step %>
               <% end %>
-            </ul>
+            </ol>
+
+            <h3 class="mt-8 font-heading text-[18px] font-bold text-brand-accent sm:text-[20px]">Phase 2 — Trouver la meilleure offre</h3>
+            <ol class="mt-2" start="5">
+              <% [
+                {
+                  number: "5",
+                  title: "Recherche, tri et analyse des offres",
+                  body: "Nous identifions les meilleures offres sur le marché du neuf et de l’occasion et vous proposons une sélection de 4 à 5 annonces, accompagnée d’un comparatif détaillé et de nos recommandations."
+                },
+                {
+                  number: "6",
+                  title: "Entretien n°3 avec Charles et Jules",
+                  body: "Nous passons les annonces en revue, approfondissons les recherches le cas échéant, arbitrons les produits annexes (entretien, garanties, assurance) et vous accompagnons jusqu’à la finalisation de votre achat.",
+                  duration: "60 min"
+                }
+              ].each do |step| %>
+                <%= render "home/pack_step", step: step %>
+              <% end %>
+            </ol>
           </div>
 
-          <div class="mt-8 space-y-3 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
-            <p>Après chaque entretien, vous recevez un document de synthèse.</p>
-            <p>Entre les rendez-vous, Charles &amp; Jules restent joignables par email pour répondre à vos questions.</p>
-          </div>
-
-          <div class="mt-10">
-            <h2 class="text-[22px] font-bold text-brand-text sm:text-[28px]">La jungle des annonces, c’est notre problème, pas le vôtre</h2>
-            <ul class="mt-6 list-disc space-y-3 pl-6 text-[18px] leading-[1.5] text-brand-text sm:text-[20px]">
-              <li>Nous définissons le modèle de voiture et les équipements qu’il vous faut</li>
-              <li>Puis nous cherchons, trions et analysons les offres du marché (neuf &amp; occasion). Nous décortiquons les prix, évaluons la fiabilité des annonces, repérons les fausses bonnes affaires et les angles morts. Nous creusons jusqu’à trouver les meilleures offres</li>
-              <li>Garanties, extensions, contrats d’entretien, assistance, assurances… Nous vous aidons également à comprendre ce que couvre réellement chaque option, à évaluer son rapport coût/bénéfice et à ne retenir que ce qui est pertinent pour vous</li>
-              <li>Au final, vous choisissez votre voiture et vos options en toute sérénité, au meilleur prix, sans y passer vos soirées</li>
-            </ul>
-          </div>
-
-          <div class="mt-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div class="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div class="font-heading leading-none text-brand-text">
+              <span class="text-[56px] font-black tracking-[-0.04em] sm:text-[64px]"><%= euro_price(@premium_pack.price_cents) %></span>
+              <span class="ml-2 text-[22px] font-medium sm:text-[26px]">TTC</span>
+            </div>
             <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
-            <div class="font-heading leading-none text-brand-text"><span class="text-[64px] font-black tracking-[-0.04em] sm:text-[72px]"><%= euro_price(@premium_pack.price_cents) %></span><span class="ml-2 text-[26px] font-medium sm:text-[30px]">TTC</span></div>
           </div>
-        </div>
-      </article>
+
+          <p class="mt-6 text-[15px] leading-[1.5] text-brand-text-secondary sm:text-[16px]">
+            Entre les rendez-vous, Charles &amp; Jules restent joignables par email et par téléphone pour répondre à vos questions.
+          </p>
+        </article>
+
+        <aside class="starter-pack-visual" aria-label="Ce que vous gagnez avec le Pack Premium">
+          <figure class="hidden lg:block">
+            <%= image_tag "/reference-assets/pack-premium-illustration.png",
+                  width: 1122,
+                  height: 1402,
+                  alt: "Charles et Jules analysent des annonces auto. On définit le modèle et les équipements qu’il vous faut, on analyse toutes les offres du marché, on décortique les prix et on repère les fausses bonnes affaires. Garanties, entretien, assistance, assurances : on ne garde que ce qui est pertinent. On creuse jusqu’à trouver les meilleures offres. La jungle des annonces, c’est notre problème, plus le vôtre.",
+                  class: "h-auto w-full",
+                  loading: "lazy" %>
+          </figure>
+
+          <div class="lg:hidden">
+            <div class="starter-pack-quotes">
+              <p class="starter-pack-quote">On définit le modèle et les équipements qu’il vous faut</p>
+              <p class="starter-pack-quote">On analyse toutes les offres du marché, on décortique les prix, on repère les fausses bonnes affaires</p>
+            </div>
+
+            <%= image_tag "/reference-assets/pack-premium-scene.png",
+                  width: 1040,
+                  height: 720,
+                  alt: "",
+                  class: "starter-pack-scene",
+                  loading: "lazy" %>
+
+            <div class="starter-pack-quotes">
+              <p class="starter-pack-quote">Garanties, entretien, assistance, assurances : on vous aide à ne garder que ce qui est pertinent</p>
+              <p class="starter-pack-quote">On creuse… jusqu’à trouver les meilleures offres</p>
+            </div>
+
+            <p class="starter-pack-slogan">
+              <span class="starter-pack-slogan-rule" aria-hidden="true"></span>
+              <%= image_tag @premium_pack.icon_path, alt: "", class: "h-7 w-auto" %>
+              <span class="starter-pack-slogan-rule" aria-hidden="true"></span>
+              <strong>La jungle des annonces, c’est notre problème, plus le vôtre</strong>
+            </p>
+          </div>
+        </aside>
+      </div>
     </div>
   </section>
 </main>

@@ -70,4 +70,26 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "img[src='/reference-assets/starter-pack-illustration.png']"
     assert_select "a[href='#{new_pack_booking_path(starter)}']", text: "Je choisis cette offre"
   end
+
+  test "pack premium page follows the two-phase layout" do
+    premium = Pack.find_by!(slug: "pack-premium")
+
+    get pack_premium_path
+
+    assert_response :success
+    assert_select "h2", text: "Votre accompagnement en 2 grandes phases"
+    assert_select "h3", text: "Phase 1 — Choisir le bon modèle"
+    assert_select "h3", text: "Phase 2 — Trouver la meilleure offre"
+    assert_select "h4", text: "Questionnaire préparatoire"
+    assert_select "h4", text: "Entretien n°1 avec Charles et Jules"
+    assert_select "h4", text: "Liste réduite de 2 à 3 modèles"
+    assert_select "h4", text: "Entretien n°2 avec Charles et Jules"
+    assert_select "h4", text: "Recherche, tri et analyse des offres"
+    assert_select "h4", text: "Entretien n°3 avec Charles et Jules"
+    assert_select ".starter-pack-duration", text: /60 min/
+    assert_select "p", text: "On définit le modèle et les équipements qu’il vous faut"
+    assert_select "strong", text: "La jungle des annonces, c’est notre problème, plus le vôtre"
+    assert_select "img[src='/reference-assets/pack-premium-illustration.png']"
+    assert_select "a[href='#{new_pack_booking_path(premium)}']", text: "Je choisis cette offre"
+  end
 end
