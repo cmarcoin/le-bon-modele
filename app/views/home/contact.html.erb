@@ -1,55 +1,96 @@
 <% content_for :title, "Contact | Le Bon Modèle" %>
+<% charles_phone = site_copy("contact.phone_charles") %>
+<% jules_phone = site_copy("contact.phone_jules") %>
+<% charles_label = site_copy("contact.phone_charles_label", "Charles") %>
+<% jules_label = site_copy("contact.phone_jules_label", "Jules") %>
 
 <%= render "home/header" %>
 
 <main class="relative pt-28">
   <%= render "home/background_pattern" %>
   <section class="relative px-6 py-14 lg:px-12">
-    <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-      <div>
-        <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-coral">Contact</p>
-        <h1 class="mt-4 font-heading text-5xl font-black leading-[0.95] text-brand-primary">Vous êtes perdu ? Parlons-en.</h1>
-        <p class="mt-6 text-lg leading-8 text-brand-text-secondary">
-          Décrivez votre situation, votre budget et vos contraintes. Nous vous répondons pour vous orienter vers l'accompagnement le plus adapté.
-        </p>
-        <%= image_tag "/reference-assets/perdu.gif", alt: "Illustration d'une personne perdue", class: "mt-8 h-auto w-full max-w-md", loading: "lazy" %>
+    <div class="mx-auto max-w-[1280px]">
+      <div class="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
+        <div>
+          <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary"><%= site_copy("contact.hero_title", "Parlons de votre projet automobile") %></h1>
+          <p class="mt-6 text-2xl font-bold text-brand-text"><%= site_copy("contact.hero_subtitle", "Une question, un doute, un besoin précis ?") %></p>
+          <p class="mt-3 text-lg leading-8 text-brand-text-secondary"><%= site_copy("contact.hero_body", "On vous répond rapidement et clairement.") %></p>
+        </div>
+        <%= image_tag "/reference-assets/about-hero.png", width: 640, height: 480, alt: "Un conseiller Le Bon Modèle à son bureau", class: "h-auto w-full max-w-lg justify-self-end", loading: "lazy" %>
       </div>
 
-      <div class="rounded-[28px] bg-white p-6 shadow-brand sm:p-8">
-        <%= form_with model: @contact_inquiry, url: submit_contact_path, class: "grid gap-5" do |form| %>
-          <% if @contact_inquiry.errors.any? %>
-            <div class="rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
-              <ul class="list-disc pl-5 text-sm">
-                <% @contact_inquiry.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
+      <div class="mt-12 grid items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <div class="rounded-[28px] bg-white p-6 shadow-brand sm:p-8">
+          <h2 class="font-heading text-3xl font-bold text-brand-text">Écrivez-nous</h2>
+
+          <%= form_with model: @contact_inquiry, url: submit_contact_path, class: "mt-6 grid gap-5" do |form| %>
+            <% if @contact_inquiry.errors.any? %>
+              <div class="rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+                <ul class="list-disc pl-5 text-sm">
+                  <% @contact_inquiry.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <%= form.label :first_name, "Prénom", class: "grid gap-2 text-sm font-bold text-brand-text" %>
+                <%= form.text_field :first_name, required: true, placeholder: "Votre prénom", class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+              </div>
+              <div>
+                <%= form.label :last_name, "Nom", class: "grid gap-2 text-sm font-bold text-brand-text" %>
+                <%= form.text_field :last_name, required: true, placeholder: "Votre nom", class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+              </div>
+            </div>
+
+            <div>
+              <%= form.label :email, "Votre email", class: "grid gap-2 text-sm font-bold text-brand-text" %>
+              <%= form.email_field :email, required: true, placeholder: "Email", class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+            </div>
+
+            <div>
+              <%= form.label :message, "Message", class: "grid gap-2 text-sm font-bold text-brand-text" %>
+              <%= form.text_area :message, required: true, rows: 6, placeholder: "Votre message", class: "w-full min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+            </div>
+
+            <div class="hidden" aria-hidden="true">
+              <%= form.label :company, "Entreprise" %>
+              <%= form.text_field :company, tabindex: "-1", autocomplete: "off" %>
+            </div>
+
+            <div class="flex flex-col items-center gap-3">
+              <%= form.submit "Envoyer ma demande", class: "inline-flex min-h-[56px] cursor-pointer items-center justify-center rounded-full bg-brand-coral px-10 text-[18px] font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
+              <p class="text-sm italic text-brand-text-secondary">Réponse sous 24 h</p>
             </div>
           <% end %>
+        </div>
 
-          <div class="grid gap-5 sm:grid-cols-2">
-            <div>
-              <%= form.label :first_name, "Prénom", class: "grid gap-2 text-sm font-bold text-brand-primary" %>
-              <%= form.text_field :first_name, required: true, class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
-            </div>
-            <div>
-              <%= form.label :email, "Email", class: "grid gap-2 text-sm font-bold text-brand-primary" %>
-              <%= form.email_field :email, required: true, class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
-            </div>
+        <aside class="rounded-[28px] bg-brand-primary-light p-6 sm:p-8" data-controller="phone-reveal">
+          <h2 class="font-heading text-3xl font-bold text-brand-primary">Appelez-nous</h2>
+          <p class="mt-3 leading-7 text-brand-primary"><%= site_copy("contact.phone_intro", "Échangez directement avec l’un de nos conseillers.") %></p>
+
+          <button type="button" class="mt-6 inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-brand-primary px-6 font-bold text-white" data-action="phone-reveal#reveal" data-phone-reveal-target="button">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Afficher le numéro
+          </button>
+
+          <div class="mt-6 hidden space-y-4" data-phone-reveal-target="panel">
+            <% [[charles_label, charles_phone], [jules_label, jules_phone]].each do |label, phone| %>
+              <div class="rounded-[20px] bg-white/70 px-5 py-4">
+                <p class="text-sm font-bold text-brand-primary"><%= label %></p>
+                <% if phone.present? %>
+                  <%= link_to phone, "tel:#{phone.gsub(/\s+/, '')}", class: "mt-1 block text-xl font-black text-brand-text" %>
+                <% else %>
+                  <p class="mt-1 text-sm text-brand-text-secondary">Numéro à renseigner dans l’administration.</p>
+                <% end %>
+              </div>
+            <% end %>
           </div>
-
-          <div>
-            <%= form.label :message, "Votre besoin", class: "grid gap-2 text-sm font-bold text-brand-primary" %>
-            <%= form.text_area :message, required: true, rows: 6, class: "w-full min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
-          </div>
-
-          <div class="hidden" aria-hidden="true">
-            <%= form.label :company, "Entreprise" %>
-            <%= form.text_field :company, tabindex: "-1", autocomplete: "off" %>
-          </div>
-
-          <%= form.submit "Envoyer ma demande", class: "inline-flex min-h-[60px] cursor-pointer items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
-        <% end %>
+        </aside>
       </div>
     </div>
   </section>

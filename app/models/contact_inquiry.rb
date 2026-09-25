@@ -3,11 +3,12 @@ class ContactInquiry
   include ActiveModel::Attributes
 
   attribute :first_name, :string
+  attribute :last_name, :string
   attribute :email, :string
   attribute :message, :string
   attribute :company, :string
 
-  validates :first_name, :email, :message, presence: true
+  validates :first_name, :last_name, :email, :message, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :company_must_be_blank
 

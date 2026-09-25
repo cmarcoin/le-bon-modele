@@ -1,4 +1,23 @@
 module ApplicationHelper
+  def site_copy(key, default = "")
+    SiteCopy.fetch(key, default)
+  end
+
+  def highlight_le_bon_modele(text)
+    safe_text = h(text.to_s)
+    highlighted = safe_text.gsub(/Le Bon Modèle/i) do |match|
+      %(<span class="inline-block rounded-xl bg-brand-primary-light px-2 py-0.5 font-black text-brand-primary">#{match}</span>)
+    end
+    highlighted.html_safe
+  end
+
+  def meeting_mode_label(mode)
+    {
+      "visio" => "En visio",
+      "phone" => "Par téléphone"
+    }.fetch(mode, mode)
+  end
+
   def euro_price(cents)
     number_to_currency(cents.to_i / 100.0, unit: "€", separator: ",", delimiter: " ", format: "%n%u", precision: cents.to_i % 100 == 0 ? 0 : 2)
   end
@@ -29,7 +48,7 @@ module ApplicationHelper
 
   def paris_day_label(date)
     day_names = %w[Dimanche Lundi Mardi Mercredi Jeudi Vendredi Samedi]
-    month_names = %w[janvier fevrier mars avril mai juin juillet aout septembre octobre novembre decembre]
+    month_names = %w[janvier février mars avril mai juin juillet août septembre octobre novembre décembre]
     "#{day_names[date.wday]} #{date.day} #{month_names[date.month - 1]}"
   end
 
@@ -52,6 +71,7 @@ module ApplicationHelper
         "Client : #{booking.customer_name}",
         "Email : #{booking.customer_email}",
         "Téléphone : #{booking.customer_phone.presence || 'Non renseigné'}",
+        "Mode : #{meeting_mode_label(booking.meeting_mode).presence || 'Non renseigné'}",
         "Pack : #{booking.pack.name}",
         "Montant : #{euro_price(booking.amount_cents)} TTC"
       ].join("\n"),

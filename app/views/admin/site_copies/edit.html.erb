@@ -1,0 +1,29 @@
+<% content_for :title, "Modifier #{@site_copy.label} | Admin" %>
+
+<%= render "admin/nav" %>
+
+<main class="px-6 py-10">
+  <div class="mx-auto max-w-3xl rounded-[28px] border border-[#E7E2DC] bg-white p-8 shadow-soft">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand-text-secondary"><%= SiteCopy::GROUPS.fetch(@site_copy.group, @site_copy.group) %></p>
+    <h1 class="mt-2 font-heading text-4xl font-bold text-brand-primary"><%= @site_copy.label %></h1>
+    <p class="mt-2 text-sm text-brand-text-secondary"><%= @site_copy.key %></p>
+
+    <%= form_with model: [:admin, @site_copy], class: "mt-8 space-y-5" do |form| %>
+      <% if @site_copy.errors.any? %>
+        <div class="rounded-[18px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+          <%= @site_copy.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.label :value, "Texte", class: "text-sm font-bold" %>
+        <%= form.text_area :value, rows: 8, class: "mt-2 w-full rounded-[24px] border border-[#E7E2DC] px-5 py-4" %>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <%= form.submit "Enregistrer", class: "inline-flex min-h-[56px] items-center rounded-full bg-brand-primary px-8 font-bold text-white" %>
+        <%= link_to "Annuler", admin_site_copies_path, class: "inline-flex min-h-[56px] items-center rounded-full border border-[#E7E2DC] px-8 font-bold text-brand-text" %>
+      </div>
+    <% end %>
+  </div>
+</main>

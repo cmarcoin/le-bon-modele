@@ -24,4 +24,17 @@ class Pack < ApplicationRecord
   def stripe_ready?
     stripe_product_id.present? && stripe_price_id.present?
   end
+
+  def includes_items
+    includes_text.to_s.split(/\r?\n/).map(&:strip).compact_blank
+  end
+
+  def stripe_description
+    case slug
+    when "starter-pack"
+      "Identifier le modèle de voiture qu’il vous faut"
+    else
+      objective
+    end
+  end
 end

@@ -2,12 +2,12 @@
   [ "Accueil", root_path ],
   [ "Qui sommes-nous ?", about_path ],
   [ "FAQ", faq_path ],
-  [ "Starter Pack", starter_pack_path ],
-  [ "Pack Premium", pack_premium_path ]
+  [ "Pack Conseil", starter_pack_path ],
+  [ "Pack Achat", pack_premium_path ]
 ] %>
 
 <header class="site-header" data-controller="site-header" data-site-header-scrolled-class="is-scrolled">
-  <div class="container-site flex items-center justify-between gap-6 px-6 py-4 lg:px-8">
+  <div class="container-site flex items-center justify-between gap-6 px-8 py-4 lg:px-12">
     <%= link_to root_path, class: "flex shrink-0 items-center", aria: { label: "Le Bon Modèle" } do %>
       <%= image_tag "/reference-assets/logo.png", alt: "Logo", class: "main-logo", id: "headerLogo" %>
     <% end %>
@@ -43,4 +43,4 @@
   </div>
 </header>
 
-<%= render "shared/flash", class: "container-site mx-auto px-6 pb-4 pt-20 lg:px-8" %>
+<%= render "shared/flash", class: "container-site mx-auto px-8 pb-4 pt-20 lg:px-12" %>

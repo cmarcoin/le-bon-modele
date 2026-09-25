@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_12_170000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_21_220000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_170000) do
     t.string "customer_email", null: false
     t.string "customer_name", null: false
     t.string "customer_phone"
+    t.string "meeting_mode"
     t.bigint "pack_id", null: false
     t.datetime "paid_at"
     t.datetime "payment_reminder_sent_at"
@@ -64,6 +65,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_170000) do
     t.text "description", null: false
     t.integer "duration_minutes", default: 45, null: false
     t.string "icon_path", null: false
+    t.text "includes_text"
     t.string "name", null: false
     t.string "objective", null: false
     t.integer "price_cents", null: false
@@ -97,6 +99,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_170000) do
     t.index ["stripe_checkout_session_id"], name: "index_payment_transactions_on_stripe_checkout_session_id", unique: true
     t.index ["stripe_payment_intent_id"], name: "index_payment_transactions_on_stripe_payment_intent_id"
     t.index ["user_id"], name: "index_payment_transactions_on_user_id"
+  end
+
+  create_table "site_copies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "group", null: false
+    t.string "key", null: false
+    t.string "label", null: false
+    t.datetime "updated_at", null: false
+    t.text "value", default: "", null: false
+    t.index ["group"], name: "index_site_copies_on_group"
+    t.index ["key"], name: "index_site_copies_on_key", unique: true
   end
 
   create_table "users", force: :cascade do |t|

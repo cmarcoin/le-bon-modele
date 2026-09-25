@@ -10,18 +10,21 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @pack = Pack.create!(
       slug: "starter-pack",
-      name: "Starter Pack",
+      name: "Pack Conseil",
       objective: "Identifier le modele",
       description: "Description",
+      includes_text: "Un questionnaire préparatoire\nUn premier entretien de 60 minutes avec Charles et Jules",
       price_cents: 5_900,
       currency: "eur",
       duration_minutes: 45,
       icon_path: "/reference-assets/icons/starter-pack.svg",
-      accent_class: "text-brand-accent"
+      accent_class: "text-brand-primary"
     )
+    starts_at = 3.days.from_now.beginning_of_week(:monday).change(hour: 10) + 1.day
+    starts_at += 1.day if starts_at.past?
     @slot = AvailabilitySlot.create!(
-      starts_at: 2.days.from_now.change(hour: 10),
-      ends_at: 2.days.from_now.change(hour: 10, min: 45),
+      starts_at: starts_at,
+      ends_at: starts_at + 45.minutes,
       timezone: "Europe/Paris"
     )
   end
@@ -30,7 +33,9 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     get new_pack_booking_path(@pack)
 
     assert_response :success
-    assert_select "h2", "Réservation et paiement"
+    assert_select "p", text: "1. Réservez votre premier entretien (60 min)"
+    assert_select "p", text: /Sélectionnez une date et un horaire/
+    assert_select "legend", text: "Préférez-vous échanger en visio ou par téléphone ?"
     assert_select "[data-controller='booking-scheduler']"
     assert_select "[data-booking-scheduler-target='calendar']"
     assert_select "[data-booking-scheduler-target='monthLabel']"
@@ -62,7 +67,8 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
                 availability_slot_id: @slot.id,
                 customer_name: "Buyer Test",
                 customer_email: "buyer@example.com",
-                customer_phone: "0600000000"
+                customer_phone: "0600000000",
+                meeting_mode: "visio"
               }
             }
           end
@@ -77,6 +83,7 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "pending_payment", booking.status
     assert_equal "cs_test_123", booking.stripe_checkout_session_id
     assert_equal 5_900, booking.payment_transaction.amount_cents
+    assert_equal "visio", booking.meeting_mode
   end
 
   test "allows retrying checkout after a failed stripe initialization" do
@@ -102,7 +109,8 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
             availability_slot_id: @slot.id,
             customer_name: "Buyer Test",
             customer_email: "buyer@example.com",
-            customer_phone: "0600000000"
+            customer_phone: "0600000000",
+            meeting_mode: "phone"
           }
         }
       end
@@ -130,5 +138,22 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_includes AvailabilitySlot.available_for(@pack), @slot
+  end
+
+  test "hides weekend days and slots from the booking calendar" do
+    saturday = Time.current.in_time_zone("Europe/Paris").next_occurring(:saturday).change(hour: 10)
+    saturday_slot = AvailabilitySlot.create!(
+      starts_at: saturday,
+      ends_at: saturday + 45.minutes,
+      timezone: "Europe/Paris"
+    )
+
+    get new_pack_booking_path(@pack)
+
+    assert_response :success
+    assert_select "input[type=radio][value='#{saturday_slot.id}']", count: 0
+    assert_select "span", text: "SAM.", count: 0
+    assert_select "span", text: "DIM.", count: 0
+    assert_select "p", text: /Le Pack Conseil comprend/
   end
 end

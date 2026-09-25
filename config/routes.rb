@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         post :resend_payment_link
       end
     end
+    resources :site_copies, only: %i[index edit update]
   end
 
   resources :packs, param: :slug, only: [] do

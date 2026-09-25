@@ -16,6 +16,7 @@ class ContactSubmissionTest < ActionDispatch::IntegrationTest
       post submit_contact_path, params: {
         contact_inquiry: {
           first_name: "Jean",
+          last_name: "Dupont",
           email: "jean@example.com",
           message: "Je cherche une voiture familiale."
         }
@@ -31,6 +32,7 @@ class ContactSubmissionTest < ActionDispatch::IntegrationTest
       post submit_contact_path, params: {
         contact_inquiry: {
           first_name: "Jean",
+          last_name: "Dupont",
           email: "jean@example.com",
           message: "Spam",
           company: "Evil Corp"

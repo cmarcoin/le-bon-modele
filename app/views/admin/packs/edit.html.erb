@@ -25,6 +25,10 @@
         <%= form.label :description, "Description courte", class: "text-sm font-bold" %>
         <%= form.text_area :description, rows: 4, class: "mt-2 w-full rounded-[24px] border border-[#E7E2DC] px-5 py-4" %>
       </div>
+      <div>
+        <%= form.label :includes_text, "Ce que le pack comprend (une ligne par élément)", class: "text-sm font-bold" %>
+        <%= form.text_area :includes_text, rows: 6, class: "mt-2 w-full rounded-[24px] border border-[#E7E2DC] px-5 py-4" %>
+      </div>
       <div class="grid gap-4 sm:grid-cols-2">
         <div>
           <%= form.label :price_cents, "Prix en centimes TTC", class: "text-sm font-bold" %>

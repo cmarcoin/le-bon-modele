@@ -3,47 +3,52 @@ require "test_helper"
 class HomeControllerTest < ActionDispatch::IntegrationTest
   setup do
     Pack.find_or_create_by!(slug: "starter-pack") do |pack|
-      pack.name = "Starter Pack"
+      pack.name = "Pack Conseil"
       pack.objective = "Identifier le modèle qu'il vous faut"
       pack.description = "Starter description"
       pack.price_cents = 5_900
       pack.currency = "eur"
       pack.duration_minutes = 45
       pack.icon_path = "/reference-assets/icons/starter-pack.svg"
-      pack.accent_class = "text-brand-accent"
-    end
+      pack.accent_class = "text-brand-primary"
+    end.tap { |pack| pack.update!(name: "Pack Conseil", accent_class: "text-brand-primary") }
 
     Pack.find_or_create_by!(slug: "pack-premium") do |pack|
-      pack.name = "Pack Premium"
+      pack.name = "Pack Achat"
       pack.objective = "Vous accompagner jusqu'à l'achat"
       pack.description = "Premium description"
       pack.price_cents = 29_900
       pack.currency = "eur"
       pack.duration_minutes = 45
       pack.icon_path = "/reference-assets/icons/pack-premium.svg"
-      pack.accent_class = "text-brand-coral"
-    end
+      pack.accent_class = "text-brand-primary"
+    end.tap { |pack| pack.update!(name: "Pack Achat", accent_class: "text-brand-primary") }
   end
 
   test "serves the reference-inspired home page" do
     get root_path
 
     assert_response :success
-    assert_select "h1", /Choisissez/
-    assert_select "[data-controller~='budget']"
-    assert_select "a", text: "Starter Pack"
-    assert_select "a", text: "Pack Premium"
-    starter = Pack.find_by!(slug: "starter-pack")
-    assert_select "a[href='#{new_pack_booking_path(starter)}']"
+    assert_select "h1", /Choisissez la voiture/
+    assert_select "h1", /Pas celle/
+    assert_select "img[src='/reference-assets/contact.gif']"
+    assert_select "h2", text: "Vous ne savez pas quelle voiture choisir ?"
+    assert_select "body", text: /La jungle des annonces/
+    assert_select "a", text: "Pack Conseil"
+    assert_select "a", text: "Pack Achat"
+    assert_select "a[href='#{starter_pack_path}'] span", text: "Découvrir"
+    assert_select "a[href='#{pack_premium_path}'] span", text: "Découvrir"
+    assert_select "body", text: /Le Bon Modèle/
+    assert_select "body", text: /il n’y a pas d’IA/
   end
 
   test "serves the linked marketing pages" do
     {
-      about_path => "Rendre l'achat auto lisible",
+      about_path => "De vrais conseillers, à vos côtés",
       faq_path => "Questions fréquentes",
-      starter_pack_path => "Starter Pack",
-      pack_premium_path => "Pack Premium",
-      contact_path => "Vous êtes perdu"
+      starter_pack_path => "Pack Conseil",
+      pack_premium_path => "Pack Achat",
+      contact_path => "Parlons de votre projet automobile"
     }.each do |path, heading|
       get path
 
@@ -59,10 +64,10 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h2", text: "Votre accompagnement en 4 étapes"
-    assert_select "h3", text: "Questionnaire préparatoire"
-    assert_select "h3", text: "Premier entretien avec Charles et Jules"
-    assert_select "h3", text: "Liste réduite de 2 à 3 modèles"
-    assert_select "h3", text: "Entretien de suivi avec Charles et Jules"
+    assert_select "h4", text: "Questionnaire préparatoire"
+    assert_select "h4", text: "Premier entretien avec Charles et Jules"
+    assert_select "h4", text: "Liste réduite de 2 à 3 modèles"
+    assert_select "h4", text: "Entretien de suivi avec Charles et Jules"
     assert_select ".starter-pack-duration", text: /60 min/
     assert_select ".starter-pack-duration", text: /30 min/
     assert_select "p", text: "On clarifie vos vrais besoins"
@@ -90,6 +95,15 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "p", text: "On définit le modèle et les équipements qu’il vous faut"
     assert_select "strong", text: "La jungle des annonces, c’est notre problème, plus le vôtre"
     assert_select "img[src='/reference-assets/pack-premium-illustration.png']"
+    assert_select "body", text: /Charles et Jules restent joignables/
     assert_select "a[href='#{new_pack_booking_path(premium)}']", text: "Je choisis cette offre"
+  end
+
+  test "contact page shows the phone reveal control" do
+    get contact_path
+
+    assert_response :success
+    assert_select "button", text: "Afficher le numéro"
+    assert_select "input[name='contact_inquiry[last_name]']"
   end
 end

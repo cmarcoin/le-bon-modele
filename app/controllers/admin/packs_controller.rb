@@ -37,7 +37,7 @@ module Admin
     end
 
     def pack_params
-      params.require(:pack).permit(:name, :objective, :description, :price_cents, :duration_minutes, :active)
+      params.require(:pack).permit(:name, :objective, :description, :includes_text, :price_cents, :duration_minutes, :active)
     end
 
     def sync_pack!(pack)

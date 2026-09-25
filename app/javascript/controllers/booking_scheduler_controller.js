@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 const MONTHS = [
-  "janvier", "fevrier", "mars", "avril", "mai", "juin",
-  "juillet", "aout", "septembre", "octobre", "novembre", "decembre"
+  "janvier", "février", "mars", "avril", "mai", "juin",
+  "juillet", "août", "septembre", "octobre", "novembre", "décembre"
 ]
 
 export default class extends Controller {
@@ -73,7 +73,8 @@ export default class extends Controller {
     const [ year, month ] = this.currentMonth.split("-").map(Number)
     const firstDay = new Date(year, month - 1, 1)
     const daysInMonth = new Date(year, month, 0).getDate()
-    const startOffset = (firstDay.getDay() + 6) % 7
+    let startOffset = (firstDay.getDay() + 6) % 7
+    if (startOffset >= 5) startOffset = 0
 
     this.monthLabelTarget.textContent = `${MONTHS[month - 1]} ${year}`
 
@@ -83,6 +84,10 @@ export default class extends Controller {
     }
 
     for (let day = 1; day <= daysInMonth; day += 1) {
+      const date = new Date(year, month - 1, day)
+      const weekday = date.getDay()
+      if (weekday === 0 || weekday === 6) continue
+
       const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
       const available = this.availableDateSet.has(dateKey)
       const selected = dateKey === this.selectedDate
@@ -174,7 +179,7 @@ export default class extends Controller {
 
     const time = label.dataset.time
     const date = label.dataset.dateLabel
-    this.summaryTarget.textContent = `${date} a ${time}`
+    this.summaryTarget.textContent = `${date} à ${time}`
   }
 
   formatSelectedDayLabel(dateKey) {

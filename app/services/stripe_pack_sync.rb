@@ -47,7 +47,7 @@ class StripePackSync
   def product_attributes
     {
       name: pack.name,
-      description: pack.objective,
+      description: pack.stripe_description,
       tax_code: CONSULTING_TAX_CODE,
       active: pack.active?,
       metadata: {
@@ -74,7 +74,8 @@ class StripePackSync
     price = Stripe::Price.retrieve(pack.stripe_price_id)
     price.active &&
       price.unit_amount == pack.price_cents &&
-      price.currency == pack.currency
+      price.currency == pack.currency &&
+      price.tax_behavior.to_s == "inclusive"
   rescue Stripe::InvalidRequestError
     false
   end

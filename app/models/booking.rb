@@ -1,5 +1,6 @@
 class Booking < ApplicationRecord
   STATUSES = %w[pending_payment paid canceled].freeze
+  MEETING_MODES = %w[visio phone].freeze
   PAYMENT_REMINDER_DELAY = 1.hour
   PAYMENT_RESUME_TOKEN_EXPIRY = 7.days
 
@@ -14,6 +15,7 @@ class Booking < ApplicationRecord
   validates :customer_name, :customer_email, :amount_cents, :currency, presence: true
   validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :amount_cents, numericality: { greater_than: 0, only_integer: true }
+  validates :meeting_mode, inclusion: { in: MEETING_MODES }, allow_blank: true
   validate :slot_matches_pack
   validate :availability_slot_available
 

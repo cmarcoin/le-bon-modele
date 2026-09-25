@@ -2,29 +2,48 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
-Pack.find_or_create_by!(slug: "starter-pack") do |pack|
-  pack.name = "Starter pack"
-  pack.objective = "Identifier le modèle qu'il vous faut"
-  pack.description = "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget."
-  pack.price_cents = 5_900
-  pack.currency = "eur"
-  pack.duration_minutes = 45
-  pack.icon_path = "/reference-assets/icons/starter-pack.svg"
-  pack.accent_class = "text-brand-accent"
-  pack.active = true
-end
+starter = Pack.find_or_initialize_by(slug: "starter-pack")
+starter.assign_attributes(
+  name: "Pack Conseil",
+  objective: "Identifier le modèle qu'il vous faut",
+  description: "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget.",
+  includes_text: [
+    "Un questionnaire préparatoire",
+    "Un premier entretien de 60 minutes avec Charles et Jules",
+    "Un document de synthèse et une pré-sélection de modèles",
+    "Un entretien de suivi, de 30 minutes"
+  ].join("\n"),
+  price_cents: 5_900,
+  currency: "eur",
+  duration_minutes: 45,
+  icon_path: "/reference-assets/icons/starter-pack.svg",
+  accent_class: "text-brand-primary",
+  active: true
+)
+starter.save!
 
-Pack.find_or_create_by!(slug: "pack-premium") do |pack|
-  pack.name = "Pack Premium"
-  pack.objective = "Vous accompagner jusqu'à l'achat"
-  pack.description = "Du cadrage de votre besoin jusqu'à l'achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape."
-  pack.price_cents = 29_900
-  pack.currency = "eur"
-  pack.duration_minutes = 45
-  pack.icon_path = "/reference-assets/icons/pack-premium.svg"
-  pack.accent_class = "text-brand-coral"
-  pack.active = true
-end
+premium = Pack.find_or_initialize_by(slug: "pack-premium")
+premium.assign_attributes(
+  name: "Pack Achat",
+  objective: "Vous accompagner jusqu'à l'achat",
+  description: "Du cadrage de votre besoin jusqu'à l'achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.",
+  includes_text: [
+    "Un questionnaire préparatoire",
+    "Trois entretiens, de 60 minutes chacun, avec Charles et Jules",
+    "Un document de synthèse avec une présélection de 2 à 3 modèles",
+    "Une sélection de 4 à 5 annonces avec un comparatif détaillé",
+    "Un accompagnement pour répondre à vos questions entre les rendez-vous"
+  ].join("\n"),
+  price_cents: 29_900,
+  currency: "eur",
+  duration_minutes: 45,
+  icon_path: "/reference-assets/icons/pack-premium.svg",
+  accent_class: "text-brand-primary",
+  active: true
+)
+premium.save!
+
+SiteCopy.seed!
 
 if ENV["STRIPE_SECRET_KEY"].present?
   Pack.find_each do |pack|

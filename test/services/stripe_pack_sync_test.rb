@@ -2,7 +2,7 @@ require "test_helper"
 
 class StripePackSyncTest < ActiveSupport::TestCase
   FakeProduct = Struct.new(:id, keyword_init: true)
-  FakePrice = Struct.new(:id, :active, :unit_amount, :currency, keyword_init: true)
+  FakePrice = Struct.new(:id, :active, :unit_amount, :currency, :tax_behavior, keyword_init: true)
 
   setup do
     @pack = Pack.create!(
@@ -31,12 +31,12 @@ class StripePackSyncTest < ActiveSupport::TestCase
     Stripe::Product.define_singleton_method(:update) { |id, _params| FakeProduct.new(id:) }
     Stripe::Product.define_singleton_method(:retrieve) { |_id| raise Stripe::InvalidRequestError.new("missing", "id") }
     Stripe::Price.define_singleton_method(:create) do |params|
-      price = FakePrice.new(id: "price_#{created_prices.size + 1}", active: true, unit_amount: params[:unit_amount], currency: params[:currency])
+      price = FakePrice.new(id: "price_#{created_prices.size + 1}", active: true, unit_amount: params[:unit_amount], currency: params[:currency], tax_behavior: params[:tax_behavior])
       created_prices << price
       price
     end
     Stripe::Price.define_singleton_method(:retrieve) { |_id| raise Stripe::InvalidRequestError.new("missing", "id") }
-    Stripe::Price.define_singleton_method(:update) { |id, _params| FakePrice.new(id:, active: false, unit_amount: 5_900, currency: "eur") }
+    Stripe::Price.define_singleton_method(:update) { |id, _params| FakePrice.new(id:, active: false, unit_amount: 5_900, currency: "eur", tax_behavior: "inclusive") }
   end
 
   teardown do
@@ -61,7 +61,7 @@ class StripePackSyncTest < ActiveSupport::TestCase
     @pack.update!(stripe_product_id: "prod_existing", stripe_price_id: "price_existing")
 
     Stripe::Product.define_singleton_method(:retrieve) { |_id| FakeProduct.new(id: "prod_existing") }
-    Stripe::Price.define_singleton_method(:retrieve) { |_id| FakePrice.new(id: "price_existing", active: true, unit_amount: 5_900, currency: "eur") }
+    Stripe::Price.define_singleton_method(:retrieve) { |_id| FakePrice.new(id: "price_existing", active: true, unit_amount: 5_900, currency: "eur", tax_behavior: "inclusive") }
 
     @pack.update!(price_cents: 6_900)
     StripePackSync.sync!(@pack)

@@ -61,14 +61,9 @@ img {
 }
 
 .main-logo {
-  height: 40px;
+  height: 56px;
   object-fit: contain;
-  transition: height 200ms ease;
   width: auto;
-}
-
-.site-header.is-scrolled .main-logo {
-  height: 30px;
 }
 
 .nav-link {
@@ -500,9 +495,9 @@ input[type="range"].budget-track::-moz-range-thumb {
 
 .starter-pack-step-number {
   align-items: center;
-  background: #34c759;
+  background: #D0F3BC;
   border-radius: 999px;
-  color: #ffffff;
+  color: #1F5E3B;
   display: inline-flex;
   flex: 0 0 auto;
   font-family: Outfit, sans-serif;
@@ -516,10 +511,11 @@ input[type="range"].budget-track::-moz-range-thumb {
 
 .starter-pack-duration {
   align-items: center;
-  background: #34c759;
+  background: #D0F3BC;
   border-radius: 999px;
-  color: #ffffff;
+  color: #1F5E3B;
   display: inline-flex;
+  flex: 0 0 auto;
   font-size: 0.8rem;
   font-weight: 800;
   gap: 0.35rem;

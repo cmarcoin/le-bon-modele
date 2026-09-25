@@ -53,6 +53,13 @@ class StripeCheckoutSession
       payment_method_types: [ "card" ],
       billing_address_collection: "required",
       automatic_tax: { enabled: true },
+      payment_intent_data: {
+        statement_descriptor: "LE BON MODELE",
+        description: "Le Bon Modèle — #{booking.pack.name}"
+      },
+      custom_text: {
+        submit: { message: "Paiement sécurisé — Le Bon Modèle" }
+      },
       line_items: [ line_item ],
       client_reference_id: booking.id,
       expires_at: SESSION_EXPIRY.from_now.to_i,

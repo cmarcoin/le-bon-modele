@@ -345,6 +345,21 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", admin_booking_path(pending_booking)
   end
 
+  test "admin can edit site copy" do
+    sign_in @admin
+    SiteCopy.seed!
+    copy = SiteCopy.find_by!(key: "home.hero_title")
+
+    get admin_site_copies_path
+    assert_response :success
+    assert_select "h1", "Textes du site"
+
+    patch admin_site_copy_path(copy), params: { site_copy: { value: "Slogan modifié" } }
+
+    assert_redirected_to admin_site_copies_path
+    assert_equal "Slogan modifié", copy.reload.value
+  end
+
   private
 
   def create_pending_booking_for_admin(session_id: "cs_admin_pending")

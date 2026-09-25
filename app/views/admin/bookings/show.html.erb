@@ -25,6 +25,10 @@
         <dd class="mt-2 font-bold"><%= @booking.customer_phone.presence || "Non renseigné" %></dd>
       </div>
       <div class="rounded-[20px] bg-brand-beige p-5">
+        <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Mode d'échange</dt>
+        <dd class="mt-2 font-bold"><%= meeting_mode_label(@booking.meeting_mode).presence || "Non renseigné" %></dd>
+      </div>
+      <div class="rounded-[20px] bg-brand-beige p-5">
         <dt class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Rendez-vous</dt>
         <dd class="mt-2 font-bold"><%= paris_datetime(@booking.availability_slot.starts_at) %></dd>
       </div>

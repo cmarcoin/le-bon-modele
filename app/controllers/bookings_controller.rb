@@ -55,7 +55,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:availability_slot_id, :customer_name, :customer_email, :customer_phone)
+    params.require(:booking).permit(:availability_slot_id, :customer_name, :customer_email, :customer_phone, :meeting_mode)
   end
 
   def assign_slot_calendar
@@ -69,7 +69,7 @@ class BookingsController < ApplicationController
   def grouped_availability_slots
     AvailabilitySlot.available_for(@pack).group_by do |slot|
       slot.starts_at.in_time_zone(AvailabilitySlot::DEFAULT_TIMEZONE).to_date
-    end
+    end.reject { |date, _slots| date.saturday? || date.sunday? }
   end
 
   def parse_calendar_month(value)

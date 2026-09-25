@@ -26,6 +26,7 @@ class HomeController < ApplicationController
     if @contact_inquiry.valid?
       ContactMailer.inquiry(
         first_name: @contact_inquiry.first_name,
+        last_name: @contact_inquiry.last_name,
         email: @contact_inquiry.email,
         message: @contact_inquiry.message
       ).deliver_later
@@ -39,12 +40,12 @@ class HomeController < ApplicationController
   private
 
   def contact_inquiry_params
-    params.require(:contact_inquiry).permit(:first_name, :email, :message, :company)
+    params.require(:contact_inquiry).permit(:first_name, :last_name, :email, :message, :company)
   end
 
   def set_pack_catalog
-    @starter_pack = Pack.find_by(slug: "starter-pack") || fallback_pack("starter-pack", "Starter pack", 5900, "/reference-assets/icons/starter-pack.svg", "text-brand-accent", "Identifier le modèle qu'il vous faut")
-    @premium_pack = Pack.find_by(slug: "pack-premium") || fallback_pack("pack-premium", "Pack Premium", 29900, "/reference-assets/icons/pack-premium.svg", "text-brand-coral", "Vous accompagner jusqu'à l'achat")
+    @starter_pack = Pack.find_by(slug: "starter-pack") || fallback_pack("starter-pack", "Pack Conseil", 5900, "/reference-assets/icons/starter-pack.svg", "text-brand-primary", "Identifier le modèle qu'il vous faut")
+    @premium_pack = Pack.find_by(slug: "pack-premium") || fallback_pack("pack-premium", "Pack Achat", 29900, "/reference-assets/icons/pack-premium.svg", "text-brand-primary", "Vous accompagner jusqu'à l'achat")
   end
 
   def fallback_pack(slug, name, price_cents, icon_path, accent_class, objective)
