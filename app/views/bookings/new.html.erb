@@ -2,7 +2,7 @@
 
 <%= render "home/header" %>
 
-<main class="relative pt-28">
+<main class="relative pt-24">
   <%= render "home/background_pattern" %>
   <section class="relative px-4 py-10 md:px-6 lg:px-8 lg:py-14">
     <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.85fr_1.15fr]">
@@ -57,7 +57,7 @@
               <div class="overflow-hidden rounded-[24px] border border-[#E7E2DC]">
                 <div class="grid lg:grid-cols-2">
                   <div class="border-b border-[#E7E2DC] p-5 sm:p-6 lg:border-b-0 lg:border-r">
-                    <p class="text-sm font-bold uppercase tracking-[0.12em] text-brand-text-secondary">Sélectionnez une date et un horaire</p>
+                    <p class="font-bold text-brand-text">Sélectionnez une date et un horaire</p>
                     <p class="mt-1 text-sm text-brand-text-secondary">Horaires affichés à l’heure de Paris</p>
 
                     <div class="mt-5 flex items-center justify-between">
@@ -132,14 +132,14 @@
                 <%= form.label :customer_phone, "Téléphone", class: "text-sm font-bold text-brand-text" %>
                 <%= form.telephone_field :customer_phone, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
               </div>
-              <fieldset class="sm:col-span-2">
+              <fieldset class="mt-8 sm:col-span-2">
                 <legend class="text-sm font-bold text-brand-text">Préférez-vous échanger en visio ou par téléphone ?</legend>
-                <div class="mt-3 flex flex-wrap gap-3">
-                  <label class="inline-flex min-h-[48px] cursor-pointer items-center gap-3 rounded-full border border-[#E7E2DC] px-5 py-3 font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-brand-primary-light">
+                <div class="mt-5 grid grid-cols-2 gap-3">
+                  <label class="inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-[#E7E2DC] px-5 py-3 font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-brand-primary-light">
                     <%= form.radio_button :meeting_mode, "visio", required: true %>
                     En visio
                   </label>
-                  <label class="inline-flex min-h-[48px] cursor-pointer items-center gap-3 rounded-full border border-[#E7E2DC] px-5 py-3 font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-brand-primary-light">
+                  <label class="inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-[#E7E2DC] px-5 py-3 font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-brand-primary-light">
                     <%= form.radio_button :meeting_mode, "phone", required: true %>
                     Par téléphone
                   </label>

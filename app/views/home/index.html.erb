@@ -8,10 +8,9 @@
     <div class="mx-auto grid max-w-[1280px] items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
       <div>
         <% hero_lines = site_copy("home.hero_title", "Choisissez la voiture qu’il vous faut. Pas celle qu’on cherche à vous vendre").split(/(?<=\.)\s+/) %>
-        <h1 class="max-w-[980px] font-heading text-[40px] leading-[1.08] sm:text-[52px] lg:text-[50px]">
+        <h1 class="max-w-[980px] font-heading text-[40px] font-bold leading-[1.08] sm:text-[52px] lg:text-[50px]">
           <% hero_lines.each_with_index do |line, index| %>
-            <span class="font-semibold text-brand-primary"><%= line %></span>
-            <% if index < hero_lines.length - 1 %><br><% end %>
+            <span class="<%= class_names("block font-bold text-brand-primary", "mt-4": index.positive?) %>"><%= line %></span>
           <% end %>
         </h1>
 
@@ -34,10 +33,23 @@
   <section id="approche" class="px-8 py-16 lg:px-12 lg:py-20">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Notre approche</h2>
-        <div class="mx-auto mt-4 max-w-5xl space-y-3 text-base leading-7 text-brand-text-secondary sm:text-lg">
-          <% site_copy("home.approach", "Sur le papier, acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/).each do |paragraph| %>
-            <p><%= highlight_le_bon_modele(paragraph) %></p>
+        <h2 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Notre approche</h2>
+        <div class="section-title-rule" aria-hidden="true"></div>
+        <div class="mx-auto mt-6 max-w-5xl space-y-3 text-base leading-7 text-brand-text-secondary sm:text-lg">
+          <% approach_paragraphs = site_copy("home.approach", "Sur le papier, acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
+          <% if approach_paragraphs[1].to_s.start_with?("En réalité") %>
+            <p>
+              <%= highlight_le_bon_modele(approach_paragraphs[0]) %>
+              <span class="whitespace-nowrap">En réalité,</span>
+              <%= highlight_le_bon_modele(approach_paragraphs[1].sub(/\AEn réalité,\s*/, "")) %>
+            </p>
+            <% approach_paragraphs.drop(2).each do |paragraph| %>
+              <p><%= highlight_le_bon_modele(paragraph) %></p>
+            <% end %>
+          <% else %>
+            <% approach_paragraphs.each do |paragraph| %>
+              <p><%= highlight_le_bon_modele(paragraph) %></p>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -48,14 +60,14 @@
           [ site_copy("home.block_2_title", "Conseillers indépendants"), site_copy("home.block_2_body", "Nous ne vendons pas de voitures. Nous ne prenons pas de commission. Notre métier, c’est de vous fournir un avis d’expert objectif, pour vous aider à faire un choix éclairé.\nEt notre seul client, c’est vous.") ],
           [ site_copy("home.block_3_title", "Double expertise"), site_copy("home.block_3_body", "Nous combinons une connaissance approfondie des véhicules avec une compréhension fine de vos besoins et de vos contraintes.\nNous appliquons une méthode rigoureuse et privilégions des échanges directs, au téléphone ou en visio, pour vous accompagner pas à pas.") ]
         ].each do |title, body| %>
-          <article class="rounded-brand border border-brand-border bg-white p-6 text-center shadow-brand">
-            <%= image_tag "/reference-assets/check.svg", width: 72, height: 72, alt: "", class: "mx-auto" %>
-            <h3 class="mt-4 font-heading text-2xl font-bold text-brand-primary"><%= title %></h3>
-            <div class="mt-3 space-y-2 text-sm leading-6 text-brand-primary">
+          <article class="rounded-brand border border-brand-border bg-white p-6 text-left shadow-brand sm:p-8">
+            <h3 class="font-heading text-2xl font-bold text-brand-primary"><%= title %></h3>
+            <div class="mt-3 space-y-2 text-sm leading-6 text-brand-text-secondary">
               <% body.split(/\n+/).each do |paragraph| %>
                 <p><%= highlight_le_bon_modele(paragraph) %></p>
               <% end %>
             </div>
+            <div class="approach-card-rule" aria-hidden="true"></div>
           </article>
         <% end %>
       </div>
@@ -80,7 +92,7 @@
   <section class="px-8 py-16 lg:px-12 lg:py-20">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="font-heading text-3xl font-bold text-brand-primary sm:text-4xl">Avis clients</h2>
+        <h2 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Avis clients</h2>
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-3">

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :set_pack_catalog, only: %i[index starter_pack pack_premium]
+  before_action :set_pack_catalog, only: %i[index about starter_pack pack_premium]
 
   def index
   end

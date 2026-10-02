@@ -3,25 +3,26 @@
 <% jules_phone = site_copy("contact.phone_jules") %>
 <% charles_label = site_copy("contact.phone_charles_label", "Charles") %>
 <% jules_label = site_copy("contact.phone_jules_label", "Jules") %>
+<% contact_hours = site_copy("contact.hours", "Du lundi au vendredi\n9h30 - 18h00") %>
 
 <%= render "home/header" %>
 
-<main class="relative pt-28">
+<main class="relative pt-24">
   <%= render "home/background_pattern" %>
-  <section class="relative px-6 py-14 lg:px-12">
+  <section class="relative px-6 py-8 lg:px-12 lg:py-10">
     <div class="mx-auto max-w-[1280px]">
       <div class="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
         <div>
           <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary"><%= site_copy("contact.hero_title", "Parlons de votre projet automobile") %></h1>
-          <p class="mt-6 text-2xl font-bold text-brand-text"><%= site_copy("contact.hero_subtitle", "Une question, un doute, un besoin précis ?") %></p>
+          <p class="mt-10 text-2xl font-bold text-brand-text"><%= site_copy("contact.hero_subtitle", "Une question, un doute, un besoin précis ?") %></p>
           <p class="mt-3 text-lg leading-8 text-brand-text-secondary"><%= site_copy("contact.hero_body", "On vous répond rapidement et clairement.") %></p>
         </div>
-        <%= image_tag "/reference-assets/about-hero.png", width: 640, height: 480, alt: "Un conseiller Le Bon Modèle à son bureau", class: "h-auto w-full max-w-lg justify-self-end", loading: "lazy" %>
+        <%= image_tag "/reference-assets/contact-hero.png", width: 640, height: 460, alt: "Un client assis à son bureau devant son ordinateur", class: "h-auto w-full max-w-lg justify-self-end", loading: "lazy" %>
       </div>
 
       <div class="mt-12 grid items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div class="rounded-[28px] bg-white p-6 shadow-brand sm:p-8">
-          <h2 class="font-heading text-3xl font-bold text-brand-text">Écrivez-nous</h2>
+          <h2 class="font-heading text-3xl font-bold text-brand-text-secondary">Écrivez-nous</h2>
 
           <%= form_with model: @contact_inquiry, url: submit_contact_path, class: "mt-6 grid gap-5" do |form| %>
             <% if @contact_inquiry.errors.any? %>
@@ -36,23 +37,23 @@
 
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
-                <%= form.label :first_name, "Prénom", class: "grid gap-2 text-sm font-bold text-brand-text" %>
-                <%= form.text_field :first_name, required: true, placeholder: "Votre prénom", class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+                <%= form.label :first_name, "Prénom", class: "pl-4 text-sm font-bold text-brand-text" %>
+                <%= form.text_field :first_name, required: true, placeholder: "Votre prénom", class: "mt-2 w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
               </div>
               <div>
-                <%= form.label :last_name, "Nom", class: "grid gap-2 text-sm font-bold text-brand-text" %>
-                <%= form.text_field :last_name, required: true, placeholder: "Votre nom", class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+                <%= form.label :last_name, "Nom", class: "pl-4 text-sm font-bold text-brand-text" %>
+                <%= form.text_field :last_name, required: true, placeholder: "Votre nom", class: "mt-2 w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
               </div>
             </div>
 
             <div>
-              <%= form.label :email, "Votre email", class: "grid gap-2 text-sm font-bold text-brand-text" %>
-              <%= form.email_field :email, required: true, placeholder: "Email", class: "w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+              <%= form.label :email, "Votre email", class: "pl-4 text-sm font-bold text-brand-text" %>
+              <%= form.email_field :email, required: true, placeholder: "Email", class: "mt-2 w-full rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
             </div>
 
             <div>
-              <%= form.label :message, "Message", class: "grid gap-2 text-sm font-bold text-brand-text" %>
-              <%= form.text_area :message, required: true, rows: 6, placeholder: "Votre message", class: "w-full min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
+              <%= form.label :message, "Message", class: "pl-4 text-sm font-bold text-brand-text" %>
+              <%= form.text_area :message, required: true, rows: 6, placeholder: "Votre message", class: "mt-2 w-full min-h-36 rounded-brand border border-brand-border px-4 py-3 font-normal text-brand-text outline-none transition focus:border-brand-primary" %>
             </div>
 
             <div class="hidden" aria-hidden="true">
@@ -68,7 +69,7 @@
         </div>
 
         <aside class="rounded-[28px] bg-brand-primary-light p-6 sm:p-8" data-controller="phone-reveal">
-          <h2 class="font-heading text-3xl font-bold text-brand-primary">Appelez-nous</h2>
+          <h2 class="font-heading text-3xl font-bold text-brand-text-secondary">Appelez-nous</h2>
           <p class="mt-3 leading-7 text-brand-primary"><%= site_copy("contact.phone_intro", "Échangez directement avec l’un de nos conseillers.") %></p>
 
           <button type="button" class="mt-6 inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-brand-primary px-6 font-bold text-white" data-action="phone-reveal#reveal" data-phone-reveal-target="button">
@@ -78,17 +79,32 @@
             Afficher le numéro
           </button>
 
-          <div class="mt-6 hidden space-y-4" data-phone-reveal-target="panel">
-            <% [[charles_label, charles_phone], [jules_label, jules_phone]].each do |label, phone| %>
-              <div class="rounded-[20px] bg-white/70 px-5 py-4">
-                <p class="text-sm font-bold text-brand-primary"><%= label %></p>
-                <% if phone.present? %>
-                  <%= link_to phone, "tel:#{phone.gsub(/\s+/, '')}", class: "mt-1 block text-xl font-black text-brand-text" %>
-                <% else %>
-                  <p class="mt-1 text-sm text-brand-text-secondary">Numéro à renseigner dans l’administration.</p>
+          <div class="mt-6 hidden" data-phone-reveal-target="panel">
+            <% filled_phones = [[charles_label, charles_phone], [jules_label, jules_phone]].select { |_label, phone| phone.present? } %>
+            <div class="space-y-3">
+              <% if filled_phones.any? %>
+                <% filled_phones.each do |_label, phone| %>
+                  <div class="rounded-full bg-white px-5 py-4 text-center">
+                    <%= link_to phone, "tel:#{phone.gsub(/\s+/, '')}", class: "block text-[22px] font-black tracking-tight text-brand-text" %>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="rounded-full bg-white px-5 py-4 text-center">
+                  <p class="text-sm text-brand-text-secondary">Numéro à renseigner dans l’administration.</p>
+                </div>
+              <% end %>
+            </div>
+            <div class="mt-6 flex items-start gap-3 text-brand-primary">
+              <svg class="mt-0.5 h-8 w-8 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3.2 1.8"></path>
+              </svg>
+              <div class="leading-6">
+                <% contact_hours.split(/\n+/).each_with_index do |line, index| %>
+                  <p class="<%= index.zero? ? "text-lg font-bold" : "text-base" %>"><%= line %></p>
                 <% end %>
               </div>
-            <% end %>
+            </div>
           </div>
         </aside>
       </div>

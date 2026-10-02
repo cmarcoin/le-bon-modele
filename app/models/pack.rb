@@ -25,8 +25,25 @@ class Pack < ApplicationRecord
     stripe_product_id.present? && stripe_price_id.present?
   end
 
+  DEFAULT_INCLUDES = {
+    "starter-pack" => [
+      "Un questionnaire préparatoire,",
+      "Un premier entretien de 60 minutes avec Charles et Jules,",
+      "Un document de synthèse et une pré-sélection de modèles,",
+      "Un entretien de suivi de 30 minutes."
+    ],
+    "pack-premium" => [
+      "Un questionnaire préparatoire,",
+      "Trois entretiens de 60 minutes chacun avec Charles et Jules,",
+      "Un document de synthèse avec une présélection de 2 à 3 modèles,",
+      "Une sélection de 4 à 5 annonces avec un comparatif détaillé,",
+      "Un accompagnement pour répondre à vos questions entre les rendez-vous."
+    ]
+  }.freeze
+
   def includes_items
-    includes_text.to_s.split(/\r?\n/).map(&:strip).compact_blank
+    items = includes_text.to_s.split(/\r?\n/).map(&:strip).compact_blank
+    items.presence || DEFAULT_INCLUDES.fetch(slug, [])
   end
 
   def stripe_description

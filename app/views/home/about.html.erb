@@ -1,10 +1,28 @@
+<%
+  about_car_rows = [
+    [
+      ["citadine-recente.png", "Citadine récente"],
+      ["compacte.png", "Compacte"],
+      ["suv-compact.png", "SUV compact"],
+      ["berline-recente.png", "Berline récente"],
+      ["break-moderne.png", "Break moderne"]
+    ],
+    [
+      ["suv-familial.png", "SUV familial"],
+      ["monospace-recent.png", "Monospace récent"],
+      ["break-routier.png", "Break routier"],
+      ["compacte-premium.png", "Compacte premium"],
+      ["suv-urbain.png", "SUV urbain"]
+    ]
+  ]
+%>
 <% content_for :title, "Qui sommes-nous ? | Le Bon Modèle" %>
 
 <%= render "home/header" %>
 
-<main class="relative pt-28">
+<main class="relative pt-24">
   <%= render "home/background_pattern" %>
-  <section class="relative px-6 py-14 lg:px-12">
+  <section class="relative px-6 py-10 lg:px-12 lg:py-12">
     <div class="mx-auto max-w-[1280px]">
       <div class="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
         <div>
@@ -16,23 +34,38 @@
             <% end %>
           </div>
         </div>
-        <%= image_tag "/reference-assets/about-hero.png", width: 900, height: 700, alt: "Charles et Jules, conseillers du Bon Modèle", class: "h-auto w-full", loading: "lazy" %>
-      </div>
-
-      <div class="mt-16 grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-        <%= image_tag "/reference-assets/homme-perdu.png", width: 720, height: 620, alt: "Illustration d’une personne perdue devant trop de choix", class: "h-auto w-full", loading: "lazy" %>
-        <blockquote class="rounded-[28px] bg-brand-primary p-8 text-white shadow-brand sm:p-10">
-          <div class="space-y-4 text-lg leading-8 text-white/90">
-            <% site_copy("about.independence", "Chez Le Bon Modèle, nous ne vendons pas de voitures. Notre métier, c’est de vous fournir un avis d’expert objectif, pour vous permettre de faire un choix éclairé.").split(/\n+/).each do |paragraph| %>
-              <p><%= paragraph %></p>
-            <% end %>
-          </div>
-        </blockquote>
+        <%= image_tag "/reference-assets/homme-perdu.svg", width: 720, height: 620, alt: "Illustration d’une personne perdue devant trop de choix", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
 
-  <section class="px-6 py-14 lg:px-12">
+  <section class="px-6 py-6 lg:px-12">
+    <div class="mx-auto max-w-[1280px]">
+      <blockquote class="rounded-[28px] bg-brand-primary p-8 text-white shadow-brand sm:p-10 lg:p-12">
+        <div class="space-y-4 text-lg leading-8 text-white/90">
+          <% site_copy("about.independence", "Chez Le Bon Modèle, nous ne vendons pas de voitures. Notre métier, c’est de vous fournir un avis d’expert objectif, pour vous permettre de faire un choix éclairé.").split(/\n+/).each do |paragraph| %>
+            <p><%= paragraph %></p>
+          <% end %>
+        </div>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="px-6 py-10 lg:px-12" aria-label="Exemples de modèles accompagnés">
+    <div class="mx-auto max-w-[1280px] space-y-4">
+      <% about_car_rows.each do |row| %>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <% row.each do |filename, label| %>
+            <figure class="overflow-hidden rounded-[20px] bg-white shadow-soft">
+              <%= image_tag "/reference-assets/modeles/#{filename}", alt: label, class: "h-28 w-full object-cover sm:h-32", loading: "lazy" %>
+            </figure>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="px-6 py-10 lg:px-12">
     <div class="mx-auto max-w-[1280px]">
       <h2 class="font-heading text-4xl font-bold text-brand-primary"><%= site_copy("about.method_title", "Transformer une idée floue en un choix clair") %></h2>
       <p class="mt-5 max-w-4xl text-lg leading-8 text-brand-text-secondary"><%= site_copy("about.method_intro", "Notre approche repose sur une double expertise : une connaissance fine des véhicules et une compréhension concrète de votre quotidien.") %></p>
@@ -52,12 +85,12 @@
       </div>
 
       <div class="mt-12">
-        <%= image_tag "/reference-assets/about-families.png", width: 1417, height: 650, alt: "Deux familles sereines avec la voiture qu’il leur faut", class: "h-auto w-full", loading: "lazy" %>
+        <%= image_tag "/reference-assets/about-hero.svg", width: 1085, height: 802, alt: "Charles et Jules, conseillers du Bon Modèle, autour d’un tableau d’annonces", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
 
-  <section class="px-6 py-14 lg:px-12">
+  <section class="px-6 py-10 lg:px-12">
     <div class="mx-auto max-w-[1280px]">
       <h2 class="font-heading text-4xl font-bold text-brand-primary">Ce que vous y gagnez concrètement</h2>
       <div class="mt-8 space-y-4">
@@ -78,6 +111,22 @@
             <button type="button" class="mt-4 text-sm font-bold text-brand-primary underline decoration-brand-primary/30 underline-offset-4" data-action="expand-copy#toggle" data-expand-copy-target="button">En savoir plus</button>
           </article>
         <% end %>
+      </div>
+
+      <div class="mt-12">
+        <%= image_tag "/reference-assets/about-families.svg", width: 1417, height: 650, alt: "Deux familles sereines avec la voiture qu’il leur faut", class: "h-auto w-full", loading: "lazy" %>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-10 lg:px-12 lg:pb-16">
+    <div class="mx-auto max-w-[1280px]">
+      <div class="text-center">
+        <h2 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Deux façons de vous accompagner</h2>
+      </div>
+      <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-2">
+        <%= render "home/offer_card", path: starter_pack_path, icon_path: @starter_pack.icon_path, title: @starter_pack.name, accent_class: "text-brand-primary", objective: @starter_pack.objective, description: @starter_pack.description, price: euro_price(@starter_pack.price_cents), cta: "Découvrir" %>
+        <%= render "home/offer_card", path: pack_premium_path, icon_path: @premium_pack.icon_path, title: @premium_pack.name, accent_class: "text-brand-primary", objective: @premium_pack.objective, description: @premium_pack.description, price: euro_price(@premium_pack.price_cents), cta: "Découvrir" %>
       </div>
     </div>
   </section>

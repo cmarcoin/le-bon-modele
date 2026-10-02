@@ -61,7 +61,7 @@ img {
 }
 
 .main-logo {
-  height: 56px;
+  height: 48px;
   object-fit: contain;
   width: auto;
 }
@@ -408,6 +408,20 @@ input[type="range"].budget-track::-moz-range-thumb {
 .offer-icon svg {
   height: 100%;
   width: 100%;
+}
+
+.section-title-rule {
+  background: #1F5E3B;
+  height: 3px;
+  margin: 0.85rem auto 0;
+  width: 3.5rem;
+}
+
+.approach-card-rule {
+  background: #1F5E3B;
+  height: 3px;
+  margin-top: 1.5rem;
+  width: 2.75rem;
 }
 
 .contact-illustration {

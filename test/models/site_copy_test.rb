@@ -18,5 +18,6 @@ class SiteCopyTest < ActiveSupport::TestCase
 
     assert_equal "Texte modifié", copy.reload.value
     assert SiteCopy.exists?(key: "contact.phone_charles")
+    assert SiteCopy.exists?(key: "contact.hours")
   end
 end

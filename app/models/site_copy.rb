@@ -45,6 +45,7 @@ class SiteCopy < ApplicationRecord
     { key: "contact.hero_subtitle", label: "Sous-titre", group: "contact", value: "Une question, un doute, un besoin précis ?" },
     { key: "contact.hero_body", label: "Texte d’intro", group: "contact", value: "On vous répond rapidement et clairement." },
     { key: "contact.phone_intro", label: "Texte Appelez-nous", group: "contact", value: "Échangez directement avec l’un de nos conseillers." },
+    { key: "contact.hours", label: "Horaires de disponibilité", group: "contact", value: "Du lundi au vendredi\n9h30 - 18h00" },
     { key: "contact.phone_charles_label", label: "Nom conseiller 1", group: "contact", value: "Charles" },
     { key: "contact.phone_charles", label: "Téléphone conseiller 1", group: "contact", value: "" },
     { key: "contact.phone_jules_label", label: "Nom conseiller 2", group: "contact", value: "Jules" },

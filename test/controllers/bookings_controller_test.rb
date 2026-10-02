@@ -34,8 +34,11 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "p", text: "1. Réservez votre premier entretien (60 min)"
-    assert_select "p", text: /Sélectionnez une date et un horaire/
+    assert_select "p", text: "Sélectionnez une date et un horaire"
     assert_select "legend", text: "Préférez-vous échanger en visio ou par téléphone ?"
+    assert_select "p", text: "Le Pack Conseil comprend :"
+    assert_select "input[value='visio']"
+    assert_select "input[value='phone']"
     assert_select "[data-controller='booking-scheduler']"
     assert_select "[data-booking-scheduler-target='calendar']"
     assert_select "[data-booking-scheduler-target='monthLabel']"

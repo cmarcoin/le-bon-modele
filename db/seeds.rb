@@ -8,10 +8,10 @@ starter.assign_attributes(
   objective: "Identifier le modèle qu'il vous faut",
   description: "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget.",
   includes_text: [
-    "Un questionnaire préparatoire",
-    "Un premier entretien de 60 minutes avec Charles et Jules",
-    "Un document de synthèse et une pré-sélection de modèles",
-    "Un entretien de suivi, de 30 minutes"
+    "Un questionnaire préparatoire,",
+    "Un premier entretien de 60 minutes avec Charles et Jules,",
+    "Un document de synthèse et une pré-sélection de modèles,",
+    "Un entretien de suivi de 30 minutes."
   ].join("\n"),
   price_cents: 5_900,
   currency: "eur",
@@ -28,11 +28,11 @@ premium.assign_attributes(
   objective: "Vous accompagner jusqu'à l'achat",
   description: "Du cadrage de votre besoin jusqu'à l'achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.",
   includes_text: [
-    "Un questionnaire préparatoire",
-    "Trois entretiens, de 60 minutes chacun, avec Charles et Jules",
-    "Un document de synthèse avec une présélection de 2 à 3 modèles",
-    "Une sélection de 4 à 5 annonces avec un comparatif détaillé",
-    "Un accompagnement pour répondre à vos questions entre les rendez-vous"
+    "Un questionnaire préparatoire,",
+    "Trois entretiens de 60 minutes chacun avec Charles et Jules,",
+    "Un document de synthèse avec une présélection de 2 à 3 modèles,",
+    "Une sélection de 4 à 5 annonces avec un comparatif détaillé,",
+    "Un accompagnement pour répondre à vos questions entre les rendez-vous."
   ].join("\n"),
   price_cents: 29_900,
   currency: "eur",
