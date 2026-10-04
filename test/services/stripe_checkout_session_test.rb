@@ -63,7 +63,7 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
     assert_equal [ "card" ], captured_params[:payment_method_types]
     assert_equal "required", captured_params[:billing_address_collection]
     assert_nil captured_params[:shipping_address_collection]
-    assert_nil captured_params[:automatic_tax]
+    assert_equal({ enabled: true }, captured_params[:automatic_tax])
     assert_nil captured_params[:customer_update]
     assert_equal "LE BON MODELE", captured_params.dig(:payment_intent_data, :statement_descriptor)
     assert captured_params[:expires_at].present?

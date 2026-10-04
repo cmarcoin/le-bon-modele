@@ -52,6 +52,7 @@ class StripeCheckoutSession
       customer_creation: "always",
       payment_method_types: [ "card" ],
       billing_address_collection: "required",
+      automatic_tax: { enabled: true },
       payment_intent_data: {
         statement_descriptor: "LE BON MODELE",
         description: "Le Bon Modèle — #{booking.pack.name}"
