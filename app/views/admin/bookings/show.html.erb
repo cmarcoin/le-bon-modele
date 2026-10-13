@@ -42,7 +42,7 @@
       <section class="mt-8 rounded-[20px] border border-brand-coral/30 bg-brand-coral/5 p-5">
         <h2 class="font-heading text-2xl font-bold text-brand-coral">Paiement en attente</h2>
         <p class="mt-3 text-sm text-brand-text-secondary">
-          Cette réservation bloque le créneau tant que le paiement n'est pas finalisé ou que la session Stripe n'a pas expiré.
+          Cette réservation bloque le créneau pendant <%= Booking::CHECKOUT_HOLD_DESCRIPTION %>, jusqu’au paiement ou à l’expiration de la session Stripe.
         </p>
         <% if @booking.payment_reminder_sent_at %>
           <p class="mt-2 text-sm text-brand-text-secondary">
@@ -57,12 +57,47 @@
       </section>
     <% end %>
 
+    <% if @booking.paid? %>
+      <section class="mt-8 rounded-[20px] border border-[#E7E2DC] p-5">
+        <h2 class="font-heading text-2xl font-bold text-brand-text">Annulation</h2>
+        <p class="mt-3 text-sm text-brand-text-secondary"><%= booking_cancellation_policy %></p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <% if @booking.refundable? %>
+            <%= button_to "Annuler et rembourser", cancel_admin_booking_path(@booking), method: :post, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white", data: { turbo_confirm: "Annuler cette réservation et rembourser le client ?" } %>
+          <% else %>
+            <%= button_to "Annuler sans remboursement", cancel_admin_booking_path(@booking), method: :post, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-beige px-6 font-bold text-brand-text", data: { turbo_confirm: "Annuler cette réservation sans remboursement ?" } %>
+            <%= button_to "Annuler et rembourser quand même", cancel_and_refund_admin_booking_path(@booking), method: :post, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white", data: { turbo_confirm: "Forcer le remboursement intégral, même dans les 48 heures ?" } %>
+          <% end %>
+        </div>
+      </section>
+    <% elsif @booking.canceled? %>
+      <section class="mt-8 rounded-[20px] border border-[#E7E2DC] p-5">
+        <h2 class="font-heading text-2xl font-bold text-brand-text">Annulation</h2>
+        <p class="mt-3 text-sm text-brand-text-secondary">
+          <% if @booking.canceled_at %>
+            Annulée le <%= paris_datetime(@booking.canceled_at) %>.
+          <% else %>
+            Cette réservation est annulée.
+          <% end %>
+          <% if @booking.payment_transaction&.refunded? %>
+            Le paiement a été remboursé.
+          <% elsif @booking.payment_transaction&.status == "paid" %>
+            Le paiement n'a pas été remboursé.
+          <% end %>
+        </p>
+      </section>
+    <% end %>
+
     <% if @booking.payment_transaction %>
       <section class="mt-8 rounded-[20px] border border-[#E7E2DC] p-5">
         <h2 class="font-heading text-2xl font-bold text-brand-text">Transaction Stripe</h2>
-        <p class="mt-4 text-sm"><strong>Session :</strong> <%= @booking.payment_transaction.stripe_checkout_session_id %></p>
+        <p class="mt-4 text-sm"><strong>Statut :</strong> <%= payment_transaction_status_label(@booking.payment_transaction.status) %></p>
+        <p class="mt-2 text-sm"><strong>Session :</strong> <%= @booking.payment_transaction.stripe_checkout_session_id %></p>
         <p class="mt-2 text-sm"><strong>Payment intent :</strong> <%= @booking.payment_transaction.stripe_payment_intent_id.presence || "En attente" %></p>
         <p class="mt-2 text-sm"><strong>TVA :</strong> <%= euro_price(@booking.payment_transaction.tax_amount_cents) %></p>
+        <% if @booking.payment_transaction.stripe_refund_id.present? %>
+          <p class="mt-2 text-sm"><strong>Remboursement :</strong> <%= @booking.payment_transaction.stripe_refund_id %> le <%= paris_datetime(@booking.payment_transaction.refunded_at) %></p>
+        <% end %>
       </section>
     <% end %>
 
@@ -71,7 +106,9 @@
         <%= link_to "Ajouter à Google Calendar", google_calendar_url_for(@booking), target: "_blank", rel: "noopener", class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-primary px-6 font-bold text-white" %>
       <% end %>
       <%= link_to "Retour aux réservations", admin_bookings_path, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-beige px-6 font-bold text-brand-text" %>
-      <%= button_to "Supprimer la réservation", admin_booking_path(@booking), method: :delete, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white", data: { turbo_confirm: "Supprimer cette réservation ? Cette action est irréversible." } %>
+      <% if @booking.canceled? %>
+        <%= button_to "Supprimer la réservation", admin_booking_path(@booking), method: :delete, class: "inline-flex min-h-[48px] items-center rounded-full bg-brand-coral px-6 font-bold text-white", data: { turbo_confirm: "Supprimer cette réservation annulée ? Cette action est irréversible." } %>
+      <% end %>
     </div>
   </div>
 </main>

@@ -1,0 +1,15 @@
+Votre réservation est annulée
+
+Bonjour <%= @booking.customer_name %>,
+
+Le rendez-vous du <%= paris_datetime(@booking.availability_slot.starts_at) %>
+pour le <%= @booking.pack.name %> est annulé. Le créneau est libéré.
+
+<% if @refunded %>
+Le paiement de <%= euro_price(@booking.amount_cents) %> TTC a été remboursé.
+<% elsif @booking.payment_transaction&.status == "paid" %>
+Conformément aux conditions, ce rendez-vous n’est pas remboursé.
+<% end %>
+
+À très vite,
+Le Bon Modèle

@@ -11,26 +11,59 @@ class StripeBookingConfirmation
     return unless session.payment_status == "paid"
 
     booking = Booking.find_by!(stripe_checkout_session_id: session.id)
-    payment_transaction = booking.payment_transaction
+    action = nil
 
-    Booking.transaction do
-      booking.update!(billing_attributes.merge(status: "paid", paid_at: Time.current))
-      payment_transaction.update!(
-        status: "paid",
-        stripe_payment_intent_id: session.payment_intent,
-        tax_amount_cents: tax_amount_cents,
-        stripe_payload: session.to_h
-      )
+    booking.with_lock do
+      booking.reload
+
+      if booking.paid?
+        action = :already_paid
+      elsif booking.canceled?
+        persist_payment_reference!(booking)
+        StripeBookingRefund.refund!(booking)
+        action = :refunded_late_payment
+      elsif booking.pending_payment?
+        mark_paid!(booking)
+        action = :confirmed
+      end
     end
 
-    BookingMailer.confirmation(booking).deliver_later
-    BookingMailer.admin_notification(booking).deliver_later
+    deliver_notifications(booking, action)
     booking
   end
 
   private
 
   attr_reader :session
+
+  def mark_paid!(booking)
+    booking.update!(billing_attributes.merge(status: "paid", paid_at: Time.current))
+    booking.payment_transaction.update!(
+      status: "paid",
+      stripe_payment_intent_id: session.payment_intent,
+      tax_amount_cents: tax_amount_cents,
+      stripe_payload: session_payload
+    )
+  end
+
+  def persist_payment_reference!(booking)
+    booking.payment_transaction&.update!(
+      stripe_payment_intent_id: session.payment_intent,
+      tax_amount_cents: tax_amount_cents,
+      stripe_payload: session_payload
+    )
+  end
+
+  def deliver_notifications(booking, action)
+    case action
+    when :confirmed
+      BookingMailer.confirmation(booking).deliver_later
+      BookingMailer.admin_notification(booking).deliver_later
+    when :refunded_late_payment
+      BookingMailer.late_payment_refund(booking).deliver_later
+      BookingMailer.admin_late_payment_refund(booking).deliver_later
+    end
+  end
 
   def tax_amount_cents
     details = if session.respond_to?(:total_details)
@@ -41,6 +74,10 @@ class StripeBookingConfirmation
     return 0 if details.blank?
 
     details.respond_to?(:amount_tax) ? details.amount_tax.to_i : details[:amount_tax].to_i
+  end
+
+  def session_payload
+    session.respond_to?(:to_h) ? session.to_h : {}
   end
 
   def billing_attributes

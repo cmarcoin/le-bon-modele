@@ -1,7 +1,8 @@
 class StripeCheckoutSession
   class ConfigurationError < StandardError; end
 
-  SESSION_EXPIRY = 60.minutes
+  # Stripe refuses an expires_at under 30 minutes once the request arrives.
+  SESSION_EXPIRY = 31.minutes
   TRUSTED_CHECKOUT_HOST = "checkout.stripe.com"
 
   def self.create_for(booking, base_url)
@@ -10,6 +11,24 @@ class StripeCheckoutSession
 
   def self.checkout_url_for(booking, base_url)
     new(booking, base_url).checkout_url
+  end
+
+  def self.expire_open_session!(booking)
+    return :skipped if booking.stripe_checkout_session_id.blank?
+    return :skipped if ENV["STRIPE_SECRET_KEY"].blank?
+
+    session = Stripe::Checkout::Session.retrieve(booking.stripe_checkout_session_id)
+    payment_status = session.respond_to?(:payment_status) ? session.payment_status : session[:payment_status]
+    status = session.respond_to?(:status) ? session.status : session[:status]
+
+    return :complete if payment_status == "paid" || status == "complete"
+    return :expired if status == "expired"
+
+    Stripe::Checkout::Session.expire(booking.stripe_checkout_session_id)
+    :expired
+  rescue Stripe::StripeError => error
+    Rails.logger.warn("Stripe checkout expire skipped for booking #{booking.id}: #{error.message}")
+    :error
   end
 
   def self.trusted_checkout_url?(url)

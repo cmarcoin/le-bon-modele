@@ -230,45 +230,50 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     assert_equal "Aucun créneau passé non réservé à supprimer.", flash[:notice]
   end
 
-  test "admin can delete booking and payment transaction" do
+  test "admin cannot delete a paid booking" do
     sign_in @admin
-    slot = AvailabilitySlot.create!(
-      starts_at: 2.days.from_now.change(hour: 12),
-      ends_at: 2.days.from_now.change(hour: 12, min: 45),
-      timezone: "Europe/Paris",
-      pack: @pack,
-      active: true
-    )
-    booking = Booking.create!(
-      user: @client,
-      pack: @pack,
-      availability_slot: slot,
-      customer_name: "Client Test",
-      customer_email: @client.email,
-      amount_cents: @pack.price_cents,
-      currency: "eur",
-      status: "paid"
-    )
-    PaymentTransaction.create!(
-      booking: booking,
-      user: @client,
-      pack: @pack,
-      amount_cents: booking.amount_cents,
-      currency: "eur",
-      status: "paid",
-      stripe_checkout_session_id: "cs_test_#{booking.id}",
-      tax_amount_cents: 0
-    )
+    booking = create_paid_booking_for_admin(starts_at: 4.days.from_now.change(hour: 12))
 
-    assert_difference -> { Booking.count }, -1 do
-      assert_difference -> { PaymentTransaction.count }, -1 do
-        delete admin_booking_path(booking)
-      end
+    assert_no_difference -> { Booking.count } do
+      delete admin_booking_path(booking)
     end
 
-    assert_redirected_to admin_bookings_path
-    assert_equal "Réservation supprimée.", flash[:notice]
-    assert slot.reload
+    assert_redirected_to admin_booking_path(booking)
+    assert_match(/annule/, flash[:alert])
+    assert_equal "paid", booking.reload.status
+  end
+
+  test "admin refunds a paid booking more than 48 hours ahead" do
+    sign_in @admin
+    booking = create_paid_booking_for_admin(starts_at: 4.days.from_now.change(hour: 15))
+    original_refund = Stripe::Refund.method(:create)
+    Stripe::Refund.define_singleton_method(:create) { |*_args| Struct.new(:id).new("re_admin") }
+
+    assert_enqueued_emails 2 do
+      post cancel_admin_booking_path(booking)
+    end
+
+    assert_redirected_to admin_booking_path(booking)
+    assert_equal "Réservation annulée et paiement remboursé.", flash[:notice]
+    assert_equal "canceled", booking.reload.status
+    assert_equal "refunded", booking.payment_transaction.reload.status
+  ensure
+    Stripe::Refund.define_singleton_method(:create, original_refund)
+  end
+
+  test "admin can force a refund inside 48 hours" do
+    sign_in @admin
+    booking = create_paid_booking_for_admin(starts_at: 12.hours.from_now)
+    original_refund = Stripe::Refund.method(:create)
+    Stripe::Refund.define_singleton_method(:create) { |*_args| Struct.new(:id).new("re_admin_force") }
+
+    post cancel_and_refund_admin_booking_path(booking)
+
+    assert_redirected_to admin_booking_path(booking)
+    assert_equal "canceled", booking.reload.status
+    assert_equal "refunded", booking.payment_transaction.reload.status
+  ensure
+    Stripe::Refund.define_singleton_method(:create, original_refund)
   end
 
   test "admin can sync pending booking when stripe reports paid" do
@@ -296,12 +301,21 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
   test "admin can release pending booking slot" do
     sign_in @admin
     booking = create_pending_booking_for_admin
+    expired = []
+    original_expire = StripeCheckoutSession.method(:expire_open_session!)
+    StripeCheckoutSession.define_singleton_method(:expire_open_session!) do |released|
+      expired << released.id
+      :expired
+    end
 
     post release_slot_admin_booking_path(booking)
 
     assert_redirected_to admin_bookings_path(status: "pending_payment")
     assert_equal "Créneau libéré — la réservation a été annulée.", flash[:notice]
     assert_equal "canceled", booking.reload.status
+    assert_equal [ booking.id ], expired
+  ensure
+    StripeCheckoutSession.define_singleton_method(:expire_open_session!, original_expire)
   end
 
   test "admin can resend payment link for pending booking" do
@@ -361,6 +375,40 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
   end
 
   private
+
+  def create_paid_booking_for_admin(starts_at:)
+    slot = AvailabilitySlot.create!(
+      starts_at: starts_at,
+      ends_at: starts_at + 45.minutes,
+      timezone: "Europe/Paris",
+      pack: @pack,
+      active: true
+    )
+    booking = Booking.create!(
+      user: @client,
+      pack: @pack,
+      availability_slot: slot,
+      customer_name: "Client Test",
+      customer_email: @client.email,
+      amount_cents: @pack.price_cents,
+      currency: "eur",
+      status: "paid",
+      paid_at: 3.days.ago,
+      stripe_checkout_session_id: "cs_paid_#{SecureRandom.hex(4)}"
+    )
+    PaymentTransaction.create!(
+      booking: booking,
+      user: @client,
+      pack: @pack,
+      amount_cents: booking.amount_cents,
+      currency: "eur",
+      status: "paid",
+      stripe_checkout_session_id: booking.stripe_checkout_session_id,
+      stripe_payment_intent_id: "pi_#{SecureRandom.hex(4)}",
+      tax_amount_cents: 0
+    )
+    booking
+  end
 
   def create_pending_booking_for_admin(session_id: "cs_admin_pending")
     slot = AvailabilitySlot.create!(

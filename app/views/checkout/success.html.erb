@@ -14,7 +14,8 @@
           Merci <%= @booking.customer_name %>. Nous avons bien reçu votre paiement pour <%= @booking.pack.name %>.
           Rendez-vous le <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>.
         </p>
-        <p class="mt-4 text-brand-text-secondary">Un email de confirmation vient de vous être envoyé.</p>
+        <p class="mt-4 text-brand-text-secondary">Un email de confirmation vient de vous être envoyé. Il contient le lien pour annuler le rendez-vous.</p>
+        <p class="mt-4 text-brand-text-secondary"><%= booking_cancellation_policy %></p>
       <% else %>
         <p class="mx-auto mt-6 max-w-2xl text-[20px] leading-[1.5] text-brand-text-secondary">
           Stripe a bien redirigé votre paiement. La confirmation définitive arrivera dès que le webhook Stripe aura validé la transaction.

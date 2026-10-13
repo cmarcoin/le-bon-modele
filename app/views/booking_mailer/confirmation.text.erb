@@ -7,6 +7,10 @@ Votre rendez-vous est confirmé le <%= paris_datetime(@booking.availability_slot
 
 Montant payé : <%= euro_price(@booking.amount_cents) %> TTC.
 
+<%= booking_cancellation_policy %>
+
+Annuler ma réservation : <%= @cancel_url %>
+
 Un compte client a été créé avec cette adresse email. Vous pourrez utiliser la page de mot de passe oublié pour définir votre mot de passe.
 
 À très vite,

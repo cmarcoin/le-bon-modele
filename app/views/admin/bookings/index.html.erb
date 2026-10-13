@@ -48,7 +48,9 @@
               <td class="px-5 py-4 text-right">
                 <div class="flex flex-wrap items-center justify-end gap-4">
                   <%= link_to "Voir", admin_booking_path(booking), class: "font-bold text-brand-primary" %>
-                  <%= button_to "Supprimer", admin_booking_path(booking), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer cette réservation ? Cette action est irréversible." } %>
+                  <% if booking.canceled? %>
+                    <%= button_to "Supprimer", admin_booking_path(booking), method: :delete, form: { class: "inline" }, class: "font-bold text-brand-coral", data: { turbo_confirm: "Supprimer cette réservation annulée ? Cette action est irréversible." } %>
+                  <% end %>
                 </div>
               </td>
             </tr>

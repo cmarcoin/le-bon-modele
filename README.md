@@ -3,35 +3,20 @@
 A Rails 8.1 application with PostgreSQL, Tailwind CSS, and importmap, running entirely in Docker containers.
 Helps user buy a car without pain
 
-## Gestion des paiements en attente (`pending_payment`)
+## Réservation et paiement
 
-Une réservation passe en `pending_payment` dès que le client valide le formulaire, avant la confirmation Stripe. Le créneau est bloqué tant que le paiement n'est pas finalisé ou que la session n'a pas expiré.
+Une réservation passe en `pending_payment` dès que le client valide le formulaire, avant la confirmation Stripe. Le créneau est bloqué **30 minutes** (la session Stripe expire à 31 minutes, marge demandée par Stripe). Passé ce délai, le webhook `checkout.session.expired` ou le job de maintenance annule la réservation et libère le créneau. Il n’y a pas d’email de relance pendant le paiement.
 
-### Flux
+Une réservation **payée** s'annule : elle n'est pas supprimée. Le créneau redevient disponible et un email part au client et aux admins.
 
-```mermaid
-flowchart TD
-    A[Réservation créée] --> B[pending_payment]
-    B --> C{Client paie ?}
-    C -->|Oui| D[paid + emails]
-    C -->|Abandon < 1h| E[Créneau bloqué]
-    E --> F[Relance email à 1h]
-    F --> G{Client clique le lien ?}
-    G -->|Oui| C
-    G -->|Non| H[Session expire à 60 min]
-    H --> I[Job maintenance annule]
-    I --> J[canceled + créneau libéré]
-    B --> K[Admin: sync / relance / libérer]
-```
+- **Plus de 48 heures avant le rendez-vous** : annulation et remboursement intégral.
+- **Dans les 48 heures, ou après le créneau** : annulation sans remboursement.
+- **Admin** : « Annuler et rembourser quand même » force le remboursement via `Stripe::Refund`.
+- Le client annule depuis le lien signé de l’email de confirmation (`/reservation/annuler/:token`).
 
-### Mécanismes automatiques
+Libérer un créneau encore en attente expire la session Checkout Stripe. Si un paiement arrive après l’annulation, il est remboursé et la réservation reste annulée. Une confirmation déjà enregistrée n’envoie pas un second email.
 
-- **Sessions Stripe** : expiration après 60 minutes (`expires_at`)
-- **Relance client** : email automatique 1 h après la création, avec lien sécurisé `/paiement/reprendre/:token` (valable 7 jours)
-- **Job récurrent** (`PendingPaymentMaintenanceJob`, toutes les 15 min) :
-  - confirme les réservations payées non synchronisées
-  - annule les sessions expirées et libère les créneaux
-  - notifie l'admin quand des créneaux sont libérés
+Un rappel de rendez-vous part une fois, dans les 24 heures qui précèdent le créneau, pour les réservations payées depuis plus de 2 heures (`AppointmentReminderJob`, toutes les 15 minutes).
 
 ### Actions admin
 
@@ -45,7 +30,7 @@ Interroge Stripe pour connaître l'état réel de la session de paiement, puis m
 
 Dans ce cas, le bouton détecte le paiement côté Stripe et passe la réservation en **Payée** (emails de confirmation envoyés automatiquement).
 
-**Autre cas — session expirée** : le client n'a jamais payé et la session Stripe a expiré (après 60 min). Le bouton annule la réservation et **libère le créneau**.
+**Autre cas — session expirée** : le client n'a jamais payé et la session Stripe a expiré (après 30 min). Le bouton annule la réservation et **libère le créneau**.
 
 **Si rien ne change** : Stripe indique que le paiement est toujours en cours (session ouverte, non payée). Aucune action nécessaire — attendre ou utiliser « Renvoyer le lien de paiement ».
 
@@ -53,17 +38,17 @@ Dans ce cas, le bouton détecte le paiement côté Stripe et passe la réservati
 
 #### Renvoyer le lien de paiement
 
-Envoie immédiatement un email au client avec un lien sécurisé pour reprendre le paiement, sans ressaisir le formulaire. Utile si le client a abandonné, n'a pas reçu la relance automatique, ou demande de l'aide.
+Envoie immédiatement un email au client avec un lien sécurisé pour reprendre le paiement, sans ressaisir le formulaire. Le créneau reste bloqué 30 minutes après l’ouverture de ce paiement.
 
 #### Libérer le créneau
 
-Annule manuellement la réservation et rend le créneau disponible pour d'autres clients. À utiliser quand on sait que le client ne finalisera pas (erreur, doublon, changement de planning), sans attendre l'expiration automatique.
+Annule la réservation, expire la session Stripe encore ouverte, et rend le créneau disponible. À utiliser quand le client ne finalisera pas, sans attendre l’expiration automatique.
 
 Le dashboard et la liste des réservations incluent un filtre **En attente de paiement** pour repérer rapidement ces cas.
 
 ### Maintenance automatique vs commande manuelle
 
-En production, un job tourne **toutes les 15 minutes** (`PendingPaymentMaintenanceJob` via Solid Queue) et effectue la même logique de synchronisation sur **toutes** les réservations en attente, plus l'envoi des relances email (1 h après la création). L'admin reçoit un email quand des créneaux sont libérés automatiquement.
+En production, un job tourne **toutes les 15 minutes** (`PendingPaymentMaintenanceJob` via Solid Queue) et synchronise **toutes** les réservations en attente. L'admin reçoit un email quand des créneaux sont libérés automatiquement. Un second job (`AppointmentReminderJob`) envoie les rappels de rendez-vous.
 
 La commande ci-dessous est l'équivalent **manuel** de ce job — utile en local, en secours si le worker ne tourne pas, ou après un incident :
 
@@ -77,13 +62,13 @@ Elle affiche un résumé :
 Confirmées : 1    ← paiements orphelins rattrapés
 Annulées   : 2    ← sessions expirées, créneaux libérés
 Inchangées : 0    ← toujours en attente de paiement
-Relances envoyées : 1
+Rappels de rendez-vous : 1
 ```
 
 | | Bouton admin « Synchroniser » | `rails bookings:maintain_pending_payments` |
 |---|---|---|
 | **Portée** | Une réservation choisie | Toutes les réservations en attente |
-| **Relances email** | Non (bouton séparé « Renvoyer le lien ») | Oui, pour les réservations éligibles |
+| **Rappels de rendez-vous** | Non | Oui, pour les rendez-vous dans les 24 h |
 | **Quand l'utiliser** | Un cas précis repéré en admin | Maintenance globale, test local, rattrapage après incident |
 
 # Local Development

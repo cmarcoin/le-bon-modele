@@ -38,7 +38,7 @@ class PendingPaymentBookingSync
       StripeBookingConfirmation.confirm_from_session!(session)
       :confirmed
     elsif session.status == "expired" || session_expired?(session)
-      booking.cancel_reservation!
+      booking.cancel_reservation!(expire_session: false)
       booking.payment_transaction&.update!(stripe_payload: session.to_h)
       :canceled
     else

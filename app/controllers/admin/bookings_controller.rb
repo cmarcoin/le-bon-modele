@@ -1,6 +1,6 @@
 module Admin
   class BookingsController < BaseController
-    before_action :set_booking, only: %i[show destroy sync_stripe release_slot resend_payment_link]
+    before_action :set_booking, only: %i[show destroy sync_stripe release_slot resend_payment_link cancel cancel_and_refund]
 
     def index
       @bookings = Booking.includes(:pack, :availability_slot, :payment_transaction).latest
@@ -35,8 +35,37 @@ module Admin
         return
       end
 
-      @booking.cancel_reservation!
-      redirect_to admin_bookings_path(status: "pending_payment"), notice: "Créneau libéré — la réservation a été annulée."
+      result = BookingCancellation.call(@booking, refund: :never, notify: false)
+      if result.outcome == :confirmed
+        redirect_to admin_booking_path(@booking), notice: "Paiement reçu — la réservation est confirmée."
+      else
+        redirect_to admin_bookings_path(status: "pending_payment"), notice: "Créneau libéré — la réservation a été annulée."
+      end
+    end
+
+    def cancel
+      if @booking.canceled?
+        redirect_to admin_booking_path(@booking), alert: "Cette réservation est déjà annulée."
+        return
+      end
+
+      result = BookingCancellation.call(@booking, refund: :auto, notify: @booking.paid?)
+      redirect_to admin_booking_path(@booking), notice: cancellation_notice(result)
+    rescue StripeBookingRefund::Error, Stripe::StripeError => error
+      redirect_to admin_booking_path(@booking), alert: "Le remboursement n'a pas pu être effectué : #{error.message}"
+    end
+
+    def cancel_and_refund
+      unless @booking.paid?
+        redirect_to admin_booking_path(@booking), alert: "Seule une réservation payée peut être remboursée."
+        return
+      end
+
+      result = BookingCancellation.call(@booking, refund: :force, notify: true)
+      notice = result.refunded ? "Réservation annulée et paiement remboursé." : "Cette réservation est déjà annulée."
+      redirect_to admin_booking_path(@booking), notice: notice
+    rescue StripeBookingRefund::Error, Stripe::StripeError => error
+      redirect_to admin_booking_path(@booking), alert: "Le remboursement n'a pas pu être effectué : #{error.message}"
     end
 
     def resend_payment_link
@@ -51,6 +80,17 @@ module Admin
     end
 
     def destroy
+      if @booking.paid?
+        redirect_to admin_booking_path(@booking), alert: "Une réservation payée s'annule depuis sa fiche. Elle n'est pas supprimée."
+        return
+      end
+
+      if @booking.pending_payment?
+        @booking.cancel_reservation!
+        redirect_to admin_bookings_path(status: "pending_payment"), notice: "Créneau libéré — la réservation a été annulée."
+        return
+      end
+
       Booking.transaction do
         PaymentTransaction.where(booking_id: @booking.id).destroy_all
         @booking.reload.destroy!
@@ -63,6 +103,18 @@ module Admin
 
     def set_booking
       @booking = Booking.includes(:pack, :availability_slot, :payment_transaction, :user).find(params[:id])
+    end
+
+    def cancellation_notice(result)
+      if result.outcome == :confirmed
+        "Paiement reçu — la réservation est confirmée."
+      elsif result.refunded
+        "Réservation annulée et paiement remboursé."
+      elsif result.booking.payment_transaction&.status == "paid"
+        "Réservation annulée, sans remboursement."
+      else
+        "Créneau libéré — la réservation a été annulée."
+      end
     end
   end
 end

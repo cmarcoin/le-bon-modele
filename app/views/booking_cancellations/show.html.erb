@@ -1,0 +1,44 @@
+<% content_for :title, "Annuler la réservation | Le Bon Modèle" %>
+
+<%= render "home/header" %>
+
+<main class="relative pt-28">
+  <%= render "home/background_pattern" %>
+  <section class="relative px-4 py-16 md:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl rounded-[28px] border border-[#E7E2DC] bg-white p-8 text-center shadow-soft lg:p-12">
+      <% if @booking.canceled? %>
+        <p class="text-[20px] font-bold text-brand-primary">Réservation annulée</p>
+        <h1 class="mt-3 font-heading text-[42px] font-bold leading-none text-brand-text sm:text-[56px]">Le créneau est libéré</h1>
+        <p class="mx-auto mt-6 max-w-2xl text-[20px] leading-[1.5] text-brand-text-secondary">
+          <% if @booking.payment_transaction&.refunded? %>
+            Le paiement de <%= euro_price(@booking.amount_cents) %> TTC a été remboursé.
+          <% elsif @booking.payment_transaction&.status == "paid" %>
+            Cette annulation ne donne pas lieu à un remboursement.
+          <% else %>
+            Aucun paiement n’a été encaissé.
+          <% end %>
+        </p>
+      <% elsif @booking.paid? %>
+        <p class="text-[20px] font-bold text-brand-coral">Annuler le rendez-vous</p>
+        <h1 class="mt-3 font-heading text-[42px] font-bold leading-none text-brand-text sm:text-[56px]"><%= @booking.pack.name %></h1>
+        <p class="mx-auto mt-6 max-w-2xl text-[20px] leading-[1.5] text-brand-text-secondary">
+          Rendez-vous prévu le <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>.
+        </p>
+        <p class="mx-auto mt-4 max-w-2xl text-[18px] leading-[1.5] text-brand-text-secondary"><%= booking_cancellation_policy %></p>
+        <% if @booking.refundable? %>
+          <p class="mx-auto mt-4 max-w-2xl text-[18px] font-bold text-brand-text">Cette annulation sera remboursée intégralement.</p>
+        <% else %>
+          <p class="mx-auto mt-4 max-w-2xl text-[18px] font-bold text-brand-text">Cette annulation ne sera pas remboursée.</p>
+        <% end %>
+        <%= button_to "Confirmer l’annulation", cancel_booking_path(token: params[:token]), method: :post, class: "mt-8 inline-flex min-h-[58px] items-center justify-center rounded-full bg-brand-coral px-8 text-[18px] font-bold text-white" %>
+      <% else %>
+        <p class="text-[20px] font-bold text-brand-coral">Annulation indisponible</p>
+        <h1 class="mt-3 font-heading text-[42px] font-bold leading-none text-brand-text sm:text-[56px]">Cette réservation n’est pas confirmée</h1>
+      <% end %>
+
+      <%= link_to "Retour à l’accueil", root_path, class: "mt-8 inline-flex min-h-[58px] items-center justify-center rounded-full bg-brand-beige px-8 text-[18px] font-bold text-brand-text" %>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

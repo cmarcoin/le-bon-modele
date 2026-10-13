@@ -66,8 +66,7 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
     assert_equal({ enabled: true }, captured_params[:automatic_tax])
     assert_nil captured_params[:customer_update]
     assert_equal "LE BON MODELE", captured_params.dig(:payment_intent_data, :statement_descriptor)
-    assert captured_params[:expires_at].present?
-    assert captured_params[:expires_at] > Time.current.to_i
+    assert_in_delta 31.minutes.from_now.to_i, captured_params[:expires_at], 5
 
     line_item = captured_params[:line_items].first
     assert_equal 1, line_item[:quantity]
@@ -124,6 +123,26 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
     end
 
     assert_match(/synchronisé/, error.message)
+  end
+
+  test "expires an open checkout session" do
+    @booking.update!(stripe_checkout_session_id: "cs_open")
+    open_session = Struct.new(:id, :status, :payment_status, keyword_init: true).new(
+      id: "cs_open",
+      status: "open",
+      payment_status: "unpaid"
+    )
+    expired_calls = []
+    original_retrieve = Stripe::Checkout::Session.method(:retrieve)
+    original_expire = Stripe::Checkout::Session.method(:expire)
+    Stripe::Checkout::Session.define_singleton_method(:retrieve) { |_id| open_session }
+    Stripe::Checkout::Session.define_singleton_method(:expire) { |id| expired_calls << id }
+
+    assert_equal :expired, StripeCheckoutSession.expire_open_session!(@booking)
+    assert_equal [ "cs_open" ], expired_calls
+  ensure
+    Stripe::Checkout::Session.define_singleton_method(:retrieve, original_retrieve)
+    Stripe::Checkout::Session.define_singleton_method(:expire, original_expire)
   end
 
   test "trusted_checkout_url accepts stripe checkout host only" do

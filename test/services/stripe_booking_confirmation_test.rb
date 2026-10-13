@@ -2,6 +2,8 @@ require "test_helper"
 require "ostruct"
 
 class StripeBookingConfirmationTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   setup do
     @pack = Pack.create!(
       slug: "starter-pack",
@@ -77,5 +79,52 @@ class StripeBookingConfirmationTest < ActiveSupport::TestCase
     assert_equal "75005", @booking.billing_postal_code
     assert_equal "Paris", @booking.billing_city
     assert_equal "FR", @booking.billing_country
+  end
+
+  test "does not send confirmation emails twice" do
+    session = OpenStruct.new(
+      id: "cs_test_confirm",
+      payment_status: "paid",
+      payment_intent: "pi_test_123",
+      total_details: OpenStruct.new(amount_tax: 0),
+      customer_details: nil
+    )
+
+    assert_enqueued_emails 2 do
+      StripeBookingConfirmation.confirm_from_session!(session)
+    end
+    paid_at = @booking.reload.paid_at
+
+    assert_no_enqueued_emails do
+      StripeBookingConfirmation.confirm_from_session!(session)
+    end
+
+    assert_equal paid_at, @booking.reload.paid_at
+  end
+
+  test "refunds a payment that arrives after cancellation" do
+    @booking.cancel_reservation!(expire_session: false)
+    @transaction = @booking.payment_transaction
+    original_refund = Stripe::Refund.method(:create)
+    Stripe::Refund.define_singleton_method(:create) { |*_args| Struct.new(:id).new("re_late") }
+
+    session = OpenStruct.new(
+      id: "cs_test_confirm",
+      payment_status: "paid",
+      payment_intent: "pi_late",
+      total_details: OpenStruct.new(amount_tax: 0),
+      customer_details: nil
+    )
+
+    assert_enqueued_emails 2 do
+      StripeBookingConfirmation.confirm_from_session!(session)
+    end
+
+    assert_equal "canceled", @booking.reload.status
+    assert_equal "refunded", @transaction.reload.status
+    assert_equal "pi_late", @transaction.stripe_payment_intent_id
+    assert_equal "re_late", @transaction.stripe_refund_id
+  ensure
+    Stripe::Refund.define_singleton_method(:create, original_refund) if original_refund
   end
 end

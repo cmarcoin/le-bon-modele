@@ -1,0 +1,12 @@
+Rappel de votre rendez-vous
+
+Bonjour <%= @booking.customer_name %>,
+
+Votre <%= @booking.pack.name %> a lieu le <%= paris_datetime(@booking.availability_slot.starts_at) %>.
+
+<%= booking_cancellation_policy %>
+
+Annuler ma réservation : <%= @cancel_url %>
+
+À très vite,
+Le Bon Modèle

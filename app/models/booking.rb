@@ -1,8 +1,10 @@
 class Booking < ApplicationRecord
   STATUSES = %w[pending_payment paid canceled].freeze
   MEETING_MODES = %w[visio phone].freeze
-  PAYMENT_REMINDER_DELAY = 1.hour
   PAYMENT_RESUME_TOKEN_EXPIRY = 7.days
+  CHECKOUT_HOLD_DESCRIPTION = "30 minutes"
+  REFUND_WINDOW = 48.hours
+  REFUND_WINDOW_DESCRIPTION = "48 heures"
 
   belongs_to :user
   belongs_to :pack
@@ -22,10 +24,13 @@ class Booking < ApplicationRecord
   scope :latest, -> { order(created_at: :desc) }
   scope :occupying_slot, -> { where(status: %w[pending_payment paid]) }
   scope :pending_payment, -> { where(status: "pending_payment") }
-  scope :due_for_payment_reminder, -> {
-    pending_payment
-      .where(payment_reminder_sent_at: nil)
-      .where(created_at: ..PAYMENT_REMINDER_DELAY.ago)
+  scope :paid, -> { where(status: "paid") }
+  scope :due_for_appointment_reminder, -> {
+    paid
+      .where(appointment_reminder_sent_at: nil)
+      .where("bookings.paid_at IS NULL OR bookings.paid_at <= ?", 2.hours.ago)
+      .joins(:availability_slot)
+      .where(availability_slots: { starts_at: Time.current..24.hours.from_now })
   }
 
   def paid?
@@ -36,8 +41,21 @@ class Booking < ApplicationRecord
     status == "pending_payment"
   end
 
+  def canceled?
+    status == "canceled"
+  end
+
+  def refundable?
+    paid? && !payment_transaction&.refunded? && availability_slot.starts_at > REFUND_WINDOW.from_now
+  end
+
   def payment_resume_token
     signed_id(purpose: :payment_resume, expires_in: PAYMENT_RESUME_TOKEN_EXPIRY)
+  end
+
+  def cancellation_token
+    remaining = availability_slot.starts_at - Time.current + 2.days
+    signed_id(purpose: :booking_cancellation, expires_in: [ remaining, 2.days ].max)
   end
 
   def self.release_pending_for_retry!(slot_id:, customer_email:)
@@ -49,11 +67,24 @@ class Booking < ApplicationRecord
     booking&.cancel_reservation!
   end
 
-  def cancel_reservation!
-    transaction do
-      update!(status: "canceled")
-      payment_transaction&.update!(status: "canceled")
+  def cancel_reservation!(expire_session: true)
+    if expire_session && stripe_checkout_session_id.present?
+      session_state = StripeCheckoutSession.expire_open_session!(self)
+      if session_state == :complete
+        session = Stripe::Checkout::Session.retrieve(stripe_checkout_session_id)
+        return StripeBookingConfirmation.confirm_from_session!(session)
+      end
     end
+
+    with_lock do
+      reload
+      return self unless pending_payment?
+
+      update!(status: "canceled", canceled_at: Time.current)
+      payment_transaction.update!(status: "canceled") if payment_transaction&.status == "pending"
+    end
+
+    self
   end
 
   private

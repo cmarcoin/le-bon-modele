@@ -1,5 +1,5 @@
 class PaymentTransaction < ApplicationRecord
-  STATUSES = %w[pending paid failed canceled].freeze
+  STATUSES = %w[pending paid failed canceled refunded].freeze
 
   belongs_to :booking
   belongs_to :user
@@ -9,4 +9,8 @@ class PaymentTransaction < ApplicationRecord
   validates :amount_cents, :currency, :stripe_checkout_session_id, presence: true
   validates :amount_cents, :tax_amount_cents, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validates :stripe_checkout_session_id, uniqueness: true
+
+  def refunded?
+    status == "refunded"
+  end
 end

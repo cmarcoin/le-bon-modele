@@ -149,7 +149,10 @@
           </div>
 
           <%= form.submit "Confirmer le créneau", disabled: true, class: "inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)] disabled:cursor-not-allowed disabled:opacity-50", data: { booking_form_target: "submit" } %>
-          <p class="text-center text-sm text-brand-text-secondary">Paiement sécurisé à l’étape suivante.</p>
+          <p class="text-center text-sm text-brand-text-secondary">
+            Le créneau est bloqué <%= Booking::CHECKOUT_HOLD_DESCRIPTION %>, le temps de payer. Paiement sécurisé à l’étape suivante.
+            <%= booking_cancellation_policy %>
+          </p>
         <% end %>
       </article>
     </div>

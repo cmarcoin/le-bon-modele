@@ -1,0 +1,17 @@
+<h1>Réservation annulée</h1>
+
+<p>
+  <%= @booking.customer_name %> (<%= @booking.customer_email %>) a annulé
+  le <strong><%= @booking.pack.name %></strong> prévu le
+  <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>.
+</p>
+
+<p>
+  <% if @refunded %>
+    Le paiement a été remboursé.
+  <% elsif @booking.payment_transaction&.status == "paid" %>
+    Le paiement n’a pas été remboursé.
+  <% else %>
+    Aucun paiement n’avait été encaissé.
+  <% end %>
+</p>

@@ -34,7 +34,7 @@ class StripeWebhooksController < ApplicationController
     booking = Booking.find_by(stripe_checkout_session_id: session.id)
     return unless booking&.pending_payment?
 
-    booking.cancel_reservation!
+    booking.cancel_reservation!(expire_session: false)
     booking.payment_transaction&.update!(stripe_payload: session.to_h)
   end
 end

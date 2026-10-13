@@ -17,6 +17,6 @@
   <%= link_to "Finaliser mon paiement", @resume_url %>
 </p>
 
-<p>Ce lien est valable 7 jours. Passé ce délai, le créneau sera libéré.</p>
+<p>Le créneau reste bloqué <%= Booking::CHECKOUT_HOLD_DESCRIPTION %> après l’ouverture du paiement. Passé ce délai, il est libéré.</p>
 
 <p>À très vite,<br>Le Bon Modèle</p>

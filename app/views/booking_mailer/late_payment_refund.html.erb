@@ -1,0 +1,11 @@
+<h1>Votre paiement a été remboursé</h1>
+
+<p>Bonjour <%= @booking.customer_name %>,</p>
+
+<p>
+  Votre paiement de <strong><%= euro_price(@booking.amount_cents) %> TTC</strong>
+  est arrivé après l’annulation de la réservation. Il a été remboursé intégralement.
+  Le créneau du <%= paris_datetime(@booking.availability_slot.starts_at) %> n’est pas réservé.
+</p>
+
+<p>À très vite,<br>Le Bon Modèle</p>

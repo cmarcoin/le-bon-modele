@@ -22,6 +22,20 @@ module ApplicationHelper
     number_to_currency(cents.to_i / 100.0, unit: "€", separator: ",", delimiter: " ", format: "%n%u", precision: cents.to_i % 100 == 0 ? 0 : 2)
   end
 
+  def booking_cancellation_policy
+    "Jusqu’à #{Booking::REFUND_WINDOW_DESCRIPTION} avant le rendez-vous, l’annulation est remboursée intégralement. Dans les #{Booking::REFUND_WINDOW_DESCRIPTION}, ou une fois le créneau passé, l’annulation reste possible, sans remboursement."
+  end
+
+  def payment_transaction_status_label(status)
+    {
+      "pending" => "En attente",
+      "paid" => "Payée",
+      "failed" => "Échouée",
+      "canceled" => "Annulée",
+      "refunded" => "Remboursée"
+    }.fetch(status, status)
+  end
+
   def booking_status_label(status)
     {
       "pending_payment" => "En attente de paiement",

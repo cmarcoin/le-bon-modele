@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PendingPaymentBookingReminderTest < ActiveSupport::TestCase
+class AppointmentReminderTest < ActiveSupport::TestCase
   include ActiveJob::TestHelper
 
   setup do
@@ -17,8 +17,8 @@ class PendingPaymentBookingReminderTest < ActiveSupport::TestCase
     )
     @slot = AvailabilitySlot.create!(
       pack: @pack,
-      starts_at: 2.days.from_now.change(hour: 10),
-      ends_at: 2.days.from_now.change(hour: 10, min: 45),
+      starts_at: 12.hours.from_now,
+      ends_at: 12.hours.from_now + 45.minutes,
       timezone: "Europe/Paris"
     )
     @booking = Booking.create!(
@@ -29,34 +29,40 @@ class PendingPaymentBookingReminderTest < ActiveSupport::TestCase
       customer_email: "client@example.com",
       amount_cents: @pack.price_cents,
       currency: "eur",
-      status: "pending_payment",
-      stripe_checkout_session_id: "cs_reminder",
-      created_at: 2.hours.ago
+      status: "paid",
+      paid_at: 3.hours.ago
     )
   end
 
-  test "sends reminder for due pending bookings" do
+  test "sends one reminder for a paid booking inside the next day" do
     assert_enqueued_emails 1 do
-      sent_count = PendingPaymentBookingReminder.call
-      assert_equal 1, sent_count
+      assert_equal 1, AppointmentReminder.call
     end
 
-    assert_not_nil @booking.reload.payment_reminder_sent_at
+    assert_not_nil @booking.reload.appointment_reminder_sent_at
   end
 
-  test "does not send reminder twice" do
-    @booking.update!(payment_reminder_sent_at: 30.minutes.ago)
+  test "does not remind twice" do
+    @booking.update!(appointment_reminder_sent_at: 1.hour.ago)
 
     assert_no_enqueued_emails do
-      assert_equal 0, PendingPaymentBookingReminder.call
+      assert_equal 0, AppointmentReminder.call
     end
   end
 
-  test "does not send reminder for recent bookings" do
-    @booking.update!(created_at: 10.minutes.ago)
+  test "does not remind for a booking just paid" do
+    @booking.update!(paid_at: 10.minutes.ago)
 
     assert_no_enqueued_emails do
-      assert_equal 0, PendingPaymentBookingReminder.call
+      assert_equal 0, AppointmentReminder.call
+    end
+  end
+
+  test "does not remind more than 24 hours ahead" do
+    @slot.update!(starts_at: 3.days.from_now, ends_at: 3.days.from_now + 45.minutes)
+
+    assert_no_enqueued_emails do
+      assert_equal 0, AppointmentReminder.call
     end
   end
 end

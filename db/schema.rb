@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_21_220000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_04_220000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,11 +29,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_220000) do
 
   create_table "bookings", force: :cascade do |t|
     t.integer "amount_cents", null: false
+    t.datetime "appointment_reminder_sent_at"
     t.bigint "availability_slot_id", null: false
     t.string "billing_city"
     t.string "billing_country", default: "FR", null: false
     t.string "billing_line1"
     t.string "billing_postal_code"
+    t.datetime "canceled_at"
     t.datetime "created_at", null: false
     t.string "currency", default: "eur", null: false
     t.string "customer_email", null: false
@@ -47,6 +49,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_220000) do
     t.string "stripe_checkout_session_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["appointment_reminder_sent_at"], name: "index_bookings_on_appointment_reminder_sent_at"
     t.index ["availability_slot_id"], name: "idx_bookings_active_slot", unique: true, where: "((status)::text = ANY (ARRAY[('pending_payment'::character varying)::text, ('paid'::character varying)::text]))"
     t.index ["availability_slot_id"], name: "index_bookings_on_availability_slot_id"
     t.index ["customer_email"], name: "index_bookings_on_customer_email"
@@ -86,10 +89,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_220000) do
     t.datetime "created_at", null: false
     t.string "currency", default: "eur", null: false
     t.bigint "pack_id", null: false
+    t.datetime "refunded_at"
     t.string "status", default: "pending", null: false
     t.string "stripe_checkout_session_id", null: false
     t.jsonb "stripe_payload", default: {}, null: false
     t.string "stripe_payment_intent_id"
+    t.string "stripe_refund_id"
     t.integer "tax_amount_cents", default: 0, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -98,6 +103,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_220000) do
     t.index ["status"], name: "index_payment_transactions_on_status"
     t.index ["stripe_checkout_session_id"], name: "index_payment_transactions_on_stripe_checkout_session_id", unique: true
     t.index ["stripe_payment_intent_id"], name: "index_payment_transactions_on_stripe_payment_intent_id"
+    t.index ["stripe_refund_id"], name: "index_payment_transactions_on_stripe_refund_id", unique: true
     t.index ["user_id"], name: "index_payment_transactions_on_user_id"
   end
 

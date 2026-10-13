@@ -10,6 +10,10 @@
 
 <p>Montant payé : <strong><%= euro_price(@booking.amount_cents) %> TTC</strong>.</p>
 
+<p><%= booking_cancellation_policy %></p>
+
+<p><%= link_to "Annuler ma réservation", @cancel_url %></p>
+
 <p>Un compte client a été créé avec cette adresse email. Vous pourrez utiliser la page de mot de passe oublié pour définir votre mot de passe.</p>
 
 <p>À très vite,<br>Le Bon Modèle</p>

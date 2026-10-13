@@ -11,7 +11,7 @@ finalisez le paiement de <%= euro_price(@booking.amount_cents) %> TTC.
 
 Finaliser mon paiement : <%= @resume_url %>
 
-Ce lien est valable 7 jours. Passé ce délai, le créneau sera libéré.
+Le créneau reste bloqué <%= Booking::CHECKOUT_HOLD_DESCRIPTION %> après l’ouverture du paiement. Passé ce délai, il est libéré.
 
 À très vite,
 Le Bon Modèle

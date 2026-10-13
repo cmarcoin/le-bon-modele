@@ -24,6 +24,8 @@ Rails.application.routes.draw do
         post :sync_stripe
         post :release_slot
         post :resend_payment_link
+        post :cancel
+        post :cancel_and_refund
       end
     end
     resources :site_copies, only: %i[index edit update]
@@ -36,6 +38,8 @@ Rails.application.routes.draw do
   get "checkout/success", to: "checkout#success", as: :checkout_success
   get "checkout/cancel", to: "checkout#cancel", as: :checkout_cancel
   get "paiement/reprendre/:token", to: "payment_resumes#show", as: :resume_payment
+  get "reservation/annuler/:token", to: "booking_cancellations#show", as: :cancel_booking
+  post "reservation/annuler/:token", to: "booking_cancellations#create"
   post "stripe/webhooks", to: "stripe_webhooks#create", as: :stripe_webhooks
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

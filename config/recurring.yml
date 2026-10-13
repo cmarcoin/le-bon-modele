@@ -16,8 +16,14 @@ production:
   pending_payment_maintenance:
     class: PendingPaymentMaintenanceJob
     schedule: every 15 minutes
+  appointment_reminders:
+    class: AppointmentReminderJob
+    schedule: every 15 minutes
 
 development:
   pending_payment_maintenance:
     class: PendingPaymentMaintenanceJob
+    schedule: every 15 minutes
+  appointment_reminders:
+    class: AppointmentReminderJob
     schedule: every 15 minutes

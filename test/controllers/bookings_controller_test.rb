@@ -155,6 +155,8 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "input[type=radio][value='#{saturday_slot.id}']", count: 0
+    assert_match(/30 minutes/, response.body)
+    assert_match(/48 heures/, response.body)
     assert_select "span", text: "SAM.", count: 0
     assert_select "span", text: "DIM.", count: 0
     assert_select "p", text: /Le Pack Conseil comprend/
