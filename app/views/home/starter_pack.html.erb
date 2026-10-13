@@ -1,79 +1,50 @@
 <% content_for :title, "#{@starter_pack.name} | Le Bon Modèle" %>
+<% offer_button = "inline-flex min-h-16 items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
+<% steps = [
+  { number: "1", icon: "document", title: "Questionnaire préparatoire", body: "Nous vous envoyons un questionnaire pour préparer le premier entretien, afin de cadrer vos usages et vos priorités." },
+  { number: "2", icon: "chat", title: "Premier entretien avec Charles et Jules", body: "Un échange en visio ou par téléphone.", duration: "60 min" },
+  { number: "3", icon: "car", title: "Liste réduite de 2 à 3 modèles", body: "Nous sélectionnons les modèles les plus adaptés à vos besoins. Vous recevez une synthèse avec nos recommandations, des repères de prix et les points de vigilance à connaître." },
+  { number: "4", icon: "calendar", title: "Entretien de suivi avec Charles et Jules", body: "Un second échange pour répondre à vos questions et vous aider à poursuivre votre achat.", duration: "30 min" }
+] %>
 
 <%= render "home/header" %>
 
 <main class="relative pt-24">
   <%= render "home/background_pattern" %>
-  <section class="relative px-4 py-6 md:px-6 lg:px-8 lg:py-8">
+  <section class="relative px-6 py-8 lg:px-12 lg:py-10">
     <div class="mx-auto max-w-[1280px]">
-      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-12 xl:gap-16">
+      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
         <article>
-          <div class="flex items-center gap-4">
-            <%= image_tag @starter_pack.icon_path, alt: "", class: "h-10 w-auto shrink-0" %>
-            <h1 class="font-heading text-[34px] font-bold leading-none text-brand-primary sm:text-[42px]"><%= @starter_pack.name %></h1>
-          </div>
-          <div class="mt-6 h-px w-full bg-[#D9D9D9]"></div>
-
-          <div class="mt-6">
-            <p class="text-[20px] font-bold text-brand-primary sm:text-[22px]">Objectif :</p>
-            <p class="mt-2 font-heading text-[30px] font-bold leading-[1.05] text-brand-text sm:text-[36px] lg:text-[40px]"><%= @starter_pack.objective %></p>
-          </div>
-
-          <p class="mt-6 max-w-[640px] text-[18px] leading-[1.45] text-brand-text-secondary sm:text-[20px]">
-            Passez 90 min avec nos deux experts auto pour identifier le bon modèle
-            de voiture à acheter, celui qui correspond vraiment à vos besoins, vos
-            contraintes et votre budget.
-          </p>
-
-          <div class="mt-10">
-            <h2 class="font-heading text-[22px] font-bold text-brand-primary sm:text-[26px]">Votre accompagnement en 4 étapes</h2>
-
-            <ol class="mt-1">
-              <% [
-                {
-                  number: "1",
-                  title: "Questionnaire préparatoire",
-                  body: "Nous vous envoyons un questionnaire pour préparer le premier entretien, afin de cadrer vos usages et vos priorités."
-                },
-                {
-                  number: "2",
-                  title: "Premier entretien avec Charles et Jules",
-                  body: "Un échange en visio ou par téléphone.",
-                  duration: "60 min"
-                },
-                {
-                  number: "3",
-                  title: "Liste réduite de 2 à 3 modèles",
-                  body: "Nous sélectionnons les modèles les plus adaptés à vos besoins. Vous recevez une synthèse avec nos recommandations, des repères de prix et les points de vigilance à connaître."
-                },
-                {
-                  number: "4",
-                  title: "Entretien de suivi avec Charles et Jules",
-                  body: "Un second échange pour répondre à vos questions et vous aider à poursuivre votre achat.",
-                  duration: "30 min"
-                }
-              ].each do |step| %>
-                <%= render "home/pack_step", step: step %>
-              <% end %>
-            </ol>
-          </div>
-
-          <div class="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div class="font-heading leading-none text-brand-text">
-              <span class="text-[56px] font-black tracking-[-0.04em] sm:text-[64px]"><%= euro_price(@starter_pack.price_cents) %></span>
-              <span class="ml-2 text-[22px] font-medium sm:text-[26px]">TTC</span>
+          <div class="lg:pt-[108px]">
+            <div class="lg:w-fit lg:max-w-full">
+              <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary"><%= @starter_pack.name %></h1>
+              <div class="mt-6 h-px bg-[#D9D9D9]"></div>
+              <p class="mt-6 text-[20px] font-normal text-brand-text-secondary">Objectif :</p>
+              <p class="mt-2 font-heading text-[40px] font-bold leading-[1.05] text-brand-text">Identifier la voiture qu’il vous faut</p>
+              <p class="mt-6 text-justify text-[20px] leading-[1.45] text-brand-text-secondary lg:[contain:inline-size]">
+                Passez 90 min avec nos deux experts auto pour identifier le bon modèle
+                de voiture à acheter, celui qui correspond vraiment à vos besoins, vos
+                contraintes et votre budget.
+              </p>
             </div>
-            <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: "inline-flex min-h-[64px] items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)]" %>
+
+            <div class="mt-9 flex flex-wrap items-center gap-8">
+              <div class="font-heading leading-none text-brand-text">
+                <span class="text-[48px] font-black tracking-[-0.04em]"><%= euro_price(@starter_pack.price_cents) %></span>
+                <span class="ml-1.5 text-[19.5px] font-medium">TTC</span>
+              </div>
+              <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: offer_button %>
+            </div>
           </div>
         </article>
 
         <aside class="starter-pack-visual" aria-label="Ce que vous gagnez avec le <%= @starter_pack.name %>">
-          <figure class="hidden lg:mt-[4.75rem] lg:block">
-            <%= image_tag "/reference-assets/starter-pack-illustration.svg",
+          <figure class="hidden lg:-mt-10 lg:block">
+            <%= image_tag "/reference-assets/starter-pack-illustration-hero.svg",
                   width: 1122,
-                  height: 1402,
-                  alt: "Charles et Jules autour d’un ordinateur. On clarifie vos vrais besoins, on explique les différences entre modèles, motorisations, finitions et options, on éclaire le coût total de possession, la revente et les garanties, et on identifie ensemble les équipements qu’il vous faut. Nous transformons une idée floue en choix clair.",
-                  class: "h-auto w-full",
+                  height: 1228,
+                  alt: "Charles et Jules autour d’un ordinateur. On clarifie vos vrais besoins, on explique les différences entre modèles, motorisations, finitions et options, on éclaire le coût total de possession, la revente et les garanties, et on identifie ensemble les équipements qu’il vous faut.",
+                  class: "h-auto w-full lg:ml-[-40px] lg:w-[calc(100%+40px)] lg:max-w-none xl:ml-[-80px] xl:w-[calc(100%+80px)]",
                   loading: "lazy" %>
           </figure>
 
@@ -94,15 +65,34 @@
               <p class="starter-pack-quote">On vous éclaire sur les sujets mal maîtrisés : coût total de possession, prix à la revente, les garanties, etc.</p>
               <p class="starter-pack-quote">On identifie ensemble les modèles et les équipements qu’il vous faut vraiment</p>
             </div>
-
-            <p class="starter-pack-slogan">
-              <span class="starter-pack-slogan-rule" aria-hidden="true"></span>
-              <%= image_tag @starter_pack.icon_path, alt: "", class: "h-7 w-auto" %>
-              <span class="starter-pack-slogan-rule" aria-hidden="true"></span>
-              <strong>Nous transformons une idée floue en choix clair</strong>
-            </p>
           </div>
         </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative px-6 pb-[72px] pt-16 lg:px-12">
+    <div class="mx-auto max-w-[1280px]">
+      <h2 class="text-center font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary">Votre accompagnement en 4 étapes</h2>
+      <div class="mt-14">
+        <%= render "home/accompaniment_track", steps: steps %>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative px-6 py-16 lg:px-12 lg:pb-[136px] lg:pt-24">
+    <div class="mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-20">
+      <%= image_tag "/reference-assets/conclusion-experts-cliente.svg",
+            alt: "Charles et Jules aident une cliente à choisir sa voiture sur un ordinateur portable",
+            class: "order-2 h-auto w-full lg:order-1 lg:pt-[72px]",
+            loading: "lazy" %>
+      <div class="order-1 lg:order-2">
+        <h2 class="font-heading text-[32px] font-extrabold leading-[1.08] tracking-[-0.01em] text-brand-text lg:text-[40px]">
+          Nous transformons<br>
+          une idée floue<br>
+          en <span class="text-brand-primary">un choix clair</span>
+        </h2>
+        <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: "#{offer_button} mt-10" %>
       </div>
     </div>
   </section>

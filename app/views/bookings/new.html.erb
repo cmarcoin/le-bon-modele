@@ -1,40 +1,67 @@
 <% content_for :title, "Réservation #{@pack.name} | Le Bon Modèle" %>
+<% subtitle = @pack.slug == "pack-premium" ? "Vous accompagner jusqu’à l’achat" : "Identifier la voiture qu’il vous faut" %>
+<% field_class = "mt-2 h-[52px] w-full rounded-[14px] border border-[#E7E2DC] bg-white px-[18px] text-base text-brand-text outline-none focus:border-brand-primary" %>
 
 <%= render "home/header" %>
 
 <main class="relative pt-24">
   <%= render "home/background_pattern" %>
   <section class="relative px-4 py-10 md:px-6 lg:px-8 lg:py-14">
-    <div class="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-      <aside class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8">
-        <div class="flex items-center gap-4">
-          <%= image_tag @pack.icon_path, alt: "", class: "h-10 w-auto shrink-0" %>
-          <h1 class="font-heading text-[34px] font-bold leading-none text-brand-primary sm:text-[42px]"><%= @pack.name %></h1>
-        </div>
-        <p class="mt-6 font-heading text-[28px] font-bold leading-[1.15] text-brand-text sm:text-[32px]"><%= @pack.objective %></p>
-        <p class="mt-6 text-[18px] leading-[1.45] text-brand-text-secondary"><%= @pack.description %></p>
+    <div
+      class="mx-auto grid max-w-[1280px] items-start gap-8 lg:grid-cols-[0.85fr_1.15fr]"
+      <% if @slots_by_date.any? %>
+        data-controller="booking-scheduler"
+        data-booking-scheduler-available-dates-value="<%= @available_dates.map(&:iso8601).to_json %>"
+        data-booking-scheduler-today-value="<%= @calendar_today.iso8601 %>"
+        data-booking-scheduler-initial-month-value="<%= @initial_month %>"
+        data-booking-scheduler-initial-date-value="<%= @initial_date %>"
+      <% end %>
+    >
+      <aside class="self-start rounded-[24px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:sticky lg:top-28">
+        <h1 class="font-heading text-[32px] font-bold leading-[1.1] text-brand-primary"><%= @pack.name %></h1>
+        <p class="mt-4 font-heading text-[22px] font-bold leading-[1.25] text-brand-text"><%= subtitle %></p>
+        <p class="mt-3.5 text-base leading-[1.6] text-brand-text-secondary"><%= @pack.description %></p>
+
         <% if @pack.includes_items.any? %>
-          <div class="mt-8">
-            <p class="font-bold text-brand-primary">Le <%= @pack.name %> comprend :</p>
-            <ul class="mt-3 list-disc space-y-2 pl-5 text-[16px] leading-[1.5] text-brand-text-secondary">
-              <% @pack.includes_items.each do |item| %>
-                <li><%= item %></li>
-              <% end %>
-            </ul>
-          </div>
+          <div class="my-6 h-px bg-[#EFEAE4]"></div>
+          <p class="text-base text-brand-text-secondary">Ce qui est inclus :</p>
+          <ul class="mt-3.5 space-y-2.5">
+            <% @pack.includes_items.each do |item| %>
+              <li class="flex items-start gap-3 text-base leading-[1.6] text-brand-text-secondary">
+                <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-primary-light text-brand-primary">
+                  <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17l9-10"></path></svg>
+                </span>
+                <span><%= item.sub(/[,\.]\z/, "") %></span>
+              </li>
+            <% end %>
+          </ul>
         <% end %>
-        <div class="mt-10 rounded-[24px] bg-brand-beige p-6">
-          <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand-primary">Prix TTC</p>
-          <p class="mt-2 font-heading text-[56px] font-black leading-none tracking-[-0.04em] text-brand-text"><%= euro_price(@pack.price_cents) %></p>
+
+        <div class="my-6 h-px bg-[#EFEAE4]"></div>
+        <div class="flex items-center gap-3 rounded-2xl bg-brand-beige px-[18px] py-4">
+          <svg class="h-[22px] w-[22px] shrink-0 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M3 10h18M8 3v4M16 3v4"></path>
+          </svg>
+          <div>
+            <p class="text-sm font-bold text-brand-text">Entretien n° 1</p>
+            <p data-booking-scheduler-target="summary" class="text-base leading-[1.6] text-brand-text-secondary">Choisissez un créneau</p>
+          </div>
+        </div>
+
+        <div class="my-6 h-px bg-[#EFEAE4]"></div>
+        <div class="flex items-baseline justify-between">
+          <p class="text-base font-bold text-brand-text">Total</p>
+          <p class="font-heading leading-none text-brand-text">
+            <span class="text-[40px] font-black tracking-[-0.04em]"><%= euro_price(@pack.price_cents) %></span>
+            <span class="ml-1.5 text-[20px] font-medium">TTC</span>
+          </p>
         </div>
       </aside>
 
-      <article class="rounded-[28px] border border-[#E7E2DC] bg-white p-6 shadow-soft sm:p-8 lg:p-10">
-        <p class="text-[20px] font-bold text-brand-primary">1. Réservez votre premier entretien (60 min)</p>
-        <p class="mt-2 text-[16px] leading-[1.5] text-brand-text-secondary">Choisissez le créneau de votre premier échange avec Charles et Jules. Le second rendez-vous sera programmé après l’envoi du document de synthèse.</p>
-
+      <article class="rounded-[24px] border border-[#E7E2DC] bg-white p-6 shadow-soft lg:py-10 lg:pl-8 lg:pr-10">
         <% if @booking.errors.any? %>
-          <div class="mt-6 rounded-[20px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
+          <div class="mb-6 rounded-[20px] border border-brand-coral/30 bg-brand-coral/5 p-4 text-brand-coral">
             <p class="font-bold">Impossible de continuer :</p>
             <ul class="mt-2 list-disc pl-5">
               <% @booking.errors.full_messages.each do |message| %>
@@ -44,115 +71,116 @@
           </div>
         <% end %>
 
-        <%= form_with model: [@pack, @booking], class: "mt-8 space-y-8", data: { turbo: false, controller: "booking-form", action: "input->booking-form#refresh change->booking-form#refresh" } do |form| %>
-          <div
-            data-controller="booking-scheduler"
-            data-booking-scheduler-available-dates-value="<%= @available_dates.map(&:iso8601).to_json %>"
-            data-booking-scheduler-today-value="<%= @calendar_today.iso8601 %>"
-            data-booking-scheduler-initial-month-value="<%= @initial_month %>"
-            data-booking-scheduler-initial-date-value="<%= @initial_date %>"
-            data-action="change->booking-form#refresh"
-          >
-            <% if @slots_by_date.any? %>
-              <div class="overflow-hidden rounded-[24px] border border-[#E7E2DC]">
-                <div class="grid lg:grid-cols-2">
-                  <div class="border-b border-[#E7E2DC] p-5 sm:p-6 lg:border-b-0 lg:border-r">
-                    <p class="font-bold text-brand-text">Sélectionnez une date et un horaire</p>
-                    <p class="mt-1 text-sm text-brand-text-secondary">Horaires affichés à l’heure de Paris</p>
+        <%= form_with model: [@pack, @booking], class: "space-y-12", data: { turbo: false, controller: "booking-form", action: "input->booking-form#refresh change->booking-form#refresh" } do |form| %>
+          <div class="grid grid-cols-[36px_minmax(0,1fr)] gap-x-5">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary-light font-heading text-[17px] font-extrabold text-brand-primary">1</span>
+            <div>
+              <h2 class="flex min-h-9 items-center font-heading text-[22px] font-bold leading-[1.25] text-brand-text">Réservez votre premier entretien (60 min)</h2>
+              <p class="mt-2 text-base leading-[1.6] text-brand-text-secondary">Choisissez le créneau de votre premier échange avec Charles et Jules. Le second rendez-vous sera programmé après l’envoi du document de synthèse.</p>
 
-                    <div class="mt-5 flex items-center justify-between">
-                      <button type="button" data-action="booking-scheduler#previousMonth" class="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition hover:bg-brand-beige" aria-label="Mois précédent">
-                        <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                      </button>
-                      <p data-booking-scheduler-target="monthLabel" class="font-bold text-brand-text"></p>
-                      <button type="button" data-action="booking-scheduler#nextMonth" class="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition hover:bg-brand-beige" aria-label="Mois suivant">
-                        <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-                      </button>
+              <% if @slots_by_date.any? %>
+                <div class="mt-6 overflow-hidden rounded-[20px] border border-[#E7E2DC]">
+                  <div class="grid lg:grid-cols-2">
+                    <div class="border-b border-[#E7E2DC] p-6 lg:border-b-0 lg:border-r">
+                      <p class="text-sm font-bold text-brand-text">Sélectionnez une date et un horaire</p>
+                      <p class="mt-1 text-sm text-brand-text-secondary">Horaires affichés à l’heure de Paris</p>
+
+                      <div class="mt-5 flex items-center justify-between">
+                        <button type="button" data-action="booking-scheduler#previousMonth" class="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition hover:bg-brand-beige" aria-label="Mois précédent">
+                          <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                        </button>
+                        <p data-booking-scheduler-target="monthLabel" class="text-sm font-bold text-brand-text"></p>
+                        <button type="button" data-action="booking-scheduler#nextMonth" class="flex h-10 w-10 items-center justify-center rounded-full text-brand-primary transition hover:bg-brand-beige" aria-label="Mois suivant">
+                          <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                        </button>
+                      </div>
+
+                      <div class="mt-4 grid grid-cols-5 gap-1 text-center text-xs font-bold uppercase tracking-[0.08em] text-brand-text-secondary">
+                        <% %w[LUN. MAR. MER. JEU. VEN.].each do |weekday| %>
+                          <span class="py-2"><%= weekday %></span>
+                        <% end %>
+                      </div>
+
+                      <div data-booking-scheduler-target="calendar" class="grid grid-cols-5 gap-1"></div>
                     </div>
 
-                    <div class="mt-4 grid grid-cols-5 gap-1 text-center text-[11px] font-bold uppercase tracking-[0.08em] text-brand-text-secondary">
-                      <% %w[LUN. MAR. MER. JEU. VEN.].each do |weekday| %>
-                        <span class="py-2"><%= weekday %></span>
-                      <% end %>
-                    </div>
+                    <div data-booking-scheduler-target="timesSection" class="p-6">
+                      <p data-booking-scheduler-target="selectedDayLabel" class="text-sm font-bold text-brand-text"></p>
+                      <p class="mt-1 text-sm text-brand-text-secondary">60 min</p>
 
-                    <div data-booking-scheduler-target="calendar" class="grid grid-cols-5 gap-1"></div>
-                  </div>
-
-                  <div data-booking-scheduler-target="timesSection" class="p-5 sm:p-6">
-                    <p data-booking-scheduler-target="selectedDayLabel" class="font-bold text-brand-text"></p>
-                    <p class="mt-1 text-sm text-brand-text-secondary"><%= @pack.duration_minutes %> min</p>
-
-                    <div class="mt-4 max-h-[320px] space-y-2 overflow-y-auto pr-1">
-                      <% @slots_by_date.each do |date, slots| %>
-                        <div data-booking-scheduler-target="timePanel" data-date="<%= date.iso8601 %>" class="space-y-3" hidden>
-                          <% slots.each do |slot| %>
-                            <label
-                              data-booking-scheduler-target="timeSlot"
-                              data-time="<%= paris_time(slot.starts_at) %>"
-                              data-date-label="<%= paris_day_label(date) %>"
-                              class="flex cursor-pointer items-center justify-center rounded-full border border-[#E7E2DC] bg-white px-4 py-3 font-bold text-brand-text transition hover:border-brand-primary"
-                            >
-                              <%= form.radio_button :availability_slot_id, slot.id, required: true, class: "sr-only", data: { action: "booking-scheduler#selectTime booking-form#refresh" } %>
-                              <%= paris_time(slot.starts_at) %>
-                            </label>
-                          <% end %>
-                        </div>
-                      <% end %>
+                      <div class="mt-4 max-h-[318px] space-y-2.5 overflow-y-auto pr-1 [mask-image:linear-gradient(to_bottom,#000_78%,transparent)]">
+                        <% @slots_by_date.each do |date, slots| %>
+                          <div data-booking-scheduler-target="timePanel" data-date="<%= date.iso8601 %>" class="space-y-2.5" hidden>
+                            <% slots.each do |slot| %>
+                              <label
+                                data-booking-scheduler-target="timeSlot"
+                                data-time="<%= paris_time(slot.starts_at) %>"
+                                data-date-label="<%= paris_day_label(date) %>"
+                                class="flex h-[46px] cursor-pointer items-center justify-center rounded-full border border-[#E7E2DC] bg-white px-4 text-sm font-bold text-brand-text transition hover:border-brand-primary"
+                              >
+                                <%= form.radio_button :availability_slot_id, slot.id, required: true, class: "sr-only", data: { action: "booking-scheduler#selectTime booking-form#refresh" } %>
+                                <%= paris_time(slot.starts_at) %>
+                              </label>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <p class="mt-5 rounded-[18px] bg-brand-beige px-4 py-3 text-brand-text">
-                <span class="font-bold text-brand-primary">Premier entretien :</span>
-                <span data-booking-scheduler-target="summary" class="ml-1"></span>
-              </p>
-            <% else %>
-              <div class="rounded-[20px] border border-[#E7E2DC] bg-brand-beige p-5">
-                <p class="font-bold text-brand-text">Aucun créneau n'est disponible pour le moment.</p>
-                <p class="mt-2 text-brand-text-secondary">Revenez bientôt ou contactez-nous pour ouvrir un nouveau rendez-vous.</p>
-              </div>
-            <% end %>
-          </div>
-
-          <div>
-            <p class="text-[20px] font-bold text-brand-primary">2. Vos coordonnées</p>
-            <p class="mt-1 text-sm text-brand-text-secondary">Vos coordonnées ne seront utilisées que dans le cadre de votre accompagnement avec Le Bon Modèle.</p>
-            <div class="mt-4 grid gap-4 sm:grid-cols-2">
-              <div class="sm:col-span-2">
-                <%= form.label :customer_name, "Nom complet", class: "text-sm font-bold text-brand-text" %>
-                <%= form.text_field :customer_name, required: true, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
-              </div>
-              <div>
-                <%= form.label :customer_email, "Email", class: "text-sm font-bold text-brand-text" %>
-                <%= form.email_field :customer_email, required: true, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
-              </div>
-              <div>
-                <%= form.label :customer_phone, "Téléphone", class: "text-sm font-bold text-brand-text" %>
-                <%= form.telephone_field :customer_phone, class: "mt-2 w-full rounded-full border border-[#E7E2DC] bg-white px-5 py-4 text-brand-text outline-none focus:border-brand-primary" %>
-              </div>
-              <fieldset class="mt-8 sm:col-span-2">
-                <legend class="text-sm font-bold text-brand-text">Préférez-vous échanger en visio ou par téléphone ?</legend>
-                <div class="mt-5 grid grid-cols-2 gap-3">
-                  <label class="inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-[#E7E2DC] px-5 py-3 font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-brand-primary-light">
-                    <%= form.radio_button :meeting_mode, "visio", required: true %>
-                    En visio
-                  </label>
-                  <label class="inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-[#E7E2DC] px-5 py-3 font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-brand-primary-light">
-                    <%= form.radio_button :meeting_mode, "phone", required: true %>
-                    Par téléphone
-                  </label>
+              <% else %>
+                <div class="mt-6 rounded-[20px] border border-[#E7E2DC] bg-brand-beige p-5">
+                  <p class="font-bold text-brand-text">Aucun créneau n'est disponible pour le moment.</p>
+                  <p class="mt-2 text-brand-text-secondary">Revenez bientôt ou contactez-nous pour ouvrir un nouveau rendez-vous.</p>
                 </div>
-              </fieldset>
+              <% end %>
             </div>
           </div>
 
-          <%= form.submit "Confirmer le créneau", disabled: true, class: "inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_14px_36px_rgba(31,95,60,0.22)] disabled:cursor-not-allowed disabled:opacity-50", data: { booking_form_target: "submit" } %>
-          <p class="text-center text-sm text-brand-text-secondary">
-            Le créneau est bloqué <%= Booking::CHECKOUT_HOLD_DESCRIPTION %>, le temps de payer. Paiement sécurisé à l’étape suivante.
-            <%= booking_cancellation_policy %>
-          </p>
+          <div class="grid grid-cols-[36px_minmax(0,1fr)] gap-x-5">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary-light font-heading text-[17px] font-extrabold text-brand-primary">2</span>
+            <div>
+              <h2 class="flex min-h-9 items-center font-heading text-[22px] font-bold leading-[1.25] text-brand-text">Vos coordonnées</h2>
+              <p class="mt-2 text-base leading-[1.6] text-brand-text-secondary">Vos coordonnées ne seront utilisées que dans le cadre de votre accompagnement avec Le Bon Modèle.</p>
+
+              <div class="mt-6 grid gap-5 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <%= form.label :customer_name, "Nom complet", class: "text-sm font-bold text-brand-text" %>
+                  <%= form.text_field :customer_name, required: true, class: field_class %>
+                </div>
+                <div>
+                  <%= form.label :customer_email, "Email", class: "text-sm font-bold text-brand-text" %>
+                  <%= form.email_field :customer_email, required: true, class: field_class %>
+                </div>
+                <div>
+                  <%= form.label :customer_phone, "Téléphone", class: "text-sm font-bold text-brand-text" %>
+                  <%= form.telephone_field :customer_phone, class: field_class %>
+                </div>
+                <fieldset class="sm:col-span-2">
+                  <legend class="text-sm font-bold text-brand-text">Préférez-vous échanger en visio ou par téléphone ?</legend>
+                  <div class="mt-2 grid grid-cols-1 gap-5 min-[640px]:grid-cols-2">
+                    <label class="inline-flex h-[52px] w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-[#E7E2DC] px-5 text-base font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-[#F3FAEF]">
+                      <%= form.radio_button :meeting_mode, "visio", required: true, class: "accent-brand-primary" %>
+                      En visio
+                    </label>
+                    <label class="inline-flex h-[52px] w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-[#E7E2DC] px-5 text-base font-bold text-brand-text has-[:checked]:border-brand-primary has-[:checked]:bg-[#F3FAEF]">
+                      <%= form.radio_button :meeting_mode, "phone", required: true, class: "accent-brand-primary" %>
+                      Par téléphone
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-14">
+            <%= form.submit "Confirmer et passer au paiement", disabled: true, class: "inline-flex h-[58px] w-full items-center justify-center rounded-full bg-brand-primary px-8 text-base font-bold text-white transition disabled:cursor-not-allowed disabled:opacity-50", data: { booking_form_target: "submit", disable_with: "Confirmer et passer au paiement" } %>
+            <p class="mt-3.5 text-center text-sm text-brand-text-secondary">
+              Paiement sécurisé à l’étape suivante.
+              Le créneau est bloqué <%= Booking::CHECKOUT_HOLD_DESCRIPTION %>, le temps de payer.
+              <%= booking_cancellation_policy %>
+            </p>
+          </div>
         <% end %>
       </article>
     </div>

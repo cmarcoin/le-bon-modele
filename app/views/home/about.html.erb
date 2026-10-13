@@ -1,132 +1,145 @@
-<%
-  about_car_rows = [
-    [
-      ["citadine-recente.png", "Citadine récente"],
-      ["compacte.png", "Compacte"],
-      ["suv-compact.png", "SUV compact"],
-      ["berline-recente.png", "Berline récente"],
-      ["break-moderne.png", "Break moderne"]
-    ],
-    [
-      ["suv-familial.png", "SUV familial"],
-      ["monospace-recent.png", "Monospace récent"],
-      ["break-routier.png", "Break routier"],
-      ["compacte-premium.png", "Compacte premium"],
-      ["suv-urbain.png", "SUV urbain"]
-    ]
-  ]
-%>
 <% content_for :title, "Qui sommes-nous ? | Le Bon Modèle" %>
+<% car_rows = [
+  %w[citadine-recente.webp monospace-familial.webp berline-confortable.webp suv-compact-recent.webp],
+  %w[monospace-luxe.webp berline-luxe.webp suv-premium.webp break-premium.webp]
+] %>
+<% gains = [
+  ["Faire un choix vraiment éclairé", "Nous vous aidons à choisir la voiture qui correspond réellement à vos besoins, à votre usage et à votre budget.", "Face à des dizaines de modèles qui se ressemblent, et des offres de plus en plus complexes, nous vous aidons à y voir clair.\nNous partons de votre quotidien : trajets, passagers, confort, praticité, coffre, budget, stationnement, équipements.\nNous vous expliquons les différences entre les modèles, les motorisations, les finitions et les options, et vous donnons une vision claire du marché.\nNous distinguons ce qui est vraiment utile pour vous de ce qui est superflu, nous clarifions les prix et intégrons des critères souvent oubliés au moment de l’achat, comme le coût total de possession et la valeur de revente.\nAu final, vous choisissez la bonne voiture, celle qui vous correspond vraiment, et pas celle que le concessionnaire en bas de chez vous cherche à vous vendre."],
+  ["Les meilleures annonces, triées et vérifiées", "Dans la jungle des sites et des annonces, nous vous aidons à dénicher les meilleures offres.", "Nous recherchons, filtrons et comparons des offres qui ne se présentent jamais de la même façon, en remettant tout à plat, qu’il s’agisse de véhicules neufs ou d’occasion, de LOA ou de LDD, d’annonces de particuliers ou de concessionnaires.\nNous décortiquons les prix, évaluons le sérieux des vendeurs et de leurs annonces, et repérons les fausses bonnes affaires et les angles morts.\nEt nous ne nous arrêtons pas à la première annonce « correcte » : nous continuons à creuser jusqu’à trouver les meilleures offres.\nRésultat : vous identifiez les meilleures annonces du marché, vous n’avez plus à vous demander si le vendeur vous dit tout ou si le prix est vraiment le bon, et vous évitez de payer trop cher."],
+  ["Eviter les dépenses inutiles", "Garanties, entretien, assurance, options… nous vous aidons à distinguer ce qui vous est réellement utile de ce qui relève du marketing.", "Au prix de la voiture viennent s’ajouter de nombreux produits et services : extension de garantie, contrat d’entretien, assistance, assurance, équipements ou options supplémentaires.\nCertains peuvent être utiles. D’autres beaucoup moins.\nNous vous aidons à comprendre ce qui est réellement couvert, à comparer les différentes offres entre elles et à évaluer leur rapport coût/bénéfice.\nL’objectif : ne payer que pour ce qui vous apporte une vraie valeur, et éviter les options inutiles ajoutées par réflexe ou par manque d’information."],
+  ["Gagner des heures de recherche", "Plus besoin de passer vos soirées sur Leboncoin ou La Centrale à comparer des annonces qui se ressemblent sans jamais être comparables.", "Chercher une voiture prend énormément de temps : comprendre les modèles, comparer les versions, surveiller les annonces, vérifier les équipements et essayer de savoir si le prix est correct.\nNous faisons ce travail pour vous.\nNous prenons en charge la recherche, la veille et la comparaison des offres, afin de ne vous présenter que celles qui méritent réellement votre attention.\nLa jungle des annonces, c’est notre problème, plus le vôtre."]
+] %>
 
 <%= render "home/header" %>
 
 <main class="relative pt-24">
   <%= render "home/background_pattern" %>
-  <section class="relative px-6 py-10 lg:px-12 lg:py-12">
+
+  <section class="relative px-6 pb-10 pt-8 lg:px-12 lg:pb-10 lg:pt-[148px]">
     <div class="mx-auto max-w-[1280px]">
-      <div class="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
+      <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
         <div>
-          <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary"><%= site_copy("about.hero_title", "De vrais conseillers, à vos côtés") %></h1>
-          <h2 class="mt-8 font-heading text-3xl font-bold text-brand-text"><%= site_copy("about.intro_title", "Derrière Le Bon Modèle, il y a nous, Charles et Jules") %></h2>
-          <div class="mt-6 space-y-4 text-lg leading-8 text-brand-text-secondary">
+          <% about_title = site_copy("about.hero_title", "De vrais conseillers, à vos côtés") %>
+          <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary">
+            <% if about_title.include?(", ") %>
+              <% first, rest = about_title.split(", ", 2) %>
+              <%= first %>,<br> <%= rest %>
+            <% else %>
+              <%= about_title %>
+            <% end %>
+          </h1>
+          <% intro_title = site_copy("about.intro_title", "Derrière Le Bon Modèle, il y a nous, Charles et Jules") %>
+          <p class="mt-10 text-2xl font-bold text-brand-text"><%= intro_title.end_with?(".") ? intro_title : "#{intro_title}." %></p>
+          <div class="mt-3 max-w-[600px] space-y-4 text-lg leading-[1.6] text-brand-text-secondary">
             <% site_copy("about.intro_body", "Comme beaucoup d’automobilistes, nous sommes passés par là.").split(/\n+/).each do |paragraph| %>
               <p><%= highlight_le_bon_modele(paragraph) %></p>
             <% end %>
           </div>
         </div>
-        <%= image_tag "/reference-assets/homme-perdu.svg", width: 720, height: 620, alt: "Illustration d’une personne perdue devant trop de choix", class: "h-auto w-full", loading: "lazy" %>
+        <%= image_tag "/reference-assets/homme-perdu.svg", width: 720, height: 620, alt: "Illustration d’une personne perdue devant trop de choix", class: "mx-auto h-auto w-full max-w-[420px] lg:max-w-[520px]", loading: "lazy" %>
       </div>
     </div>
   </section>
 
-  <section class="px-6 py-6 lg:px-12">
-    <div class="mx-auto max-w-[1280px]">
-      <blockquote class="rounded-[28px] bg-brand-primary p-8 text-white shadow-brand sm:p-10 lg:p-12">
-        <div class="space-y-4 text-lg leading-8 text-white/90">
-          <% site_copy("about.independence", "Chez Le Bon Modèle, nous ne vendons pas de voitures. Notre métier, c’est de vous fournir un avis d’expert objectif, pour vous permettre de faire un choix éclairé.").split(/\n+/).each do |paragraph| %>
-            <p><%= paragraph %></p>
-          <% end %>
-        </div>
-      </blockquote>
+  <section class="px-6 py-12 lg:px-12">
+    <div class="relative mx-auto max-w-[880px] px-10 py-6 text-center lg:px-[72px]">
+      <span class="pointer-events-none absolute left-0 top-[-8px] font-heading text-[64px] font-black leading-none text-brand-coral md:text-[96px]" aria-hidden="true">“</span>
+      <span class="pointer-events-none absolute bottom-[-28px] right-0 font-heading text-[64px] font-black leading-none text-brand-coral md:bottom-[-44px] md:text-[96px]" aria-hidden="true">”</span>
+      <p class="font-heading text-[22px] font-semibold leading-[1.5] text-brand-primary lg:text-[26px]">
+        <span class="lg:block">Chez Le Bon Modèle, nous ne vendons pas de voitures.</span>
+        <span class="lg:block">Notre métier, c’est de vous fournir un avis d’expert objectif,</span>
+        <span class="lg:block">pour vous permettre de faire un choix éclairé.</span>
+      </p>
+      <div class="mt-8 space-y-0 text-lg leading-[1.7] text-brand-text-secondary">
+        <p>Nous ne prenons pas non plus de commission sur un éventuel achat.</p>
+        <p>Ce que nous vendons, c’est une expertise et des conseils. En toute indépendance.</p>
+      </div>
     </div>
   </section>
 
-  <section class="px-6 py-10 lg:px-12" aria-label="Exemples de modèles accompagnés">
-    <div class="mx-auto max-w-[1280px] space-y-4">
-      <% about_car_rows.each do |row| %>
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          <% row.each do |filename, label| %>
-            <figure class="overflow-hidden rounded-[20px] bg-white shadow-soft">
-              <%= image_tag "/reference-assets/modeles/#{filename}", alt: label, class: "h-28 w-full object-cover sm:h-32", loading: "lazy" %>
-            </figure>
+  <section class="px-6 py-8 lg:px-12" aria-label="Exemples de modèles accompagnés">
+    <div class="mx-auto max-w-[1280px] space-y-5">
+      <% car_rows.each do |row| %>
+        <div class="grid grid-cols-2 gap-4 min-[640px]:grid-cols-4 min-[640px]:gap-6 lg:grid-cols-[repeat(4,220px)] lg:justify-between lg:gap-0">
+          <% row.each do |filename| %>
+            <%= image_tag "/reference-assets/modeles/vignettes/#{filename}", width: 640, height: 343, alt: "", class: "h-auto w-full opacity-[0.72]", loading: "lazy" %>
           <% end %>
         </div>
       <% end %>
     </div>
   </section>
 
-  <section class="px-6 py-10 lg:px-12">
+  <section class="px-6 pb-10 pt-[72px] lg:px-12">
     <div class="mx-auto max-w-[1280px]">
-      <h2 class="font-heading text-4xl font-bold text-brand-primary"><%= site_copy("about.method_title", "Transformer une idée floue en un choix clair") %></h2>
-      <p class="mt-5 max-w-4xl text-lg leading-8 text-brand-text-secondary"><%= site_copy("about.method_intro", "Notre approche repose sur une double expertise : une connaissance fine des véhicules et une compréhension concrète de votre quotidien.") %></p>
+      <h2 class="text-center font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary"><%= site_copy("about.method_title", "Transformer une idée floue en un choix clair") %></h2>
+      <p class="mx-auto mt-5 max-w-[860px] text-center text-lg leading-[1.6] text-brand-text-secondary"><%= site_copy("about.method_intro", "Notre approche repose sur une double expertise : une connaissance fine des véhicules et une compréhension concrète de votre quotidien.") %></p>
 
-      <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <div class="mx-auto mt-12 grid max-w-[1120px] gap-5 lg:grid-cols-3 lg:gap-8">
         <% [
-          [ "Nous partons de votre quotidien", "Nous analysons vos contraintes, vos habitudes et vos priorités." ],
-          [ "Nous identifions le bon modèle", "Pas le plus évident, pas le plus vendeur, mais celui qui vous correspond vraiment." ],
-          [ "Nous trouvons la meilleure offre", "Nous comparons et décortiquons toutes les offres du marché — en neuf comme en occasion — et sélectionnons les meilleures opportunités." ]
-        ].each_with_index do |(title, body), index| %>
-          <article class="rounded-[24px] border border-brand-border bg-white p-6 shadow-soft">
-            <span class="starter-pack-step-number"><%= index + 1 %></span>
-            <h3 class="mt-4 font-heading text-2xl font-bold text-brand-primary"><%= title %></h3>
-            <p class="mt-4 leading-7 text-brand-text-secondary"><%= body %></p>
+          ["Nous partons", "de votre quotidien", "Nous analysons vos contraintes, vos habitudes et vos priorités."],
+          ["Nous identifions", "le bon modèle", "Pas le plus évident, pas le plus vendeur, mais celui qui vous correspond vraiment."],
+          ["Nous trouvons", "la meilleure offre", "Nous comparons et décortiquons toutes les offres du marché — en neuf comme en occasion — et sélectionnons les meilleures opportunités."]
+        ].each_with_index do |(first, second, body), index| %>
+          <article class="mx-auto w-full max-w-[560px] rounded-[20px] bg-brand-beige p-8 shadow-[0_8px_20px_rgba(0,0,0,0.04)]">
+            <div class="flex items-center gap-4">
+              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-brand-coral font-heading text-[22px] font-bold text-brand-coral"><%= index + 1 %></span>
+              <h3 class="font-heading text-[21px] font-bold leading-[1.2] text-brand-text"><%= first %><br><%= second %></h3>
+            </div>
+            <span class="ml-16 mt-5 block h-0.5 w-8 rounded-full bg-brand-coral" aria-hidden="true"></span>
+            <p class="mt-4 text-left text-base leading-[1.6] text-brand-text-secondary"><%= body %></p>
           </article>
         <% end %>
       </div>
 
-      <div class="mt-12">
-        <%= image_tag "/reference-assets/about-hero.svg", width: 1085, height: 802, alt: "Charles et Jules, conseillers du Bon Modèle, autour d’un tableau d’annonces", class: "h-auto w-full", loading: "lazy" %>
+      <div class="mt-14">
+        <%= image_tag "/reference-assets/about-hero.svg", width: 1085, height: 802, alt: "Charles et Jules, conseillers du Bon Modèle, autour d’un tableau d’annonces", class: "mx-auto h-auto w-full max-w-[900px]", loading: "lazy" %>
       </div>
     </div>
   </section>
 
-  <section class="px-6 py-10 lg:px-12">
+  <section class="px-6 pb-10 pt-[72px] lg:px-12">
     <div class="mx-auto max-w-[1280px]">
-      <h2 class="font-heading text-4xl font-bold text-brand-primary">Ce que vous y gagnez concrètement</h2>
-      <div class="mt-8 space-y-4">
-        <% [
-          ["Faire un choix vraiment éclairé", "Nous vous aidons à choisir la voiture qui correspond réellement à vos besoins, à votre usage et à votre budget.", "Face à des dizaines de modèles qui se ressemblent, et des offres de plus en plus complexes, nous vous aidons à y voir clair.\nNous partons de votre quotidien : trajets, passagers, confort, praticité, coffre, budget, stationnement, équipements.\nNous vous expliquons les différences entre les modèles, les motorisations, les finitions et les options, et vous donnons une vision claire du marché.\nNous distinguons ce qui est vraiment utile pour vous de ce qui est superflu, nous clarifions les prix et intégrons des critères souvent oubliés au moment de l’achat, comme le coût total de possession et la valeur de revente.\nAu final, vous choisissez la bonne voiture, celle qui vous correspond vraiment, et pas celle que le concessionnaire en bas de chez vous cherche à vous vendre."],
-          ["Les meilleures annonces, triées et vérifiées", "Dans la jungle des sites et des annonces, nous vous aidons à dénicher les meilleures offres.", "Nous recherchons, filtrons et comparons des offres qui ne se présentent jamais de la même façon, en remettant tout à plat, qu’il s’agisse de véhicules neufs ou d’occasion, de LOA ou de LDD, d’annonces de particuliers ou de concessionnaires.\nNous décortiquons les prix, évaluons le sérieux des vendeurs et de leurs annonces, et repérons les fausses bonnes affaires et les angles morts.\nEt nous ne nous arrêtons pas à la première annonce « correcte » : nous continuons à creuser jusqu’à trouver les meilleures offres.\nRésultat : vous identifiez les meilleures annonces du marché, vous n’avez plus à vous demander si le vendeur vous dit tout ou si le prix est vraiment le bon, et vous évitez de payer trop cher."],
-          ["Eviter les dépenses inutiles", "Garanties, entretien, assurance, options… nous vous aidons à distinguer ce qui vous est réellement utile de ce qui relève du marketing.", "Au prix de la voiture viennent s’ajouter de nombreux produits et services : extension de garantie, contrat d’entretien, assistance, assurance, équipements ou options supplémentaires.\nCertains peuvent être utiles. D’autres beaucoup moins.\nNous vous aidons à comprendre ce qui est réellement couvert, à comparer les différentes offres entre elles et à évaluer leur rapport coût/bénéfice.\nL’objectif : ne payer que pour ce qui vous apporte une vraie valeur, et éviter les options inutiles ajoutées par réflexe ou par manque d’information."],
-          ["Gagner des heures de recherche", "Plus besoin de passer vos soirées sur Leboncoin ou La Centrale à comparer des annonces qui se ressemblent sans jamais être comparables.", "Chercher une voiture prend énormément de temps : comprendre les modèles, comparer les versions, surveiller les annonces, vérifier les équipements et essayer de savoir si le prix est correct.\nNous faisons ce travail pour vous.\nNous prenons en charge la recherche, la veille et la comparaison des offres, afin de ne vous présenter que celles qui méritent réellement votre attention.\nLa jungle des annonces, c’est notre problème, plus le vôtre."]
-        ].each do |title, summary, details| %>
-          <article class="rounded-[24px] border border-brand-border bg-white p-6 shadow-soft" data-controller="expand-copy">
-            <h3 class="font-heading text-2xl font-bold text-brand-primary"><%= title %></h3>
-            <p class="mt-3 leading-7 text-brand-text-secondary"><%= summary %></p>
-            <div class="mt-4 hidden space-y-3 text-brand-text-secondary" data-expand-copy-target="panel">
+      <h2 class="text-center font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary">Ce que vous y gagnez concrètement</h2>
+      <div class="mx-auto mt-12 grid max-w-[1040px] items-start gap-5 md:grid-cols-2 md:gap-7">
+        <% gains.each_with_index do |(title, summary, details), index| %>
+          <article class="flex min-h-0 flex-col rounded-[20px] bg-brand-beige p-7 shadow-[0_8px_20px_rgba(0,0,0,0.04)] md:min-h-[262px] md:px-10 md:py-9" data-controller="expand-copy">
+            <h3 class="font-heading text-2xl font-bold leading-[1.2] text-brand-text"><%= title %></h3>
+            <p class="mt-3.5 text-[17px] leading-[1.6] text-brand-text"><%= summary %></p>
+            <div id="about-gain-<%= index %>" class="mt-5 hidden border-t border-[#E6D9C6] pt-5 text-[17px] leading-[1.6] text-brand-text" data-expand-copy-target="panel">
               <% details.split(/\n+/).each do |paragraph| %>
-                <p class="leading-7"><%= paragraph %></p>
+                <p class="mb-3.5 last:mb-0"><%= paragraph %></p>
               <% end %>
             </div>
-            <button type="button" class="mt-4 text-sm font-bold text-brand-primary underline decoration-brand-primary/30 underline-offset-4" data-action="expand-copy#toggle" data-expand-copy-target="button">En savoir plus</button>
+            <button type="button" class="mt-auto inline-flex items-center gap-2 pt-6 text-base font-bold text-brand-primary" data-action="expand-copy#toggle" data-expand-copy-target="button" aria-expanded="false" aria-controls="about-gain-<%= index %>">
+              <span data-expand-copy-target="label">En savoir plus</span>
+              <svg data-expand-copy-target="openIcon" class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              <svg data-expand-copy-target="closeIcon" class="hidden h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 15l6-6 6 6"></path></svg>
+            </button>
           </article>
         <% end %>
       </div>
 
-      <div class="mt-12">
-        <%= image_tag "/reference-assets/about-families.svg", width: 1417, height: 650, alt: "Deux familles sereines avec la voiture qu’il leur faut", class: "h-auto w-full", loading: "lazy" %>
+      <div class="mt-14">
+        <%= image_tag "/reference-assets/about-families.svg", width: 1417, height: 650, alt: "Deux familles sereines avec la voiture qu’il leur faut", class: "mx-auto h-auto w-full max-w-[900px]", loading: "lazy" %>
       </div>
     </div>
   </section>
 
-  <section class="px-6 py-10 lg:px-12 lg:pb-16">
-    <div class="mx-auto max-w-[1280px]">
-      <div class="text-center">
-        <h2 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Deux façons de vous accompagner</h2>
-      </div>
-      <div class="mt-12 grid items-stretch gap-6 lg:grid-cols-2">
-        <%= render "home/offer_card", path: starter_pack_path, icon_path: @starter_pack.icon_path, title: @starter_pack.name, accent_class: "text-brand-primary", objective: @starter_pack.objective, description: @starter_pack.description, price: euro_price(@starter_pack.price_cents), cta: "Découvrir" %>
-        <%= render "home/offer_card", path: pack_premium_path, icon_path: @premium_pack.icon_path, title: @premium_pack.name, accent_class: "text-brand-primary", objective: @premium_pack.objective, description: @premium_pack.description, price: euro_price(@premium_pack.price_cents), cta: "Découvrir" %>
+  <section class="px-6 pb-28 pt-20 lg:px-12">
+    <div class="mx-auto max-w-[1280px] text-center">
+      <h2 class="relative inline-block text-center font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary">
+        <span class="absolute right-full top-1/2 mr-3 -translate-y-1/2"><%= render "home/coral_mark" %></span>
+        Deux façons de vous accompagner
+      </h2>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <%= link_to starter_pack_path, class: "inline-flex min-h-16 w-full items-center justify-center gap-2.5 rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white sm:w-auto" do %>
+          Découvrir le Pack Conseil
+          <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        <% end %>
+        <%= link_to pack_premium_path, class: "inline-flex min-h-16 w-full items-center justify-center gap-2.5 rounded-full bg-brand-primary px-8 text-[18px] font-bold text-white sm:w-auto" do %>
+          Découvrir le Pack Achat
+          <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        <% end %>
       </div>
     </div>
   </section>

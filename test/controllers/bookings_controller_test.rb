@@ -33,10 +33,10 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     get new_pack_booking_path(@pack)
 
     assert_response :success
-    assert_select "p", text: "1. Réservez votre premier entretien (60 min)"
+    assert_select "h2", text: "Réservez votre premier entretien (60 min)"
     assert_select "p", text: "Sélectionnez une date et un horaire"
     assert_select "legend", text: "Préférez-vous échanger en visio ou par téléphone ?"
-    assert_select "p", text: "Le Pack Conseil comprend :"
+    assert_select "p", text: "Ce qui est inclus :"
     assert_select "input[value='visio']"
     assert_select "input[value='phone']"
     assert_select "[data-controller='booking-scheduler']"
@@ -159,6 +159,6 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/48 heures/, response.body)
     assert_select "span", text: "SAM.", count: 0
     assert_select "span", text: "DIM.", count: 0
-    assert_select "p", text: /Le Pack Conseil comprend/
+    assert_select "p", text: "Ce qui est inclus :"
   end
 end

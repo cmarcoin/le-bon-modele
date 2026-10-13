@@ -1,32 +1,115 @@
 <% content_for :title, "FAQ | Le Bon Modèle" %>
+<% faqs = [
+  ["En quoi consiste Le Bon Modèle ?", [
+    "Le Bon Modèle vous accompagne dans le choix et la recherche de votre prochaine voiture. Nous partons de vos besoins réels - usages, budget, contraintes, préférences - pour vous aider à identifier les modèles les plus adaptés et, selon la formule choisie, à trouver les meilleures annonces.",
+    "Notre objectif, c’est de vous permettre de faire un choix éclairé, sans passer des heures à comparer seul des dizaines de modèles et d’offres."
+  ]],
+  ["Le Bon Modèle vend-il des voitures ?", [
+    "Non. Nous ne vendons aucune voiture.",
+    "Nous ne sommes ni concessionnaire, ni mandataire, ni courtier automobile. Nous ne prenons pas non plus de commission sur un éventuel achat.",
+    "Notre métier, c’est de vous accompagner et de vous fournir un avis d’expert objectif, pour vous permettre de faire un choix éclairé.",
+    "Ce que nous vendons, ce sont une expertise et des conseils."
+  ]],
+  ["Percevez-vous une commission sur les voitures recommandées ?", [
+    "Non. Nous ne percevons aucune commission sur les véhicules que nous vous recommandons et nous n’avons aucun intérêt à vous orienter vers une marque, un modèle ou un vendeur plutôt qu’un autre.",
+    "Nous sommes deux conseillers totalement indépendants. Et notre seul client, c’est vous."
+  ]],
+  ["Travaillez-vous avec des concessionnaires ou des vendeurs partenaires ?", [
+    "Non. Nous pouvons analyser une offre provenant d’un particulier, d’un concessionnaire, d’un mandataire ou d’une plateforme, mais nous n’avons pas de vendeur privilégié. C’est précisément ce qui nous permet de rester indépendants dans nos recommandations."
+  ]],
+  ["Quelle est la différence entre le pack Conseil et le pack Achat ?", [
+    "Le pack Conseil est conçu pour vous aider à identifier la voiture qui répond vraiment à vos besoins et à vos contraintes. Pas le modèle le plus évident, pas le modèle le plus vendeur, mais celui qui vous correspond vraiment.",
+    "À l’issue de cet accompagnement, vous savez précisément quelle voiture acheter et pourquoi.",
+    "Le pack Achat va plus loin : après avoir identifié avec vous le bon modèle, nous vous aidons à dénicher les meilleures offres, en neuf comme en occasion.",
+    "Nous analysons et trions toutes les annonces du marché, nous décortiquons les prix, évaluons le sérieux des vendeurs et de leurs annonces, et repérons les fausses bonnes affaires et les angles morts.",
+    "Nous sélectionnons pour vous les meilleures opportunités.",
+    "Nous vous aidons également à y voir clair parmi les garanties, contrats d’entretien, assurances et options, pour ne retenir que ce qui répond réellement à vos besoins.",
+    "Avec le pack Achat, nous vous accompagnons pas à pas, de la sélection des offres jusqu’à la concrétisation de votre achat."
+  ]],
+  ["Pourquoi se faire accompagner ?", [
+    "Parce qu’entre les modèles, les motorisations, les options, les annonces et les différents modes d’achat, il est difficile de s’y retrouver.",
+    "Nous vous aidons à faire un choix vraiment éclairé, à éviter les dépenses inutiles et à gagner des heures de recherche.",
+    "Et lorsque vous passez à l’achat, nous recherchons, trions et comparons toutes les annonces pour faire ressortir les meilleures offres.",
+    "Vous avancez ainsi plus sereinement, avec un expert à vos côtés à chaque étape."
+  ]],
+  ["Sur quels critères choisissez-vous les voitures recommandées ?", [
+    "Nous regardons notamment votre budget, votre usage quotidien, le nombre de kilomètres parcourus, vos besoins en espace, vos contraintes de stationnement, le type de trajets réalisés et vos préférences. Nous prenons également en compte la fiabilité, le coût d’utilisation, les motorisations, les équipements, la valeur de revente et les éventuels points de vigilance propres à chaque modèle."
+  ]],
+  ["Pouvez-vous m’accompagner pour une voiture neuve comme d’occasion ?", [
+    "Oui.",
+    "Neuf ou occasion, nous cherchons avant tout la solution la plus adaptée à vos besoins, à vos usages et à votre budget.",
+    "L’achat d’une voiture d’occasion demande simplement une analyse plus spécifique, notamment sur le kilométrage, l’historique, l’entretien, le prix et les garanties."
+  ]],
+  ["Quels types de véhicules pouvez-vous m’aider à trouver ?", [
+    "Citadine, berline, break, SUV, monospace, thermique, hybride ou électrique : nous partons de vos besoins, de vos usages et de votre budget pour identifier le type de véhicule et les modèles les plus adaptés. En neuf comme en occasion."
+  ]],
+  ["Comment sélectionnez-vous les annonces dans le Pack Achat ?", [
+    "Une fois le modèle ou les modèles à cibler définis ensemble, nous recherchons les offres auprès de tous les types de vendeurs (particuliers, concessionnaires, garages, mandataires) et sur les principaux sites d’annonces.",
+    "Nous analysons ensuite les annonces dans le détail : prix, kilométrage, année, motorisation, finition, équipements, état général, historique d’entretien, nombre de propriétaires, garanties proposées, conditions de vente, réputation du vendeur et éventuels points de vigilance.",
+    :in_fine
+  ]],
+  ["Travaillez-vous dans toute la France ?", [
+    "Oui. L’accompagnement est réalisé en visioconférence ou par téléphone. Nous pouvons donc vous accompagner où que vous soyez en France et rechercher des véhicules au-delà de votre région lorsque cela présente un intérêt."
+  ]],
+  ["Combien de temps faut-il pour être accompagné ?", [
+    "Cela dépend de la formule choisie et de votre projet. La phase de conseil peut être réalisée rapidement - 10 jours - une fois le questionnaire complété et le premier échange effectué. Pour le Pack Achat, le délai dépend également de la disponibilité de véhicules réellement intéressants sur le marché : nous préférons prendre le temps d’identifier de bonnes offres plutôt que de vous proposer des annonces simplement pour aller vite.",
+    "Dans tous les cas, nous nous adaptons à vos contraintes : que vous soyez pressé ou que vous souhaitiez prendre davantage de temps, nous ajustons le rythme de l’accompagnement."
+  ]],
+  ["Que se passe-t-il si aucun véhicule intéressant n’est disponible ?", [
+    "Nous vous le disons.",
+    "Notre rôle n’est pas de vous pousser à acheter à tout prix. Si les offres disponibles ne sont pas suffisamment intéressantes ou ne correspondent pas aux critères définis ensemble, nous pourrons vous conseiller d’attendre, d’élargir certains critères, ou de réévaluer les compromis à envisager."
+  ]],
+  ["Je ne sais pas quel pack choisir : puis-je vous contacter avant de commander ?", [
+    "Bien sûr. Si vous hésitez entre les deux formules ou si votre situation est particulière, vous pouvez nous contacter avant de vous engager. Nous vous aiderons à identifier l’accompagnement le plus adapté à votre besoin."
+  ]]
+] %>
 
 <%= render "home/header" %>
 
-<main class="relative pt-28">
+<main class="relative pt-24">
   <%= render "home/background_pattern" %>
-  <section class="relative px-4 py-12 md:px-6 lg:px-8" data-controller="faq">
+  <section class="relative px-6 py-8 lg:px-12 lg:py-10" data-controller="faq">
     <div class="mx-auto max-w-[1280px]">
-      <div class="mb-10 text-center">
-        <h1 class="font-heading text-4xl font-bold text-brand-primary sm:text-5xl">Questions fréquentes</h1>
+      <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
+        <div class="lg:pt-[108px]">
+          <h1 class="font-heading text-[36px] font-black leading-[0.98] text-brand-primary lg:text-[48px]">Questions fréquentes</h1>
+          <p class="mt-8 text-[20px] leading-[1.5] text-brand-text-secondary">Tout ce que vous devez savoir sur Le Bon Modèle</p>
+        </div>
+        <%= image_tag "/reference-assets/fille-perdue-v2.svg", width: 1235, height: 1159, alt: "", class: "mx-auto h-auto w-[280px] lg:w-[400px] lg:justify-self-end", loading: "lazy" %>
       </div>
 
-      <div class="space-y-5 md:space-y-6">
-        <% [
-          [ "Est-ce remboursable ?", booking_cancellation_policy ],
-          [ "Puis-je payer en deux fois ?", "Oui, selon l’offre choisie, un paiement en plusieurs fois peut être proposé." ],
-          [ "Est-ce que vous négociez à ma place ?", "Oui, dans le cadre du Pack Achat, nous pouvons vous accompagner sur la négociation." ],
-          [ "Travaillez-vous sur toute la France ?", "Oui, nous accompagnons des clients partout en France à distance." ]
-        ].each do |question, answer| %>
-          <article class="faq-item rounded-[24px] bg-brand-primary-light py-4 transition-all duration-300" data-faq-target="item" data-open="false">
-            <button type="button" class="faq-question flex w-full items-center justify-between gap-4 px-6 py-8 text-left md:px-8 md:py-10" aria-expanded="false" data-action="faq#toggle">
-              <span class="faq-label pr-4 font-heading text-[22px] font-bold text-brand-primary md:text-[26px]"><%= question %></span>
-              <span class="faq-icon text-[30px] font-bold text-brand-primary transition-all duration-300">+</span>
+      <div class="mt-[72px] border-y border-[#E3DDD5]">
+        <% faqs.each_with_index do |(question, paragraphs), index| %>
+          <article class="faq-item border-b border-[#E3DDD5] last:border-b-0" data-faq-target="item" data-open="false">
+            <button type="button" class="faq-question flex w-full items-center gap-3 py-7 text-left md:gap-6" aria-expanded="false" aria-controls="faq-answer-<%= index %>" data-action="faq#toggle">
+              <span class="w-7 shrink-0 font-heading text-base font-bold tracking-[0.02em] text-brand-coral md:w-10"><%= format("%02d", index + 1) %></span>
+              <span class="faq-label flex-1 font-heading text-lg font-bold leading-[1.3] text-brand-text md:text-[22px]"><%= question %></span>
+              <span class="faq-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary-light text-brand-primary md:h-10 md:w-10" aria-hidden="true">
+                <svg class="faq-plus h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+                <svg class="faq-minus h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg>
+              </span>
             </button>
-            <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-              <div class="px-6 pb-8 text-[16px] leading-[1.65] text-white md:px-8 md:pb-10 md:text-[18px]"><%= answer %></div>
+            <div id="faq-answer-<%= index %>" class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+              <div class="max-w-[720px] space-y-3 pb-8 text-lg leading-[1.5] text-brand-text-secondary md:ml-16 md:text-[20px]">
+                <% paragraphs.each do |paragraph| %>
+                  <% if paragraph == :in_fine %>
+                    <p>Nous comparons ainsi des offres très différentes sur une base commune et sélectionnons <em>in fine</em> celles qui présentent le meilleur intérêt pour vous.</p>
+                  <% else %>
+                    <p><%= paragraph %></p>
+                  <% end %>
+                <% end %>
+              </div>
             </div>
           </article>
         <% end %>
+      </div>
+
+      <div class="mb-[120px] mt-24 flex flex-col items-start justify-between gap-6 rounded-[24px] bg-brand-primary-light px-8 py-11 md:flex-row md:items-center md:px-12">
+        <div>
+          <h2 class="font-heading text-[28px] font-bold text-brand-text">Vous ne trouvez pas la réponse à votre question ?</h2>
+          <p class="mt-2.5 text-base text-brand-text">Écrivez-nous ou appelez-nous.</p>
+        </div>
+        <%= link_to "Nous contacter", contact_path, class: "inline-flex h-14 w-full items-center justify-center rounded-full bg-brand-primary px-8 text-base font-bold text-white md:w-auto" %>
       </div>
     </div>
   </section>

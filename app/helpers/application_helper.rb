@@ -3,10 +3,17 @@ module ApplicationHelper
     SiteCopy.fetch(key, default)
   end
 
-  def highlight_le_bon_modele(text)
+  def highlight_le_bon_modele(text, style: :pill)
     safe_text = h(text.to_s)
     highlighted = safe_text.gsub(/Le Bon Modèle/i) do |match|
-      %(<span class="inline-block rounded-xl bg-brand-primary-light px-2 py-0.5 font-black text-brand-primary">#{match}</span>)
+      case style
+      when :bold
+        %(<span class="font-bold text-brand-text">#{match}</span>)
+      when :plain
+        match
+      else
+        %(<span class="inline-block rounded-xl bg-brand-primary-light px-2 py-0.5 font-black text-brand-primary">#{match}</span>)
+      end
     end
     highlighted.html_safe
   end

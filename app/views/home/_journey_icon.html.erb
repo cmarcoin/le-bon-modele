@@ -1,0 +1,42 @@
+<% name = local_assigns.fetch(:name) %>
+<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#1F5E3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <% case name %>
+  <% when "document" %>
+    <rect x="5" y="2.8" width="14" height="18.4" rx="2.6"></rect>
+    <path d="M8.8 8h6.4M8.8 11.8h6.4M8.8 15.6h3.4"></path>
+  <% when "chat" %>
+    <path d="M14.2 9.4c0 3-2.9 5.3-6.4 5.3-.9 0-1.8-.15-2.6-.45L2.4 15.4l.85-2.45C2.5 12 2 10.8 2 9.4 2 6.4 4.8 4.1 8.1 4.1s6.1 2.3 6.1 5.3z"></path>
+    <path d="M16.4 8.5c3.2.35 5.6 2.5 5.6 5.1 0 1.25-.5 2.35-1.35 3.25l.8 2.45-2.65-1.1c-.75.28-1.6.42-2.45.42-2.35 0-4.35-.95-5.5-2.35"></path>
+  <% when "car" %>
+    <path d="M5 11l1.6-4.3a2 2 0 0 1 1.9-1.3h7a2 2 0 0 1 1.9 1.3L19 11"></path>
+    <rect x="3" y="11" width="18" height="6.2" rx="2"></rect>
+    <path d="M5.6 17.2v2M18.4 17.2v2"></path>
+    <circle cx="7.4" cy="14.1" r=".9" fill="#1F5E3B"></circle>
+    <circle cx="16.6" cy="14.1" r=".9" fill="#1F5E3B"></circle>
+  <% when "calendar" %>
+    <rect x="3.4" y="4.8" width="17.2" height="15.8" rx="2.6"></rect>
+    <path d="M3.4 9.4h17.2M8 2.8v4M16 2.8v4"></path>
+    <g fill="#1F5E3B" stroke="none">
+      <circle cx="8.2" cy="13" r=".95"></circle>
+      <circle cx="12" cy="13" r=".95"></circle>
+      <circle cx="15.8" cy="13" r=".95"></circle>
+      <circle cx="8.2" cy="16.6" r=".95"></circle>
+      <circle cx="12" cy="16.6" r=".95"></circle>
+      <circle cx="15.8" cy="16.6" r=".95"></circle>
+    </g>
+  <% when "check" %>
+    <circle cx="12" cy="12" r="9.2"></circle>
+    <path d="M8.2 12.2l2.6 2.6 5-5.2"></path>
+  <% when "search" %>
+    <circle cx="10.8" cy="10.8" r="6.8"></circle>
+    <path d="M20.4 20.4l-4.8-4.8"></path>
+  <% when "car_check" %>
+    <path d="M2.5 15.2l1.3-3.5a1.7 1.7 0 0 1 1.6-1.1h6a1.7 1.7 0 0 1 1.6 1.1l1.3 3.5"></path>
+    <rect x="1" y="15.2" width="14.8" height="5" rx="1.7"></rect>
+    <path d="M3.2 20.2v1.6M13.6 20.2v1.6"></path>
+    <circle cx="4.6" cy="17.7" r=".75" fill="#1F5E3B"></circle>
+    <circle cx="12.2" cy="17.7" r=".75" fill="#1F5E3B"></circle>
+    <circle cx="17.6" cy="6.6" r="5"></circle>
+    <path d="M15.4 6.7l1.6 1.6 3-3.1"></path>
+  <% end %>
+</svg>

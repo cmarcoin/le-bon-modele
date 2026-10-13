@@ -41,6 +41,8 @@ export default class extends Controller {
       this.selectedDate = null
     }
 
+    if (!this.hasCalendarTarget) return
+
     this.renderCalendar()
     this.showTimesForSelectedDate()
   }
@@ -76,7 +78,8 @@ export default class extends Controller {
     let startOffset = (firstDay.getDay() + 6) % 7
     if (startOffset >= 5) startOffset = 0
 
-    this.monthLabelTarget.textContent = `${MONTHS[month - 1]} ${year}`
+    const monthName = MONTHS[month - 1]
+    this.monthLabelTarget.textContent = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} ${year}`
 
     let html = ""
     for (let index = 0; index < startOffset; index += 1) {
@@ -100,7 +103,7 @@ export default class extends Controller {
             type="button"
             data-date="${dateKey}"
             data-action="booking-scheduler#selectDate"
-            class="mx-auto flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold transition ${this.dayButtonClasses(selected, isToday)}"
+            class="mx-auto flex h-[42px] w-[42px] items-center justify-center rounded-full text-sm font-bold transition ${this.dayButtonClasses(selected, isToday)}"
             aria-label="${dateKey}"
             aria-pressed="${selected}"
           >
@@ -109,7 +112,7 @@ export default class extends Controller {
         `
       } else {
         html += `
-          <span class="mx-auto flex h-11 w-11 items-center justify-center text-sm ${isPast ? "text-brand-text-secondary/40" : "text-brand-text-secondary/25"}">
+          <span class="mx-auto flex h-[42px] w-[42px] items-center justify-center text-sm font-normal ${isPast ? "text-brand-text-secondary/40" : "text-brand-text-secondary/25"}">
             ${day}
           </span>
         `

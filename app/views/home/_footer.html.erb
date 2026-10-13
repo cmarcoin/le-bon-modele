@@ -1,48 +1,58 @@
-<footer class="bg-[#121212] text-white">
-  <div class="mx-auto grid max-w-[1280px] gap-10 px-8 py-14 md:grid-cols-4 lg:px-12">
-    <div>
-      <h3 class="text-3xl font-bold">Le bon<span class="font-extrabold">Modèle</span></h3>
-      <p class="mt-4 max-w-sm text-sm leading-7 text-white/70">
-        Bien acheter, c’est être bien conseillé. Avec Le Bon Modèle, deux experts
-        indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus
-        adaptée à votre quotidien et à votre budget.
-      </p>
-    </div>
+<footer>
+  <div class="h-0.5 w-full bg-[#E3DDD5]"></div>
 
-    <div>
-      <h4 class="text-2xl font-bold">Le bon modèle</h4>
-      <ul class="mt-4 space-y-3 text-sm text-white/70">
-        <li><%= link_to "Qui sommes-nous ?", about_path, class: "transition hover:text-white" %></li>
-        <li><a href="#" class="transition hover:text-white">Carrière</a></li>
-        <li><%= link_to "Contactez-nous", faq_path, class: "transition hover:text-white" %></li>
-        <li><a href="#" class="transition hover:text-white">Avis Trustpilot</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="text-2xl font-bold">+ d'infos</h4>
-      <ul class="mt-4 space-y-3 text-sm text-white/70">
-        <li><%= link_to "FAQ", faq_path, class: "transition hover:text-white" %></li>
-        <li><a href="#" class="transition hover:text-white">....</a></li>
-        <li><a href="#" class="transition hover:text-white">..</a></li>
-        <li><a href="#" class="transition hover:text-white">..</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="text-2xl font-bold">Réseaux sociaux</h4>
-    </div>
-  </div>
-
-  <div class="border-t border-white/10">
-    <div class="mx-auto flex max-w-[1280px] flex-col gap-4 px-8 py-5 text-xs text-white/60 lg:flex-row lg:items-center lg:justify-between lg:px-12">
-      <div class="flex flex-wrap gap-4">
-        <a href="#" class="transition hover:text-white">Politique de confidentialité</a>
-        <a href="#" class="transition hover:text-white">Informations règlementaires</a>
-        <a href="#" class="transition hover:text-white">Mentions légales</a>
-        <a href="#" class="transition hover:text-white">Conditions générales d'utilisation</a>
+  <div class="mx-auto max-w-[1280px] px-6 pt-16 lg:px-12">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-stretch">
+      <div class="lg:flex-[1.25] lg:pr-16">
+        <%= link_to root_path, aria: { label: "Le Bon Modèle" } do %>
+          <%= image_tag "/reference-assets/logo.png", alt: "Le Bon Modèle", class: "h-10 w-auto" %>
+        <% end %>
+        <p class="mt-5 max-w-[460px] text-base leading-[1.6] text-brand-text-secondary">Bien acheter, c’est être bien conseillé.</p>
+        <p class="mt-3 max-w-[460px] text-base leading-[1.6] text-brand-text-secondary">
+          Avec Le Bon Modèle, deux experts indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus adaptée à votre quotidien et à votre budget.
+        </p>
       </div>
-      <div>© 2026 Tous droits réservés</div>
+
+      <div class="flex flex-col gap-8 border-[#E3DDD5] max-lg:border-t max-lg:pt-8 md:flex-row md:gap-10 lg:contents">
+      <nav class="md:w-1/2 lg:w-auto lg:border-x lg:px-16" aria-label="Navigation du pied de page">
+        <ul class="flex flex-col gap-3.5 font-heading text-base font-medium text-brand-text">
+          <li><%= link_to "Accueil", root_path, class: "transition hover:text-brand-primary" %></li>
+          <li><%= link_to "Pack Conseil", starter_pack_path, class: "transition hover:text-brand-primary" %></li>
+          <li><%= link_to "Pack Achat", pack_premium_path, class: "transition hover:text-brand-primary" %></li>
+          <li><%= link_to "Qui sommes-nous ?", about_path, class: "transition hover:text-brand-primary" %></li>
+          <li><%= link_to "FAQ", faq_path, class: "transition hover:text-brand-primary" %></li>
+        </ul>
+      </nav>
+
+      <div class="border-[#E3DDD5] max-md:border-t max-md:pt-8 md:max-lg:w-1/2 lg:flex-1 lg:pl-16">
+        <ul class="grid grid-cols-3 gap-4 text-center">
+          <% [
+            [ "Conseillers", "indépendants", "users" ],
+            [ "Sans", "commission", "percent" ],
+            [ "Réponse", "sous 24 h", "clock" ]
+          ].each do |first, second, icon| %>
+            <li>
+              <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary-light text-brand-primary">
+                <%= render "home/footer_icon", name: icon %>
+              </span>
+              <p class="mt-3 text-sm font-bold leading-[1.35] text-brand-text"><%= first %><br><%= second %></p>
+            </li>
+          <% end %>
+        </ul>
+        <%= link_to "Une question ? Contactez-nous", contact_path, class: "mt-7 inline-flex h-14 w-full items-center justify-center rounded-full bg-brand-primary px-6 text-base font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
+      </div>
+      </div>
+    </div>
+
+    <div class="mt-14 border-t border-[#EFEAE4] py-6 pb-8 text-sm text-brand-text-secondary max-md:text-center md:flex md:items-center md:justify-between">
+      <p class="max-md:order-2 max-md:mt-4">© <%= Date.current.year %> Le Bon Modèle</p>
+      <ul class="flex flex-wrap items-center justify-center gap-5 max-md:order-1">
+        <li><a href="#" class="transition hover:text-brand-primary">Mentions légales</a></li>
+        <li class="h-3.5 w-px bg-[#E3DDD5]" aria-hidden="true"></li>
+        <li><a href="#" class="transition hover:text-brand-primary">Politique de confidentialité</a></li>
+        <li class="h-3.5 w-px bg-[#E3DDD5]" aria-hidden="true"></li>
+        <li><a href="#" class="transition hover:text-brand-primary">CGU</a></li>
+      </ul>
     </div>
   </div>
 </footer>

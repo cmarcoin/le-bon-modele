@@ -39,8 +39,8 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "img[src='/reference-assets/check.svg']", count: 0
     assert_select "a", text: "Pack Conseil"
     assert_select "a", text: "Pack Achat"
-    assert_select "a[href='#{starter_pack_path}'] span", text: "Découvrir"
-    assert_select "a[href='#{pack_premium_path}'] span", text: "Découvrir"
+    assert_select "a[href='#{starter_pack_path}'] span", text: "Découvrir le Pack Conseil"
+    assert_select "a[href='#{pack_premium_path}'] span", text: "Découvrir le Pack Achat"
     assert_select "body", text: /Le Bon Modèle/
     assert_select "body", text: /il n’y a pas d’IA/
   end
@@ -67,16 +67,16 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h2", text: "Votre accompagnement en 4 étapes"
-    assert_select "h4", text: "Questionnaire préparatoire"
-    assert_select "h4", text: "Premier entretien avec Charles et Jules"
-    assert_select "h4", text: "Liste réduite de 2 à 3 modèles"
-    assert_select "h4", text: "Entretien de suivi avec Charles et Jules"
+    assert_select "h3", text: "Questionnaire préparatoire"
+    assert_select "h3", text: "Premier entretien avec Charles et Jules"
+    assert_select "h3", text: "Liste réduite de 2 à 3 modèles"
+    assert_select "h3", text: "Entretien de suivi avec Charles et Jules"
     assert_select "body", text: /cadrer vos usages et vos priorités/
-    assert_select ".starter-pack-duration", text: /60 min/
-    assert_select ".starter-pack-duration", text: /30 min/
+    assert_select ".journey-badge", text: /60 min/
+    assert_select ".journey-badge", text: /30 min/
     assert_select "p", text: "On clarifie vos vrais besoins"
-    assert_select "strong", text: "Nous transformons une idée floue en choix clair"
-    assert_select "img[src='/reference-assets/starter-pack-illustration.svg']"
+    assert_select "h2", text: /Nous transformons/
+    assert_select "img[src='/reference-assets/starter-pack-illustration-hero.svg']"
     assert_select "a[href='#{new_pack_booking_path(starter)}']", text: "Je choisis cette offre"
   end
 
@@ -86,20 +86,20 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get pack_premium_path
 
     assert_response :success
-    assert_select "h2", text: "Votre accompagnement en 2 grandes phases"
-    assert_select "h3", text: "Phase 1 — Choisir le bon modèle"
-    assert_select "h3", text: "Phase 2 — Trouver la meilleure offre"
-    assert_select "h4", text: "Questionnaire préparatoire"
-    assert_select "h4", text: "Entretien n°1 avec Charles et Jules"
-    assert_select "h4", text: "Liste réduite de 2 à 3 modèles"
-    assert_select "h4", text: "Entretien n°2 avec Charles et Jules"
-    assert_select "h4", text: "Recherche, tri et analyse des offres"
-    assert_select "h4", text: "Entretien n°3 avec Charles et Jules"
+    assert_select "h2", text: "Votre accompagnement en 2 phases"
+    assert_select "h3", text: "Phase 1 – Choisir le bon modèle"
+    assert_select "h3", text: "Phase 2 – Trouver la meilleure offre"
+    assert_select "h3", text: "Questionnaire préparatoire"
+    assert_select "h3", text: "Entretien n°1 avec Charles et Jules"
+    assert_select "h3", text: "Liste réduite de 2 à 3 modèles"
+    assert_select "h3", text: "Entretien n°2 avec Charles et Jules"
+    assert_select "h3", text: "Recherche, tri et analyse des offres"
+    assert_select "h3", text: "Entretien n°3 avec Charles et Jules"
     assert_select "body", text: /une synthèse avec nos recommandations/
-    assert_select ".starter-pack-duration", text: /60 min/
+    assert_select ".journey-badge", text: /60 min/
     assert_select "p", text: "On définit le modèle et les équipements qu’il vous faut"
-    assert_select "strong", text: "La jungle des annonces, c’est notre problème, plus le vôtre"
-    assert_select "img[src='/reference-assets/pack-premium-illustration.svg']"
+    assert_select "h2", text: /La jungle des annonces/
+    assert_select "img[src='/reference-assets/pack-premium-illustration-hero.svg']"
     assert_select "body", text: /Charles et Jules restent joignables/
     assert_select "a[href='#{new_pack_booking_path(premium)}']", text: "Je choisis cette offre"
   end
@@ -123,6 +123,6 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "img[src='/reference-assets/about-hero.svg']"
     assert_select "img[src='/reference-assets/about-families.svg']"
     assert_select "h2", text: "Deux façons de vous accompagner"
-    assert_select "img[src='/reference-assets/modeles/citadine-recente.png']"
+    assert_select "img[src='/reference-assets/modeles/vignettes/citadine-recente.webp']"
   end
 end

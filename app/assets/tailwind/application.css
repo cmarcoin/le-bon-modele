@@ -61,9 +61,15 @@ img {
 }
 
 .main-logo {
-  height: 48px;
+  height: 32px;
   object-fit: contain;
   width: auto;
+}
+
+@media (min-width: 1024px) {
+  .main-logo {
+    height: 40.8px;
+  }
 }
 
 .nav-link {
@@ -106,10 +112,40 @@ img {
   display: flex;
 }
 
-.faq-item[data-open="true"] .faq-label,
-.faq-item[data-open="true"] .faq-icon,
-.faq-item[data-open="true"] .faq-answer {
-  color: #ffffff !important;
+.faq-item[data-open="true"] .faq-icon {
+  background-color: #1F5E3B;
+  color: #ffffff;
+}
+
+.faq-minus,
+.faq-item[data-open="true"] .faq-plus {
+  display: none;
+}
+
+.faq-item[data-open="true"] .faq-minus {
+  display: block;
+}
+
+.journey-track {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .journey-track::before {
+    background: #B9E4A5;
+    border-radius: 999px;
+    content: "";
+    height: 3px;
+    left: calc((100% - 120px) / 8);
+    position: absolute;
+    right: calc((100% - 120px) / 8);
+    top: 27px;
+  }
+
+  .journey-track-pair::before {
+    left: calc(50% - 240px);
+    right: calc(50% - 240px);
+  }
 }
 
 body:has(.page-background-bands) > :not(.site-header) {

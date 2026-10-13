@@ -1,0 +1,26 @@
+<% steps = local_assigns.fetch(:steps) %>
+<% pair = local_assigns.fetch(:pair, false) %>
+<% text_width = pair ? "max-w-[360px]" : "max-w-[270px]" %>
+
+<ol class="<%= class_names("journey-track relative grid grid-cols-1 gap-12 text-center md:grid-cols-2 lg:gap-x-10 lg:gap-y-0 lg:[grid-template-rows:auto_auto_auto_auto_1fr]", "lg:grid-cols-4": !pair, "journey-track-pair lg:mx-auto lg:w-fit lg:grid-cols-[repeat(2,400px)] lg:justify-center lg:gap-x-20": pair) %>" <% if pair %>start="<%= steps.first[:number] %>"<% end %>>
+  <% steps.each do |step| %>
+    <li class="grid justify-items-center lg:row-span-5 lg:grid-rows-subgrid">
+      <span class="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-brand-primary-light font-heading text-2xl font-extrabold text-brand-primary"><%= step[:number] %></span>
+      <span class="h-6 w-0.5 bg-[#B9E4A5]" aria-hidden="true"></span>
+      <span class="mt-3"><%= render "home/journey_icon", name: step[:icon] %></span>
+      <h3 class="mt-5 <%= text_width %> text-balance font-heading text-[22px] font-bold leading-[1.22] text-brand-text"><%= step[:title] %></h3>
+      <div class="<%= text_width %>">
+        <p class="mt-3.5 text-[17px] leading-[1.6] text-brand-text-secondary"><%= step[:body] %></p>
+        <% if step[:duration] %>
+          <p class="journey-badge mt-5 inline-flex items-center gap-2 rounded-full bg-brand-primary-light px-[18px] py-[9px] text-[16px] font-bold text-brand-primary">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 7v5l3 2"></path>
+            </svg>
+            <%= step[:duration] %>
+          </p>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ol>
