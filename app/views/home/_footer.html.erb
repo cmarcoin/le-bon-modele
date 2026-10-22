@@ -1,7 +1,8 @@
 <footer>
   <div class="h-0.5 w-full bg-[#E3DDD5]"></div>
 
-  <div class="mx-auto max-w-[1280px] px-6 pt-16 lg:px-12">
+  <div class="px-6 lg:px-12">
+  <div class="mx-auto max-w-[1280px] pt-16">
     <div class="flex flex-col gap-8 lg:flex-row lg:items-stretch">
       <div class="lg:flex-[1.25] lg:pr-16">
         <%= link_to root_path, aria: { label: "Le Bon Modèle" } do %>
@@ -14,7 +15,7 @@
       </div>
 
       <div class="flex flex-col gap-8 border-[#E3DDD5] max-lg:border-t max-lg:pt-8 md:flex-row md:gap-10 lg:contents">
-      <nav class="md:w-1/2 lg:w-auto lg:border-x lg:px-16" aria-label="Navigation du pied de page">
+      <nav class="md:w-1/2 lg:w-auto lg:border-x lg:border-[#E3DDD5] lg:px-16" aria-label="Navigation du pied de page">
         <ul class="flex flex-col gap-3.5 font-heading text-base font-medium text-brand-text">
           <li><%= link_to "Accueil", root_path, class: "transition hover:text-brand-primary" %></li>
           <li><%= link_to "Pack Conseil", starter_pack_path, class: "transition hover:text-brand-primary" %></li>
@@ -44,15 +45,16 @@
       </div>
     </div>
 
-    <div class="mt-14 border-t border-[#EFEAE4] py-6 pb-8 text-sm text-brand-text-secondary max-md:text-center md:flex md:items-center md:justify-between">
-      <p class="max-md:order-2 max-md:mt-4">© <%= Date.current.year %> Le Bon Modèle</p>
-      <ul class="flex flex-wrap items-center justify-center gap-5 max-md:order-1">
+    <div class="mt-14 flex flex-col items-center gap-4 border-t border-[#EFEAE4] py-6 pb-8 text-center text-sm text-brand-text-secondary md:flex-row md:justify-between md:text-left">
+      <ul class="order-1 flex flex-col items-center gap-2.5 md:order-2 md:flex-row md:gap-5">
         <li><a href="#" class="transition hover:text-brand-primary">Mentions légales</a></li>
-        <li class="h-3.5 w-px bg-[#E3DDD5]" aria-hidden="true"></li>
+        <li class="hidden h-3.5 w-px bg-[#E3DDD5] md:block" aria-hidden="true"></li>
         <li><a href="#" class="transition hover:text-brand-primary">Politique de confidentialité</a></li>
-        <li class="h-3.5 w-px bg-[#E3DDD5]" aria-hidden="true"></li>
+        <li class="hidden h-3.5 w-px bg-[#E3DDD5] md:block" aria-hidden="true"></li>
         <li><a href="#" class="transition hover:text-brand-primary">CGU</a></li>
       </ul>
+      <p class="order-2 md:order-1">© <%= Date.current.year %> Le Bon Modèle</p>
     </div>
+  </div>
   </div>
 </footer>

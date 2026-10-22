@@ -20,7 +20,7 @@
               <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary"><%= @starter_pack.name %></h1>
               <div class="mt-6 h-px bg-[#D9D9D9]"></div>
               <p class="mt-6 text-[20px] font-normal text-brand-text-secondary">Objectif :</p>
-              <p class="mt-2 font-heading text-[40px] font-bold leading-[1.05] text-brand-text">Identifier la voiture qu’il vous faut</p>
+              <p class="mt-2 font-heading text-[28px] font-bold leading-[1.05] text-brand-text lg:text-[40px]">Identifier la voiture qu’il vous faut</p>
               <p class="mt-6 text-justify text-[20px] leading-[1.45] text-brand-text-secondary lg:[contain:inline-size]">
                 Passez 90 min avec nos deux experts auto pour identifier le bon modèle
                 de voiture à acheter, celui qui correspond vraiment à vos besoins, vos
@@ -44,27 +44,17 @@
                   width: 1122,
                   height: 1228,
                   alt: "Charles et Jules autour d’un ordinateur. On clarifie vos vrais besoins, on explique les différences entre modèles, motorisations, finitions et options, on éclaire le coût total de possession, la revente et les garanties, et on identifie ensemble les équipements qu’il vous faut.",
-                  class: "h-auto w-full lg:ml-[-40px] lg:w-[calc(100%+40px)] lg:max-w-none xl:ml-[-80px] xl:w-[calc(100%+80px)]",
+                  class: "h-auto w-full lg:ml-[-40px] lg:w-[calc(100%_+_40px)] lg:max-w-none xl:ml-[-80px] xl:w-[calc(100%_+_80px)]",
                   loading: "lazy" %>
           </figure>
 
           <div class="lg:hidden">
-            <div class="starter-pack-quotes">
-              <p class="starter-pack-quote">On clarifie vos vrais besoins</p>
-              <p class="starter-pack-quote">On vous explique les différences entre les modèles et les motorisations, entre les finitions et les options</p>
-            </div>
-
             <%= image_tag "/reference-assets/starter-pack-scene.png",
                   width: 980,
                   height: 660,
                   alt: "",
-                  class: "starter-pack-scene",
+                  class: "mx-auto h-auto w-full",
                   loading: "lazy" %>
-
-            <div class="starter-pack-quotes">
-              <p class="starter-pack-quote">On vous éclaire sur les sujets mal maîtrisés : coût total de possession, prix à la revente, les garanties, etc.</p>
-              <p class="starter-pack-quote">On identifie ensemble les modèles et les équipements qu’il vous faut vraiment</p>
-            </div>
           </div>
         </aside>
       </div>
@@ -81,18 +71,18 @@
   </section>
 
   <section class="relative px-6 py-16 lg:px-12 lg:pb-[136px] lg:pt-24">
-    <div class="mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-20">
+    <div class="mx-auto grid max-w-[1280px] items-center gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-16 xl:gap-20">
       <%= image_tag "/reference-assets/conclusion-experts-cliente.svg",
             alt: "Charles et Jules aident une cliente à choisir sa voiture sur un ordinateur portable",
             class: "order-2 h-auto w-full lg:order-1 lg:pt-[72px]",
             loading: "lazy" %>
-      <div class="order-1 lg:order-2">
-        <h2 class="font-heading text-[32px] font-extrabold leading-[1.08] tracking-[-0.01em] text-brand-text lg:text-[40px]">
+      <div class="max-lg:contents lg:order-2">
+        <h2 class="order-1 font-heading text-[32px] font-extrabold leading-[1.08] tracking-[-0.01em] text-brand-text xl:text-[40px]">
           Nous transformons<br>
           une idée floue<br>
           en <span class="text-brand-primary">un choix clair</span>
         </h2>
-        <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: "#{offer_button} mt-10" %>
+        <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: "#{offer_button} order-3 max-lg:mt-0 lg:mt-10" %>
       </div>
     </div>
   </section>

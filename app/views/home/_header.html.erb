@@ -1,9 +1,8 @@
 <% nav_items = [
-  [ "Accueil", root_path ],
-  [ "Qui sommes-nous ?", about_path ],
-  [ "FAQ", faq_path ],
   [ "Pack Conseil", starter_pack_path ],
-  [ "Pack Achat", pack_premium_path ]
+  [ "Pack Achat", pack_premium_path ],
+  [ "Qui sommes-nous ?", about_path ],
+  [ "FAQ", faq_path ]
 ] %>
 
 <header class="site-header px-6 lg:px-12" data-controller="site-header" data-site-header-scrolled-class="is-scrolled">
@@ -12,14 +11,14 @@
       <%= image_tag "/reference-assets/logo.png", alt: "Logo", class: "main-logo", id: "headerLogo" %>
     <% end %>
 
-    <nav class="hidden items-center gap-2 lg:flex" aria-label="Navigation principale">
+    <nav class="hidden items-center gap-2 xl:flex" aria-label="Navigation principale">
       <% nav_items.each do |label, path| %>
         <%= link_to label, path, class: class_names("nav-link", "active": current_page?(path)) %>
       <% end %>
       <%= link_to "Contact", contact_path, class: "ml-4 rounded-full bg-brand-primary px-6 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" %>
     </nav>
 
-    <button type="button" class="relative z-[6000] p-2 lg:hidden" aria-label="Ouvrir le menu" data-action="site-header#toggle">
+    <button type="button" class="relative z-[6000] p-2 xl:hidden" aria-label="Ouvrir le menu" data-action="site-header#toggle">
       <span data-site-header-target="openIcon">
         <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M4 6h16M4 12h16M4 18h16" />

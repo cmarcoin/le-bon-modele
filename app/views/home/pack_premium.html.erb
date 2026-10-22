@@ -24,7 +24,7 @@
               <h1 class="font-heading text-5xl font-black leading-[0.95] text-brand-primary"><%= @premium_pack.name %></h1>
               <div class="mt-6 h-px bg-[#D9D9D9]"></div>
               <p class="mt-6 text-[20px] font-normal text-brand-text-secondary">Objectif :</p>
-              <p class="mt-2 font-heading text-[40px] font-bold leading-[1.05] text-brand-text">Choisir le bon modèle,<br>puis trouver la meilleure offre</p>
+              <p class="mt-2 font-heading text-[28px] font-bold leading-[1.05] text-brand-text lg:text-[40px]">Choisir le bon modèle,<br>puis trouver la meilleure offre</p>
               <p class="mt-6 text-left text-[20px] leading-[1.45] tracking-[-0.012em] text-brand-text-secondary lg:[contain:inline-size]">
                 Du cadrage de votre besoin jusqu’à l’achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.
               </p>
@@ -46,27 +46,17 @@
                   width: 1122,
                   height: 1262,
                   alt: "Charles et Jules analysent des annonces auto. On définit le modèle et les équipements qu’il vous faut, on analyse toutes les offres du marché, on décortique les prix et on repère les fausses bonnes affaires. Garanties, entretien, assistance, assurances : on ne garde que ce qui est pertinent. On creuse jusqu’à trouver les meilleures offres.",
-                  class: "h-auto w-full lg:ml-[-40px] lg:w-[calc(100%+40px)] lg:max-w-none xl:ml-[-80px] xl:w-[calc(100%+80px)]",
+                  class: "h-auto w-full lg:ml-[-40px] lg:w-[calc(100%_+_40px)] lg:max-w-none xl:ml-[-80px] xl:w-[calc(100%_+_80px)]",
                   loading: "lazy" %>
           </figure>
 
           <div class="lg:hidden">
-            <div class="starter-pack-quotes">
-              <p class="starter-pack-quote">On définit le modèle et les équipements qu’il vous faut</p>
-              <p class="starter-pack-quote">On analyse toutes les offres du marché, on décortique les prix, on repère les fausses bonnes affaires</p>
-            </div>
-
             <%= image_tag "/reference-assets/pack-premium-scene.png",
                   width: 1040,
                   height: 720,
                   alt: "",
-                  class: "starter-pack-scene",
+                  class: "mx-auto h-auto w-full",
                   loading: "lazy" %>
-
-            <div class="starter-pack-quotes">
-              <p class="starter-pack-quote">Garanties, entretien, assistance, assurances : on vous aide à ne garder que ce qui est pertinent</p>
-              <p class="starter-pack-quote">On creuse… jusqu’à trouver les meilleures offres</p>
-            </div>
           </div>
         </aside>
       </div>
@@ -91,25 +81,25 @@
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
         </span>
-        <p class="max-w-4xl text-left text-[18px] leading-[1.6] text-brand-text">Entre les rendez-vous, Charles et Jules restent joignables par email et par téléphone pour répondre à vos questions.</p>
+        <p class="text-left text-[18px] leading-[1.6] text-brand-text xl:max-w-none xl:whitespace-nowrap">Entre les rendez-vous, Charles et Jules restent joignables par email et par téléphone pour répondre à vos questions.</p>
       </div>
     </div>
   </section>
 
   <section class="relative px-6 py-16 lg:px-12 lg:pb-[136px] lg:pt-24">
-    <div class="mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-20">
+    <div class="mx-auto grid max-w-[1280px] items-center gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-16 xl:gap-20">
       <%= image_tag "/reference-assets/contact.gif",
             width: 480,
             height: 470,
             alt: "Personne qui fait défiler des annonces auto",
             class: "order-2 mx-auto h-auto w-[280px] lg:order-1 lg:w-[480px]" %>
-      <div class="order-1 text-left lg:order-2">
-        <h2 class="font-heading text-[32px] font-extrabold leading-[1.08] tracking-[-0.01em] text-brand-text lg:text-[40px]">
+      <div class="max-lg:contents text-left lg:order-2 lg:pt-14">
+        <h2 class="order-1 font-heading text-[32px] font-extrabold leading-[1.08] tracking-[-0.01em] text-brand-text xl:text-[40px]">
           La jungle des annonces,<br>
           c’est notre problème,<br>
           <span class="text-brand-primary">plus le vôtre.</span>
         </h2>
-        <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "#{offer_button} mt-10" %>
+        <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "#{offer_button} order-3 max-lg:mt-0 lg:mt-10" %>
       </div>
     </div>
   </section>

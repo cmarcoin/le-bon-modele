@@ -36,11 +36,6 @@ main {
   overflow: hidden;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
-
 .container-site {
   margin-inline: auto;
   max-width: 1280px;

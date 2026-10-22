@@ -32,7 +32,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", /Choisissez la voiture/
     assert_select "h1", /Pas celle/
     assert_select "img[src='/reference-assets/contact.gif']"
-    assert_select "h2", text: "Difficile de faire le bon choix…"
+    assert_select "h2", text: /Vous ne savez pas quelle voiture\s+choisir \?/
     assert_select "body", text: /La jungle des annonces/
     assert_select "h2", text: "Notre approche"
     assert_select "h2", text: "Avis clients"
@@ -74,7 +74,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "body", text: /cadrer vos usages et vos priorités/
     assert_select ".journey-badge", text: /60 min/
     assert_select ".journey-badge", text: /30 min/
-    assert_select "p", text: "On clarifie vos vrais besoins"
+    assert_select "img[src='/reference-assets/starter-pack-scene.png']"
     assert_select "h2", text: /Nous transformons/
     assert_select "img[src='/reference-assets/starter-pack-illustration-hero.svg']"
     assert_select "a[href='#{new_pack_booking_path(starter)}']", text: "Je choisis cette offre"
@@ -97,7 +97,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "h3", text: "Entretien n°3 avec Charles et Jules"
     assert_select "body", text: /une synthèse avec nos recommandations/
     assert_select ".journey-badge", text: /60 min/
-    assert_select "p", text: "On définit le modèle et les équipements qu’il vous faut"
+    assert_select "img[src='/reference-assets/pack-premium-scene.png']"
     assert_select "h2", text: /La jungle des annonces/
     assert_select "img[src='/reference-assets/pack-premium-illustration-hero.svg']"
     assert_select "body", text: /Charles et Jules restent joignables/

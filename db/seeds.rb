@@ -5,7 +5,7 @@
 starter = Pack.find_or_initialize_by(slug: "starter-pack")
 starter.assign_attributes(
   name: "Pack Conseil",
-  objective: "Identifier le modèle qu'il vous faut",
+  objective: "Identifier le modèle qu’il vous faut",
   description: "Passez 90 min avec nos deux experts auto pour identifier le bon modèle de voiture à acheter, celui qui correspond vraiment à vos besoins, vos contraintes et votre budget.",
   includes_text: [
     "Un questionnaire préparatoire,",
@@ -25,7 +25,7 @@ starter.save!
 premium = Pack.find_or_initialize_by(slug: "pack-premium")
 premium.assign_attributes(
   name: "Pack Achat",
-  objective: "Vous accompagner jusqu'à l'achat",
+  objective: "Vous accompagner jusqu’à l’achat",
   description: "Du cadrage de votre besoin jusqu'à l'achat de votre voiture, nos deux experts auto vous accompagnent à chaque étape.",
   includes_text: [
     "Un questionnaire préparatoire,",

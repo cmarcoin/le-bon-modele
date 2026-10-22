@@ -17,7 +17,9 @@
           <p class="mt-10 text-2xl font-bold text-brand-text"><%= site_copy("contact.hero_subtitle", "Une question, un doute, un besoin précis ?") %></p>
           <p class="mt-3 text-lg leading-8 text-brand-text-secondary"><%= site_copy("contact.hero_body", "On vous répond rapidement et clairement.") %></p>
         </div>
-        <%= image_tag "/reference-assets/contact-hero.svg", width: 640, height: 460, alt: "Un homme travaille sur son ordinateur portable à son bureau", class: "h-auto w-full max-w-lg justify-self-end", loading: "lazy" %>
+        <div class="w-full justify-self-end lg:flex lg:h-[422px] lg:items-center lg:justify-end">
+          <%= image_tag "/reference-assets/contact-hero.svg", width: 640, height: 460, alt: "Un homme travaille sur son ordinateur portable à son bureau", class: "h-auto w-full max-w-[440px] max-lg:mx-auto", loading: "lazy" %>
+        </div>
       </div>
 
       <div class="mt-12 grid items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]">
@@ -72,12 +74,14 @@
           <h2 class="font-heading text-3xl font-bold text-brand-text-secondary">Appelez-nous</h2>
           <p class="mt-3 leading-7 text-brand-primary"><%= site_copy("contact.phone_intro", "Échangez directement avec l’un de nos conseillers.") %></p>
 
-          <button type="button" class="mt-6 inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-brand-primary px-6 font-bold text-white" data-action="phone-reveal#reveal" data-phone-reveal-target="button">
+          <div class="mt-6" data-phone-reveal-target="button">
+          <button type="button" class="flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-brand-primary px-6 font-bold text-white" data-action="phone-reveal#reveal">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
             Afficher le numéro
           </button>
+          </div>
 
           <div class="mt-6 hidden" data-phone-reveal-target="panel">
             <% filled_phones = [[charles_label, charles_phone], [jules_label, jules_phone]].select { |_label, phone| phone.present? } %>
@@ -85,7 +89,7 @@
               <% if filled_phones.any? %>
                 <% filled_phones.each do |_label, phone| %>
                   <div class="rounded-full bg-white px-5 py-4 text-center">
-                    <%= link_to phone, "tel:#{phone.gsub(/\s+/, '')}", class: "block text-[22px] font-black tracking-tight text-brand-text" %>
+                    <%= link_to french_phone_display(phone), "tel:#{french_phone_tel(phone)}", class: "block text-lg font-bold text-brand-text" %>
                   </div>
                 <% end %>
               <% else %>

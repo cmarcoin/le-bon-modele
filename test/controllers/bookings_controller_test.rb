@@ -20,8 +20,8 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
       icon_path: "/reference-assets/icons/starter-pack.svg",
       accent_class: "text-brand-primary"
     )
-    starts_at = 3.days.from_now.beginning_of_week(:monday).change(hour: 10) + 1.day
-    starts_at += 1.day if starts_at.past?
+    starts_at = 1.day.from_now.in_time_zone("Europe/Paris").change(hour: 10)
+    starts_at += 1.day while starts_at.past? || starts_at.on_weekend?
     @slot = AvailabilitySlot.create!(
       starts_at: starts_at,
       ends_at: starts_at + 45.minutes,
@@ -155,8 +155,8 @@ class BookingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "input[type=radio][value='#{saturday_slot.id}']", count: 0
-    assert_match(/30 minutes/, response.body)
-    assert_match(/48 heures/, response.body)
+    assert_no_match(/30 minutes/, response.body)
+    assert_match(/Annulation gratuite jusqu’à 48 h avant le rendez-vous/, response.body)
     assert_select "span", text: "SAM.", count: 0
     assert_select "span", text: "DIM.", count: 0
     assert_select "p", text: "Ce qui est inclus :"

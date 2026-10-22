@@ -13,7 +13,7 @@
     <div class="mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-14">
       <div class="lg:pt-[108px]">
         <% hero_lines = site_copy("home.hero_title", "Choisissez la voiture qu’il vous faut. Pas celle qu’on cherche à vous vendre.").split(/(?<=\.)\s+/) %>
-        <h1 class="max-w-[640px] font-heading text-[36px] font-black leading-[0.98] lg:text-[48px]">
+        <h1 class="max-w-[640px] font-heading text-[32px] font-black leading-[0.98] lg:text-[48px]">
           <% hero_lines.each_with_index do |line, index| %>
             <span class="<%= class_names("block", index.zero? ? "text-brand-primary" : "mt-4 text-brand-text") %>"><%= line %></span>
           <% end %>
@@ -23,7 +23,7 @@
           <%= highlight_le_bon_modele(site_copy("home.hero_subtitle", "Bien acheter, c’est être bien conseillé. Avec Le Bon Modèle, deux experts indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus adaptée à votre quotidien et à votre budget."), style: :bold) %>
         </p>
 
-        <div class="mt-7 flex flex-wrap gap-7">
+        <div class="mt-7 flex flex-wrap gap-12">
           <% ["Sans commission", "Experts indépendants"].each do |label| %>
             <span class="inline-flex items-center gap-2.5 text-base font-bold text-brand-text">
               <span class="inline-flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand-primary-light text-brand-primary">
@@ -36,7 +36,7 @@
       </div>
 
       <div class="flex items-center justify-center lg:justify-end">
-        <%= image_tag "/reference-assets/famille-voitures-v2.svg", width: 1163, height: 477, alt: "Illustration de voitures pour toute la famille", class: "h-auto w-full", loading: "lazy" %>
+        <%= image_tag "/reference-assets/famille-voitures-v3.svg", width: 1163, height: 509, alt: "Illustration de voitures pour toute la famille", class: "h-auto w-full", loading: "lazy" %>
       </div>
     </div>
   </section>
@@ -44,7 +44,7 @@
   <section id="approche" class="px-6 pt-[120px] lg:px-12">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary">Notre approche</h2>
+        <h2 class="font-heading text-[28px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary lg:text-[40px]">Notre approche</h2>
         <div class="mx-auto mt-5 max-w-[980px] space-y-3 text-base leading-[1.6] text-brand-text-secondary">
           <% approach_paragraphs = site_copy("home.approach", "Sur le papier, acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
           <% if approach_paragraphs[1].to_s.start_with?("En réalité") %>
@@ -71,17 +71,21 @@
           [site_copy("home.block_3_title", "Double expertise"), site_copy("home.block_3_body", "Nous combinons une connaissance approfondie des véhicules avec une compréhension fine de vos besoins et de vos contraintes.\nNous appliquons une méthode rigoureuse et privilégions des échanges directs, au téléphone ou en visio, pour vous accompagner pas à pas."), :bold]
         ].each_with_index do |(title, body, style), index| %>
           <article class="<%= "relative md:before:absolute md:before:-left-11 md:before:top-0 md:before:h-full md:before:w-px md:before:bg-[#E3DDD5] max-md:border-t max-md:border-[#E3DDD5] max-md:pt-8" if index.positive? %>">
-            <span class="block h-[3px] w-10 rounded-full bg-brand-coral" aria-hidden="true"></span>
-            <h3 class="mt-[18px] font-heading text-[22px] font-bold text-brand-text"><%= title %></h3>
+            <span class="block font-heading text-[48px] font-extrabold leading-none tracking-[-0.02em] text-brand-coral" aria-hidden="true"><%= format("%02d", index + 1) %></span>
+            <h3 class="mt-[18px] font-heading text-2xl font-bold text-brand-text"><%= title %></h3>
             <div class="mt-4 space-y-2.5 text-base leading-[1.6] text-brand-text-secondary">
               <% if title == "Conseillers indépendants" %>
-                <% sentences = body.gsub("\n", " ").split(/(?<=\.)\s+/) %>
+                <% paragraphs = body.split(/\n+/) %>
+                <% sentences = paragraphs.first.to_s.split(/(?<=\.)\s+/) %>
                 <p>
                   <% sentences.first(2).each do |sentence| %>
                     <%= highlight_le_bon_modele(sentence, style: style) %><br>
                   <% end %>
                   <%= highlight_le_bon_modele(sentences.drop(2).join(" "), style: style) %>
                 </p>
+                <% paragraphs.drop(1).each do |paragraph| %>
+                  <p><%= highlight_le_bon_modele(paragraph, style: style) %></p>
+                <% end %>
               <% else %>
                 <% body.split(/\n+/).each do |paragraph| %>
                   <p><%= highlight_le_bon_modele(paragraph, style: style) %></p>
@@ -96,11 +100,11 @@
 
   <%= render "home/contact_banner" %>
 
-  <section id="offres" class="px-6 pb-16 pt-28 lg:px-12">
+  <section id="offres" class="px-6 pb-0 pt-28 lg:px-12">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="relative inline-block font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary">
-          <span class="absolute right-full top-1/2 mr-4 -translate-y-1/2"><%= render "home/coral_mark" %></span>
+        <h2 class="relative inline-block font-heading text-[28px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary lg:text-[40px]">
+          <span class="absolute right-full top-1/2 mr-3 hidden -translate-y-1/2 md:block"><%= render "home/coral_mark" %></span>
           Nos accompagnements
         </h2>
       </div>
@@ -115,7 +119,7 @@
   <section class="px-6 pt-28 lg:px-12">
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
-        <h2 class="font-heading text-[40px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary">Avis clients</h2>
+        <h2 class="font-heading text-[28px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary lg:text-[40px]">Avis clients</h2>
         <p class="mt-4 text-[20px] leading-[1.5] text-brand-text-secondary">Ils ont trouvé la voiture qu’il leur fallait.</p>
       </div>
 

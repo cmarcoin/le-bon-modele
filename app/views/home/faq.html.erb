@@ -70,7 +70,7 @@
   <%= render "home/background_pattern" %>
   <section class="relative px-6 py-8 lg:px-12 lg:py-10" data-controller="faq">
     <div class="mx-auto max-w-[1280px]">
-      <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
+      <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-14">
         <div class="lg:pt-[108px]">
           <h1 class="font-heading text-[36px] font-black leading-[0.98] text-brand-primary lg:text-[48px]">Questions fréquentes</h1>
           <p class="mt-8 text-[20px] leading-[1.5] text-brand-text-secondary">Tout ce que vous devez savoir sur Le Bon Modèle</p>
@@ -90,7 +90,7 @@
               </span>
             </button>
             <div id="faq-answer-<%= index %>" class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-              <div class="max-w-[720px] space-y-3 pb-8 text-lg leading-[1.5] text-brand-text-secondary md:ml-16 md:text-[20px]">
+              <div class="max-w-[960px] space-y-3 pb-8 text-lg leading-[1.5] text-brand-text-secondary md:ml-16 md:text-[20px]">
                 <% paragraphs.each do |paragraph| %>
                   <% if paragraph == :in_fine %>
                     <p>Nous comparons ainsi des offres très différentes sur une base commune et sélectionnons <em>in fine</em> celles qui présentent le meilleur intérêt pour vous.</p>
@@ -104,7 +104,7 @@
         <% end %>
       </div>
 
-      <div class="mb-[120px] mt-24 flex flex-col items-start justify-between gap-6 rounded-[24px] bg-brand-primary-light px-8 py-11 md:flex-row md:items-center md:px-12">
+      <div class="mb-12 mt-24 flex flex-col items-start justify-between gap-6 rounded-[24px] bg-brand-primary-light px-8 py-11 md:flex-row md:items-center md:px-12 lg:mb-20">
         <div>
           <h2 class="font-heading text-[28px] font-bold text-brand-text">Vous ne trouvez pas la réponse à votre question ?</h2>
           <p class="mt-2.5 text-base text-brand-text">Écrivez-nous ou appelez-nous.</p>

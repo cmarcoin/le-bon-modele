@@ -44,8 +44,8 @@ class HomeController < ApplicationController
   end
 
   def set_pack_catalog
-    @starter_pack = Pack.find_by(slug: "starter-pack") || fallback_pack("starter-pack", "Pack Conseil", 5900, "/reference-assets/icons/starter-pack.svg", "text-brand-primary", "Identifier le modèle qu'il vous faut")
-    @premium_pack = Pack.find_by(slug: "pack-premium") || fallback_pack("pack-premium", "Pack Achat", 29900, "/reference-assets/icons/pack-premium.svg", "text-brand-primary", "Vous accompagner jusqu'à l'achat")
+    @starter_pack = Pack.find_by(slug: "starter-pack") || fallback_pack("starter-pack", "Pack Conseil", 5900, "/reference-assets/icons/starter-pack.svg", "text-brand-primary", "Identifier le modèle qu’il vous faut")
+    @premium_pack = Pack.find_by(slug: "pack-premium") || fallback_pack("pack-premium", "Pack Achat", 29900, "/reference-assets/icons/pack-premium.svg", "text-brand-primary", "Vous accompagner jusqu’à l’achat")
   end
 
   def fallback_pack(slug, name, price_cents, icon_path, accent_class, objective)

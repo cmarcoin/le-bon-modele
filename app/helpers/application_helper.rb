@@ -25,6 +25,20 @@ module ApplicationHelper
     }.fetch(mode, mode)
   end
 
+  def french_phone_display(phone)
+    digits = phone.to_s.gsub(/\D/, "")
+    digits = "0#{digits[2..]}" if digits.start_with?("33") && digits.length == 11
+    digits.scan(/.{1,2}/).join(" ")
+  end
+
+  def french_phone_tel(phone)
+    digits = phone.to_s.gsub(/\D/, "")
+    return "+33#{digits[1..]}" if digits.start_with?("0")
+    return "+#{digits}" if digits.start_with?("33")
+
+    digits
+  end
+
   def euro_price(cents)
     number_to_currency(cents.to_i / 100.0, unit: "€", separator: ",", delimiter: " ", format: "%n%u", precision: cents.to_i % 100 == 0 ? 0 : 2)
   end
