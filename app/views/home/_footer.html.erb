@@ -52,6 +52,15 @@
         <li><a href="#" class="transition hover:text-brand-primary">Politique de confidentialité</a></li>
         <li class="hidden h-3.5 w-px bg-[#E3DDD5] md:block" aria-hidden="true"></li>
         <li><a href="#" class="transition hover:text-brand-primary">CGU</a></li>
+        <% if ENV["GA_MEASUREMENT_ID"].present? %>
+          <li class="hidden h-3.5 w-px bg-[#E3DDD5] md:block" aria-hidden="true"></li>
+          <li>
+            <button onclick="window.cookieConsentController?.show()" 
+                    class="transition hover:text-brand-primary">
+              Gérer les cookies
+            </button>
+          </li>
+        <% end %>
       </ul>
       <p class="order-2 md:order-1">© <%= Date.current.year %> Le Bon Modèle</p>
     </div>

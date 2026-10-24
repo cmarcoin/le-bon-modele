@@ -246,7 +246,7 @@ ADMIN_INITIAL_PASSWORD=...               # Mot de passe admin initial (changé a
 GA_MEASUREMENT_ID=G-XXXXXXXXXX           # ID de mesure GA4 (commençant par G-)
 ```
 
-Si cette variable est renseignée, le script Google Analytics (`gtag.js`) est injecté sur toutes les pages.  
+Si cette variable est renseignée, le script Google Analytics (`gtag.js`) est injecté sur toutes les pages avec **Google Consent Mode v2**.  
 Si elle est absente, aucun tracking n'est actif.
 
 **Configuration dans Google Analytics :**
@@ -254,7 +254,27 @@ Si elle est absente, aucun tracking n'est actif.
 - Récupérer l'ID de mesure (commençant par `G-`)
 - Ajouter la variable d'environnement dans Scalingo
 
-**Note sur les cookies :** Le site doit afficher un bandeau de consentement aux cookies si GA4 est activé (conformité RGPD). Cette fonctionnalité n'est pas encore implémentée.
+**Consentement aux cookies (RGPD) :**
+
+Le site intègre un bandeau de consentement conforme RGPD et aux recommandations de la CNIL :
+
+- **Affichage conditionnel** : le bandeau ne s'affiche que si `GA_MEASUREMENT_ID` est renseigné
+- **Google Consent Mode v2** : par défaut, tous les consentements sont refusés (`analytics_storage: denied`, `ad_storage: denied`, etc.)
+- **Aucun cookie GA avant consentement** : Google Analytics ne dépose aucun cookie tant que l'utilisateur n'a pas explicitement accepté
+- **Boutons d'égale importance** : "Tout accepter" et "Tout refuser" ont la même visibilité (conformité RGPD)
+- **Choix mémorisé 6 mois** : le consentement est stocké dans `localStorage` et expire automatiquement après 6 mois
+- **Lien "Gérer les cookies"** : présent dans le footer (uniquement si GA4 est actif), permet de rouvrir le bandeau et modifier son choix
+- **Anonymisation IP** : activée par défaut (`anonymize_ip: true`)
+
+**Fonctionnement technique :**
+
+1. Au chargement de la page, `gtag.js` est chargé mais avec tous les consentements refusés par défaut
+2. Si l'utilisateur n'a pas encore fait de choix, le bandeau s'affiche en bas de page
+3. Si l'utilisateur accepte : le consentement est mis à jour (`analytics_storage: granted`) et GA4 commence à tracker
+4. Si l'utilisateur refuse : le consentement reste refusé, aucun tracking n'est effectué
+5. Le choix est stocké dans `localStorage` avec un timestamp et expire après 6 mois
+
+**Note :** Le bandeau ne gère actuellement que Google Analytics. Crisp (chatbot) est considéré comme une fonctionnalité demandée par l'utilisateur et n'est pas soumis au consentement (il ne s'active que si l'utilisateur interagit avec le widget).
 
 #### Crisp (chatbot support client)
 
