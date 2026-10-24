@@ -1,19 +1,97 @@
-<h1>Votre rendez-vous est confirmé</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<title>C'est réservé : votre <%= @booking.pack.name %> avec Le Bon Modèle</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; padding:0; background:#FAF3EB; }
+  a { color:#1F5E3B; }
+  @media (max-width:620px) {
+    .container { width:100% !important; }
+    .px { padding-left:24px !important; padding-right:24px !important; }
+    .h1 { font-size:30px !important; }
+    .btn a { display:block !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#FAF3EB;">
+<!-- Texte d'aperçu (affiché dans la boîte de réception, masqué dans l'e-mail) -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Rendez-vous le <%= paris_date_short(@booking.availability_slot.starts_at.in_time_zone("Europe/Paris")) %> à <%= paris_time(@booking.availability_slot.starts_at) %>, <% if @booking.meeting_mode == "visio" %>en visio<% else %>par téléphone<% end %>, avec Charles et Jules.</div>
 
-<p>Bonjour <%= @booking.customer_name %>,</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FAF3EB;">
+<tr><td align="center" style="padding:32px 12px;">
 
-<p>
-  Merci pour votre achat du <strong><%= @booking.pack.name %></strong>.
-  Votre rendez-vous est confirmé le
-  <strong><%= paris_datetime(@booking.availability_slot.starts_at) %></strong>.
-</p>
+  <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
 
-<p>Montant payé : <strong><%= euro_price(@booking.amount_cents) %> TTC</strong>.</p>
+    <!-- Logo -->
+    <tr><td class="px" style="padding:0 40px 24px;">
+      <a href="https://www.lebonmodele.fr" style="text-decoration:none;"><img src="https://www.lebonmodele.fr/reference-assets/logo.png" width="180" height="29" alt="Le Bon Modèle" style="display:block;border:0;width:180px;height:auto;"></a>
+    </td></tr>
 
-<p><%= booking_cancellation_policy %></p>
+    <!-- Carte principale -->
+    <tr><td style="background:#FFFFFF;border-radius:24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 
-<p><%= link_to "Annuler ma réservation", @cancel_url %></p>
+        <tr><td class="px" style="padding:44px 40px 0;font-family:'Outfit',Arial,Helvetica,sans-serif;">
+          <h1 class="h1" style="margin:0;font-size:36px;line-height:1.08;font-weight:900;color:#1F5E3B;">C'est réservé&nbsp;!<br><span style="color:#1A1A1A;">À très vite, <%= @booking.customer_name.split.first %>.</span></h1>
+        </td></tr>
 
-<p>Un compte client a été créé avec cette adresse email. Vous pourrez utiliser la page de mot de passe oublié pour définir votre mot de passe.</p>
+        <tr><td class="px" style="padding:20px 40px 0;font-family:'DM Sans',Arial,Helvetica,sans-serif;font-size:17px;line-height:1.6;color:#4F4F4F;">
+          Votre paiement pour le <%= @booking.pack.name %> a bien été reçu. Voici le récapitulatif de votre réservation.
+        </td></tr>
 
-<p>À très vite,<br>Le Bon Modèle</p>
+        <!-- Récapitulatif -->
+        <tr><td class="px" style="padding:28px 40px 0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F3F7EF;border-radius:20px;">
+            <tr><td style="padding:24px 28px;font-family:'DM Sans',Arial,Helvetica,sans-serif;">
+
+              <p style="margin:0 0 4px;font-size:13px;line-height:1.4;color:#4F4F4F;">Votre rendez-vous</p>
+              <p style="margin:0;font-size:17px;line-height:1.4;font-weight:700;color:#1A1A1A;"><%= paris_datetime_full(@booking.availability_slot.starts_at).gsub(" h", "&nbsp;h").html_safe %></p>
+              <p style="margin:2px 0 0;font-size:14px;line-height:1.5;color:#4F4F4F;">Premier entretien · 60 minutes</p>
+
+              <div style="height:1px;background:#DDE8D5;margin:18px 0;line-height:1px;font-size:1px;">&nbsp;</div>
+
+              <p style="margin:0 0 4px;font-size:13px;line-height:1.4;color:#4F4F4F;">Format</p>
+              <% if @booking.meeting_mode == "visio" %>
+                <p style="margin:0;font-size:17px;line-height:1.4;font-weight:700;color:#1A1A1A;">En visio</p>
+                <p style="margin:2px 0 0;font-size:14px;line-height:1.5;color:#4F4F4F;">Le lien de connexion et le questionnaire préparatoire vous seront adressés quelques jours avant l'entretien.</p>
+              <% else %>
+                <p style="margin:0;font-size:17px;line-height:1.4;font-weight:700;color:#1A1A1A;">Par téléphone</p>
+                <p style="margin:2px 0 0;font-size:14px;line-height:1.5;color:#4F4F4F;">Charles et Jules vous appelleront au numéro indiqué. Le questionnaire préparatoire vous sera adressé quelques jours avant l'entretien.</p>
+              <% end %>
+
+              <div style="height:1px;background:#DDE8D5;margin:18px 0;line-height:1px;font-size:1px;">&nbsp;</div>
+
+              <p style="margin:0 0 4px;font-size:13px;line-height:1.4;color:#4F4F4F;">Votre accompagnement</p>
+              <p style="margin:0;font-size:17px;line-height:1.4;font-weight:700;color:#1A1A1A;"><%= @booking.pack.name %> · <%= euro_price(@booking.amount_cents).gsub(" €", "&nbsp;€").html_safe %> TTC</p>
+              <p style="margin:2px 0 0;font-size:14px;line-height:1.5;color:#4F4F4F;">Paiement reçu le <%= paris_date_full_no_day(@booking.paid_at&.to_date || Date.current) %></p>
+
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- Signature -->
+        <tr><td class="px" style="padding:36px 40px 44px;font-family:'DM Sans',Arial,Helvetica,sans-serif;">
+          <div style="height:1px;background:#EFEAE4;line-height:1px;font-size:1px;margin:0 0 28px;">&nbsp;</div>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#4F4F4F;">Une question d'ici là&nbsp;? Répondez simplement à cet e-mail, ou retrouvez toutes les informations sur <a href="https://www.lebonmodele.fr" style="color:#1F5E3B;font-weight:700;text-decoration:none;white-space:nowrap;">lebonmodele.fr</a>.</p>
+          <p style="margin:20px 0 0;font-family:'Outfit',Arial,Helvetica,sans-serif;font-size:18px;line-height:1.4;font-weight:700;color:#1A1A1A;">À très vite,<br>Charles et Jules</p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+
+    <!-- Pied de page -->
+    <tr><td class="px" style="padding:24px 40px 0;font-family:'DM Sans',Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#8A8178;text-align:center;">
+      Le Bon Modèle · Bien acheter, c'est être bien conseillé.<br>
+      <a href="https://www.lebonmodele.fr" style="color:#8A8178;">lebonmodele.fr</a> · Vous recevez cet e-mail suite à votre réservation.
+    </td></tr>
+
+  </table>
+
+</td></tr>
+</table>
+</body>
+</html>
