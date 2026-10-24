@@ -61,4 +61,7 @@ Rails.application.routes.draw do
   get "pack-premium", to: "home#pack_premium", as: :pack_premium
   get "contact", to: "home#contact", as: :contact
   post "contact", to: "home#submit_contact", as: :submit_contact
+  get "mentions-legales", to: "home#legal_notices", as: :legal_notices
+  get "politique-de-confidentialite", to: "home#privacy_policy", as: :privacy_policy
+  get "cgv", to: "home#terms_of_sale", as: :terms_of_sale
 end

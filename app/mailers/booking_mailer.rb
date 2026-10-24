@@ -6,7 +6,7 @@ class BookingMailer < ApplicationMailer
   def confirmation(booking)
     @booking = booking
     @cancel_url = cancel_booking_url(token: booking.cancellation_token)
-    mail(to: booking.customer_email, subject: "Votre rendez-vous Le Bon Modèle est confirmé")
+    mail(to: booking.customer_email, subject: "C'est réservé : votre #{booking.pack.name} avec Le Bon Modèle")
   end
 
   def admin_notification(booking)

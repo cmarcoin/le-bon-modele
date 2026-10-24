@@ -198,3 +198,109 @@ scalingo --app herve-2-staging scale worker:1
 ```
 
 Or upgrade the PostgreSQL add-on for more connections. Check usage in the database dashboard (`current_connections` vs `max_connections`).
+
+## Configuration de production
+
+### Variables d'environnement obligatoires
+
+Les variables suivantes doivent être renseignées dans l'environnement de production (Scalingo ou autre hébergeur) :
+
+#### Stripe (paiement)
+
+```
+STRIPE_SECRET_KEY=sk_live_...           # Clé secrète Stripe (compte de production)
+STRIPE_PUBLISHABLE_KEY=pk_live_...      # Clé publique Stripe (affichée côté client)
+STRIPE_WEBHOOK_SECRET=whsec_...         # Secret de signature des webhooks Stripe
+```
+
+**Important** : 
+- Utiliser les clés du compte Stripe de **production** (préfixées `sk_live_`, `pk_live_`)
+- Configurer le webhook Stripe pour envoyer les événements vers `https://www.lebonmodele.fr/stripe/webhooks`
+- Types d'événements requis : `checkout.session.completed`, `checkout.session.expired`
+- Synchroniser les packs avec Stripe depuis l'interface admin (`/admin/packs` → « Synchroniser avec Stripe »)
+
+#### Email (SMTP)
+
+```
+CONTACT_RECIPIENT=contact@lebonmodele.fr
+SMTP_ADDRESS=ssl0.ovh.net
+SMTP_PORT=587
+SMTP_USERNAME=contact@lebonmodele.fr
+SMTP_PASSWORD=...                        # Mot de passe du compte email OVH
+SMTP_AUTHENTICATION=plain
+SMTP_ENABLE_STARTTLS_AUTO=true
+```
+
+#### Application
+
+```
+APP_HOST=lebonmodele.fr                  # Domaine principal (sans https://)
+ADMIN_INITIAL_PASSWORD=...               # Mot de passe admin initial (changé après premier login)
+```
+
+### Variables d'environnement optionnelles
+
+#### Google Analytics 4 (tracking des visites)
+
+```
+GA_MEASUREMENT_ID=G-XXXXXXXXXX           # ID de mesure GA4 (commençant par G-)
+```
+
+Si cette variable est renseignée, le script Google Analytics (`gtag.js`) est injecté sur toutes les pages avec **Google Consent Mode v2**.  
+Si elle est absente, aucun tracking n'est actif.
+
+**Configuration dans Google Analytics :**
+- Créer une propriété GA4 pour `lebonmodele.fr`
+- Récupérer l'ID de mesure (commençant par `G-`)
+- Ajouter la variable d'environnement dans Scalingo
+
+**Consentement aux cookies (RGPD) :**
+
+Le site intègre un bandeau de consentement conforme RGPD et aux recommandations de la CNIL :
+
+- **Affichage conditionnel** : le bandeau ne s'affiche que si `GA_MEASUREMENT_ID` est renseigné
+- **Google Consent Mode v2** : par défaut, tous les consentements sont refusés (`analytics_storage: denied`, `ad_storage: denied`, etc.)
+- **Aucun cookie GA avant consentement** : Google Analytics ne dépose aucun cookie tant que l'utilisateur n'a pas explicitement accepté
+- **Boutons d'égale importance** : "Tout accepter" et "Tout refuser" ont la même visibilité (conformité RGPD)
+- **Choix mémorisé 6 mois** : le consentement est stocké dans `localStorage` et expire automatiquement après 6 mois
+- **Lien "Gérer les cookies"** : présent dans le footer (uniquement si GA4 est actif), permet de rouvrir le bandeau et modifier son choix
+- **Anonymisation IP** : activée par défaut (`anonymize_ip: true`)
+
+**Fonctionnement technique :**
+
+1. Au chargement de la page, `gtag.js` est chargé mais avec tous les consentements refusés par défaut
+2. Si l'utilisateur n'a pas encore fait de choix, le bandeau s'affiche en bas de page
+3. Si l'utilisateur accepte : le consentement est mis à jour (`analytics_storage: granted`) et GA4 commence à tracker
+4. Si l'utilisateur refuse : le consentement reste refusé, aucun tracking n'est effectué
+5. Le choix est stocké dans `localStorage` avec un timestamp et expire après 6 mois
+
+**Note :** Le bandeau ne gère actuellement que Google Analytics. Crisp (chatbot) est considéré comme une fonctionnalité demandée par l'utilisateur et n'est pas soumis au consentement (il ne s'active que si l'utilisateur interagit avec le widget).
+
+#### Crisp (chatbot support client)
+
+```
+CRISP_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Website ID Crisp (UUID)
+```
+
+Si cette variable est renseignée, le widget de chat Crisp est affiché en bas à droite sur toutes les pages.  
+Si elle est absente, aucun chatbot n'est chargé.
+
+**Configuration dans Crisp :**
+- Créer un compte sur [crisp.chat](https://crisp.chat)
+- Ajouter un site web `lebonmodele.fr`
+- Récupérer le Website ID (format UUID)
+- Ajouter la variable d'environnement dans Scalingo
+
+### Commandes de configuration
+
+#### Synchroniser les packs avec Stripe
+
+Après avoir configuré les clés Stripe, synchroniser tous les packs depuis l'interface admin :
+
+```
+https://www.lebonmodele.fr/admin/packs
+```
+
+Cliquer sur « Synchroniser tous les packs avec Stripe » pour créer les produits et prix correspondants dans Stripe.
+
+Les IDs de produit (`prod_xxx`) et de prix (`price_xxx`) sont ensuite stockés en base de données et utilisés lors des paiements.

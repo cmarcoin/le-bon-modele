@@ -19,7 +19,7 @@
           <% end %>
         </h1>
 
-        <p class="mt-8 max-w-[580px] text-[20px] leading-[1.5] text-brand-text-secondary">
+        <p class="mt-8 lg:mt-11 max-w-[580px] text-[20px] leading-[1.5] text-brand-text-secondary">
           <%= highlight_le_bon_modele(site_copy("home.hero_subtitle", "Bien acheter, c’est être bien conseillé. Avec Le Bon Modèle, deux experts indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus adaptée à votre quotidien et à votre budget."), style: :bold) %>
         </p>
 
@@ -45,20 +45,20 @@
     <div class="mx-auto max-w-[1280px]">
       <div class="text-center">
         <h2 class="font-heading text-[28px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary lg:text-[40px]">Notre approche</h2>
-        <div class="mx-auto mt-5 max-w-[980px] space-y-3 text-base leading-[1.6] text-brand-text-secondary">
+        <div class="mx-auto mt-5 max-w-[980px] lg:max-w-[1120px] space-y-3 text-base leading-[1.6] lg:text-[20px] lg:leading-[1.5] text-brand-text-secondary">
           <% approach_paragraphs = site_copy("home.approach", "Sur le papier, acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
           <% if approach_paragraphs[1].to_s.start_with?("En réalité") %>
             <p>
-              <%= highlight_le_bon_modele(approach_paragraphs[0], style: :bold) %>
+              <%= highlight_le_bon_modele(approach_paragraphs[0], style: :plain) %>
               <span class="whitespace-nowrap">En réalité,</span>
-              <%= highlight_le_bon_modele(approach_paragraphs[1].sub(/\AEn réalité,\s*/, ""), style: :bold) %>
+              <%= highlight_le_bon_modele(approach_paragraphs[1].sub(/\AEn réalité,\s*/, ""), style: :plain) %>
             </p>
             <% approach_paragraphs.drop(2).each do |paragraph| %>
-              <p><%= highlight_le_bon_modele(paragraph, style: :bold) %></p>
+              <p><%= highlight_le_bon_modele(paragraph, style: :plain) %></p>
             <% end %>
           <% else %>
             <% approach_paragraphs.each do |paragraph| %>
-              <p><%= highlight_le_bon_modele(paragraph, style: :bold) %></p>
+              <p><%= highlight_le_bon_modele(paragraph, style: :plain) %></p>
             <% end %>
           <% end %>
         </div>
@@ -82,10 +82,10 @@
                     <%= highlight_le_bon_modele(sentence, style: style) %><br>
                   <% end %>
                   <%= highlight_le_bon_modele(sentences.drop(2).join(" "), style: style) %>
+                  <% paragraphs.drop(1).each do |paragraph| %>
+                    <br><%= highlight_le_bon_modele(paragraph, style: style) %>
+                  <% end %>
                 </p>
-                <% paragraphs.drop(1).each do |paragraph| %>
-                  <p><%= highlight_le_bon_modele(paragraph, style: style) %></p>
-                <% end %>
               <% else %>
                 <% body.split(/\n+/).each do |paragraph| %>
                   <p><%= highlight_le_bon_modele(paragraph, style: style) %></p>
@@ -127,7 +127,7 @@
         <% reviews.each_with_index do |(car, initials, name, region, quote), index| %>
           <article class="flex flex-col <%= "relative md:before:absolute md:before:-left-11 md:before:top-0 md:before:h-full md:before:w-px md:before:bg-[#E3DDD5] max-md:border-t max-md:border-[#E3DDD5] max-md:pt-8" if index.positive? %>">
             <span class="block h-[34px] font-heading text-[64px] font-black leading-none text-brand-coral" aria-hidden="true">“</span>
-            <h3 class="mt-[18px] font-heading text-[22px] font-bold text-brand-text"><%= car %></h3>
+            <h3 class="mt-[18px] font-heading text-2xl font-bold text-brand-text"><%= car %></h3>
             <p class="mt-3.5 text-base leading-[1.6] text-brand-text-secondary"><%= quote %></p>
             <div class="mt-auto flex items-center gap-3.5 pt-6">
               <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand-primary-light font-heading text-[15px] font-bold text-brand-primary" aria-hidden="true"><%= initials %></span>
