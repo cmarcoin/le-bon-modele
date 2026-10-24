@@ -1,0 +1,268 @@
+<% content_for :title, "Politique de confidentialité | Le Bon Modèle" %>
+
+<%= render "home/header" %>
+
+<main class="relative pt-24">
+  <%= render "home/background_pattern" %>
+  
+  <section class="relative px-6 py-8 lg:px-12 lg:py-10">
+    <div class="mx-auto max-w-[880px]">
+      <h1 class="font-heading text-[36px] font-black leading-[0.98] text-brand-primary lg:text-[48px]">Politique de confidentialité</h1>
+      
+      <p class="mt-6 text-lg leading-[1.6] text-brand-text-secondary">Dernière mise à jour : <%= Date.current.strftime("%-d %B %Y") %></p>
+      
+      <div class="mt-12 space-y-10 text-base leading-[1.6] text-brand-text-secondary lg:text-lg">
+        
+        <!-- Responsable de traitement -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Responsable de traitement</h2>
+          <p>Le responsable du traitement des données personnelles collectées sur le site lebonmodele.fr est <strong>Le Bon Modèle</strong>.</p>
+          <div class="mt-3 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm">
+            <p class="font-semibold text-amber-900">Informations à compléter :</p>
+            <ul class="mt-2 space-y-1 text-amber-800">
+              <li>• Adresse du siège social : <strong>[À COMPLÉTER]</strong></li>
+              <li>• SIREN : <strong>[À COMPLÉTER]</strong></li>
+            </ul>
+          </div>
+          <p class="mt-3"><strong>Contact :</strong> <a href="mailto:contact@lebonmodele.fr" class="text-brand-primary underline hover:no-underline">contact@lebonmodele.fr</a></p>
+        </article>
+
+        <!-- Données collectées -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Données personnelles collectées</h2>
+          
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">1. Formulaire de contact</h3>
+          <p>Lorsque vous nous contactez via le formulaire de contact, nous collectons :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Votre prénom et nom</li>
+            <li>Votre adresse email</li>
+            <li>Le contenu de votre message</li>
+            <li>Votre société (optionnel)</li>
+          </ul>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">2. Réservation d'une prestation</h3>
+          <p>Lorsque vous réservez un Pack Conseil ou un Pack Achat, nous collectons :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Votre prénom et nom</li>
+            <li>Votre adresse email</li>
+            <li>Votre numéro de téléphone</li>
+            <li>La date et l'heure de rendez-vous choisies</li>
+            <li>Le mode de rendez-vous (visio ou téléphone)</li>
+            <li>Le pack réservé et son montant</li>
+          </ul>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">3. Paiement</h3>
+          <p>Les paiements sont effectués via <strong>Stripe</strong>. Les données bancaires sont collectées et traitées directement par Stripe (nous n'y avons pas accès). Stripe collecte :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Les informations de carte bancaire</li>
+            <li>L'adresse de facturation (si renseignée)</li>
+            <li>Les données de transaction (montant, date, statut)</li>
+          </ul>
+          <p class="mt-2">Nous recevons de Stripe uniquement les informations nécessaires à la confirmation de paiement (identifiant de transaction, montant, date).</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">4. Emails de confirmation</h3>
+          <p>Nous vous envoyons des emails de confirmation de réservation, de rappel de rendez-vous et, le cas échéant, d'annulation. Ces emails contiennent les informations relatives à votre réservation.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">5. Cookies et Google Analytics</h3>
+          <p>Si vous acceptez les cookies, nous utilisons <strong>Google Analytics 4</strong> pour analyser l'audience du site (pages visitées, durée de visite, provenance des visiteurs). Ces données sont anonymisées.</p>
+          <p class="mt-2"><strong>Aucun cookie de tracking n'est déposé sans votre consentement explicite.</strong></p>
+          <p class="mt-2">Vous pouvez à tout moment modifier votre consentement via le lien <%= link_to "« Gérer les cookies »", "#", onclick: "window.cookieConsentController?.show(); return false;", class: "text-brand-primary underline hover:no-underline" %> en bas de page.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">6. Chat en direct (Crisp)</h3>
+          <p>Si vous utilisez le widget de chat Crisp, les données suivantes peuvent être collectées :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Votre adresse email (si vous la fournissez)</li>
+            <li>Le contenu de vos messages</li>
+            <li>Des données de navigation (page visitée, appareil)</li>
+          </ul>
+          <p class="mt-2">Crisp est un service tiers qui peut déposer des cookies. Consultez la politique de confidentialité de Crisp : <a href="https://crisp.chat/fr/privacy/" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">crisp.chat/fr/privacy/</a></p>
+        </article>
+
+        <!-- Finalités et bases légales -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Finalités et bases légales</h2>
+          <p>Nous collectons et traitons vos données personnelles pour les finalités suivantes :</p>
+          
+          <div class="mt-4 space-y-4">
+            <div>
+              <p class="font-semibold text-brand-text">Répondre à vos demandes de contact</p>
+              <p class="mt-1 text-sm">Base légale : votre consentement (envoi volontaire du formulaire)</p>
+            </div>
+            
+            <div>
+              <p class="font-semibold text-brand-text">Gérer vos réservations et vous fournir les prestations commandées</p>
+              <p class="mt-1 text-sm">Base légale : exécution du contrat (prestation de service)</p>
+            </div>
+            
+            <div>
+              <p class="font-semibold text-brand-text">Traiter les paiements</p>
+              <p class="mt-1 text-sm">Base légale : exécution du contrat</p>
+            </div>
+            
+            <div>
+              <p class="font-semibold text-brand-text">Vous envoyer des emails de confirmation, rappel et informations relatives à votre réservation</p>
+              <p class="mt-1 text-sm">Base légale : exécution du contrat et intérêt légitime (bon fonctionnement du service)</p>
+            </div>
+            
+            <div>
+              <p class="font-semibold text-brand-text">Analyser l'audience du site et améliorer nos services</p>
+              <p class="mt-1 text-sm">Base légale : votre consentement (acceptation des cookies)</p>
+            </div>
+            
+            <div>
+              <p class="font-semibold text-brand-text">Vous apporter une assistance via le chat</p>
+              <p class="mt-1 text-sm">Base légale : votre consentement (utilisation volontaire du widget)</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Durées de conservation -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Durées de conservation</h2>
+          <ul class="space-y-2 ml-6 list-disc">
+            <li><strong>Demandes de contact :</strong> 3 ans à compter de la réception du message</li>
+            <li><strong>Réservations et paiements :</strong> 10 ans (obligation légale comptable et fiscale)</li>
+            <li><strong>Données de connexion (logs) :</strong> 12 mois maximum</li>
+            <li><strong>Cookies Google Analytics :</strong> 6 mois maximum, puis consentement redemandé</li>
+            <li><strong>Conversations Crisp :</strong> selon les paramètres de conservation définis dans Crisp (généralement 6 mois)</li>
+          </ul>
+        </article>
+
+        <!-- Destinataires et sous-traitants -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Destinataires et sous-traitants</h2>
+          <p>Vos données personnelles sont destinées uniquement aux personnes habilitées du Bon Modèle (Charles Marcoin et Jules Delmas) ainsi qu'aux sous-traitants suivants :</p>
+          
+          <ul class="mt-4 space-y-3">
+            <li>
+              <strong>Stripe</strong> (paiement en ligne)<br>
+              <span class="text-sm">Site : <a href="https://stripe.com" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">stripe.com</a> | Politique de confidentialité : <a href="https://stripe.com/fr/privacy" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">stripe.com/fr/privacy</a></span>
+            </li>
+            
+            <li>
+              <strong>Scalingo SAS</strong> (hébergement du site et de la base de données)<br>
+              <span class="text-sm">Site : <a href="https://scalingo.com" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">scalingo.com</a> | Siège : Strasbourg, France</span>
+            </li>
+            
+            <li>
+              <strong>Google LLC</strong> (analyse d'audience via Google Analytics, si consentement accordé)<br>
+              <span class="text-sm">Politique de confidentialité : <a href="https://policies.google.com/privacy?hl=fr" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">policies.google.com/privacy</a></span>
+            </li>
+            
+            <li>
+              <strong>Crisp IM SARL</strong> (widget de chat)<br>
+              <span class="text-sm">Site : <a href="https://crisp.chat" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">crisp.chat</a> | Siège : France | Politique de confidentialité : <a href="https://crisp.chat/fr/privacy/" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">crisp.chat/fr/privacy/</a></span>
+            </li>
+            
+            <li>
+              <strong>OVH SAS</strong> (envoi des emails)<br>
+              <span class="text-sm">Serveur SMTP : ssl0.ovh.net | Siège : Roubaix, France | Politique de confidentialité : <a href="https://www.ovhcloud.com/fr/personal-data-protection/" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">ovhcloud.com/fr/personal-data-protection/</a></span>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Transferts hors UE -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Transferts hors Union européenne</h2>
+          <p>Certains de nos sous-traitants peuvent être situés hors de l'Union européenne ou transférer vos données hors UE :</p>
+          
+          <ul class="mt-4 space-y-2 ml-6 list-disc">
+            <li><strong>Stripe :</strong> peut transférer certaines données vers les États-Unis (clauses contractuelles types approuvées par la Commission européenne)</li>
+            <li><strong>Google (Google Analytics) :</strong> peut transférer des données aux États-Unis (mécanisme de transfert : clauses contractuelles types et Google Consent Mode v2)</li>
+          </ul>
+          
+          <p class="mt-3">Ces transferts sont encadrés par les garanties appropriées conformément au RGPD (clauses contractuelles types, Privacy Shield successeur, etc.).</p>
+        </article>
+
+        <!-- Droits des personnes -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Vos droits</h2>
+          <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+          
+          <ul class="mt-4 space-y-2 ml-6 list-disc">
+            <li><strong>Droit d'accès :</strong> obtenir une copie de vos données personnelles</li>
+            <li><strong>Droit de rectification :</strong> corriger vos données inexactes ou incomplètes</li>
+            <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données (sauf obligation légale de conservation)</li>
+            <li><strong>Droit à la limitation du traitement :</strong> demander de geler temporairement l'utilisation de vos données</li>
+            <li><strong>Droit d'opposition :</strong> vous opposer à un traitement fondé sur l'intérêt légitime</li>
+            <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré et couramment utilisé</li>
+            <li><strong>Droit de retirer votre consentement :</strong> à tout moment (cookies, chat)</li>
+            <li><strong>Droit de définir des directives post-mortem :</strong> définir le sort de vos données après votre décès</li>
+          </ul>
+          
+          <p class="mt-6 rounded-lg bg-brand-primary-light px-6 py-4">
+            <strong class="text-brand-text">Pour exercer vos droits :</strong><br>
+            Envoyez-nous un email à <a href="mailto:contact@lebonmodele.fr" class="text-brand-primary underline hover:no-underline font-semibold">contact@lebonmodele.fr</a> en précisant votre demande et en justifiant de votre identité (copie d'une pièce d'identité).<br>
+            <span class="text-sm text-brand-text-secondary">Nous vous répondrons dans un délai d'un mois à compter de la réception de votre demande.</span>
+          </p>
+        </article>
+
+        <!-- Réclamation CNIL -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Droit de réclamation</h2>
+          <p>Si vous estimez que vos droits ne sont pas respectés, vous avez le droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :</p>
+          <p class="mt-3">
+            <strong>CNIL</strong><br>
+            3 Place de Fontenoy<br>
+            TSA 80715<br>
+            75334 Paris Cedex 07<br>
+            France
+          </p>
+          <p class="mt-3">
+            Site web : <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">cnil.fr</a><br>
+            Téléphone : 01 53 73 22 22
+          </p>
+        </article>
+
+        <!-- Cookies -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Cookies</h2>
+          <p>Nous utilisons des cookies uniquement avec votre consentement explicite. Les cookies déposés sont :</p>
+          
+          <ul class="mt-4 space-y-2 ml-6 list-disc">
+            <li><strong>Cookies de consentement :</strong> pour mémoriser votre choix concernant les cookies (stocké dans localStorage, durée 6 mois)</li>
+            <li><strong>Cookies Google Analytics :</strong> pour analyser l'audience du site (uniquement si vous acceptez, durée 6 mois maximum)</li>
+            <li><strong>Cookies Crisp :</strong> pour le fonctionnement du chat en direct (si vous utilisez le widget)</li>
+          </ul>
+          
+          <p class="mt-6 rounded-lg bg-brand-primary-light px-6 py-4">
+            <strong class="text-brand-text">Gérer vos cookies :</strong><br>
+            Vous pouvez à tout moment modifier vos préférences en cliquant sur le lien <%= link_to "« Gérer les cookies »", "#", onclick: "window.cookieConsentController?.show(); return false;", class: "text-brand-primary underline hover:no-underline font-semibold" %> en bas de page.
+          </p>
+        </article>
+
+        <!-- Sécurité -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Sécurité</h2>
+          <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre la destruction, la perte, l'altération, la divulgation non autorisée ou l'accès non autorisé.</p>
+          <p class="mt-3">Les mesures de sécurité incluent notamment :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Chiffrement des communications (HTTPS)</li>
+            <li>Hébergement sécurisé en France (Scalingo)</li>
+            <li>Accès restreint aux données personnelles (authentification, contrôle des accès)</li>
+            <li>Sauvegardes régulières</li>
+            <li>Paiements sécurisés via Stripe (conforme PCI-DSS)</li>
+          </ul>
+        </article>
+
+        <!-- Modification de la politique -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Modification de la politique de confidentialité</h2>
+          <p>Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. La date de dernière mise à jour est indiquée en haut de cette page.</p>
+          <p class="mt-3">En cas de modification substantielle, nous vous en informerons par email (si nous disposons de votre adresse email) ou via un bandeau sur le site.</p>
+        </article>
+
+      </div>
+
+      <div class="mb-12 mt-16 flex flex-col items-start justify-between gap-6 rounded-[24px] bg-brand-primary-light px-8 py-11 md:flex-row md:items-center md:px-12 lg:mb-20">
+        <div>
+          <h2 class="font-heading text-[28px] font-bold text-brand-text">Des questions sur vos données ?</h2>
+          <p class="mt-2.5 text-base text-brand-text">Contactez-nous à <a href="mailto:contact@lebonmodele.fr" class="text-brand-primary underline hover:no-underline font-semibold">contact@lebonmodele.fr</a></p>
+        </div>
+        <%= link_to "Nous contacter", contact_path, class: "inline-flex h-14 w-full items-center justify-center rounded-full bg-brand-primary px-8 text-base font-bold text-white md:w-auto" %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

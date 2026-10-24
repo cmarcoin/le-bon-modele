@@ -10,6 +10,15 @@ class HomeController < ApplicationController
   def faq
   end
 
+  def legal_notices
+  end
+
+  def privacy_policy
+  end
+
+  def terms_of_sale
+  end
+
   def starter_pack
   end
 
