@@ -18,9 +18,8 @@
       <% end %>
     >
       <aside class="self-start rounded-[24px] bg-[#F3F7EF] p-6 sm:p-8">
-        <p class="text-sm font-bold text-brand-text-secondary">Votre réservation</p>
-        <p class="mt-4 font-heading text-[22px] font-bold leading-[1.25] text-brand-primary"><%= @pack.name %></p>
-        <p class="mt-3 text-xs leading-[1.6] text-brand-text-secondary"><%= @pack.description %></p>
+        <p class="font-heading text-[22px] font-bold leading-[1.25] text-brand-primary"><%= @pack.name %></p>
+        <p class="mt-3 text-base leading-[1.6] text-brand-text-secondary"><%= @pack.description %></p>
 
         <% if @pack.includes_items.any? %>
           <p class="mt-6 text-base text-brand-text-secondary">Ce qui est inclus :</p>
