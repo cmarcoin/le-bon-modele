@@ -1,0 +1,241 @@
+<% content_for :title, "Conditions générales de vente | Le Bon Modèle" %>
+
+<%= render "home/header" %>
+
+<main class="relative pt-24">
+  <%= render "home/background_pattern" %>
+
+  <section class="relative px-6 py-8 lg:px-12 lg:py-10">
+    <div class="mx-auto max-w-[880px]">
+      <h1 class="font-heading text-[36px] font-black leading-[0.98] text-brand-primary lg:text-[48px]">Conditions générales de vente</h1>
+
+      <p class="mt-6 text-lg leading-[1.6] text-brand-text-secondary">Dernière mise à jour : <%= Date.current.strftime("%-d %B %Y") %></p>
+
+      <div class="mt-12 space-y-10 text-base leading-[1.6] text-brand-text-secondary lg:text-lg">
+
+        <!-- Préambule -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">Préambule</h2>
+          <p>Les présentes conditions générales de vente (ci-après « CGV ») régissent les relations contractuelles entre <strong>Le Bon Modèle</strong> (ci-après « le Prestataire ») et toute personne physique (ci-après « le Client ») souhaitant bénéficier des prestations de conseil automobile proposées sur le site <strong>lebonmodele.fr</strong>.</p>
+          <div class="mt-3 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm">
+            <p class="font-semibold text-amber-900">Informations légales à compléter :</p>
+            <ul class="mt-2 space-y-1 text-amber-800">
+              <li>• Forme juridique : <strong>[À COMPLÉTER]</strong></li>
+              <li>• SIREN : <strong>[À COMPLÉTER]</strong></li>
+              <li>• Siège social : <strong>[À COMPLÉTER]</strong></li>
+            </ul>
+          </div>
+          <p class="mt-3">Toute commande de prestation implique l'acceptation sans réserve des présentes CGV.</p>
+        </article>
+
+        <!-- Objet -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">1. Objet</h2>
+          <p>Le Bon Modèle propose des prestations de conseil automobile indépendant destinées à accompagner les particuliers dans le choix et la recherche de leur véhicule. Le Prestataire ne vend aucun véhicule, ne perçoit aucune commission sur les ventes et n'agit pas en tant que mandataire, courtier ou concessionnaire automobile.</p>
+        </article>
+
+        <!-- Prestations proposées -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">2. Description des prestations</h2>
+          <p>Le Prestataire propose deux formules d'accompagnement :</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">2.1. Pack Conseil (49 € TTC)</h3>
+          <p>Le Pack Conseil comprend :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Un questionnaire préparatoire détaillé pour analyser vos besoins, usages et contraintes</li>
+            <li>Un premier entretien de 60 minutes (en visioconférence ou par téléphone) avec nos conseillers</li>
+            <li>L'identification du ou des modèles de véhicules les plus adaptés à votre situation</li>
+            <li>Une synthèse écrite récapitulant les préconisations et les critères de choix</li>
+            <li>Des conseils sur les motorisations, finitions, équipements et points de vigilance</li>
+          </ul>
+          <p class="mt-3"><strong>Objectif :</strong> vous permettre de faire un choix éclairé en identifiant la voiture qui correspond réellement à vos besoins et à votre budget.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">2.2. Pack Achat (299 € TTC)</h3>
+          <p>Le Pack Achat comprend l'ensemble des prestations du Pack Conseil, ainsi que :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>La recherche active et la veille d'annonces sur tous les sites de vente (particuliers, concessionnaires, mandataires)</li>
+            <li>L'analyse comparative des offres disponibles (prix, kilométrage, équipements, historique, vendeur)</li>
+            <li>La sélection des meilleures opportunités correspondant à vos critères</li>
+            <li>L'accompagnement dans l'analyse des garanties, contrats d'entretien, assurances et options</li>
+            <li>Des échanges réguliers jusqu'à la concrétisation de votre achat</li>
+          </ul>
+          <p class="mt-3"><strong>Objectif :</strong> vous accompagner pas à pas, de l'identification du bon modèle jusqu'à l'achat du véhicule, en vous présentant les meilleures offres du marché.</p>
+
+          <p class="mt-6 italic text-brand-text">Les prestations sont fournies en neuf comme en occasion, pour tous types de véhicules (citadine, berline, SUV, break, monospace, thermique, hybride, électrique).</p>
+        </article>
+
+        <!-- Prix -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">3. Prix</h2>
+          <p>Les prix des prestations sont indiqués en euros, toutes taxes comprises (TTC) :</p>
+          <ul class="mt-3 ml-6 list-disc">
+            <li><strong>Pack Conseil :</strong> 49 € TTC</li>
+            <li><strong>Pack Achat :</strong> 299 € TTC</li>
+          </ul>
+          <p class="mt-3">Les prix sont fermes et non révisables pendant leur période de validité. Le Prestataire se réserve le droit de modifier ses tarifs à tout moment, mais les prestations seront facturées sur la base des tarifs en vigueur au moment de la validation de la commande.</p>
+          <p class="mt-3">Le paiement s'effectue intégralement en ligne lors de la réservation, avant la réalisation de la prestation.</p>
+        </article>
+
+        <!-- Réservation et paiement -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">4. Réservation et paiement</h2>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">4.1. Processus de réservation</h3>
+          <p>Pour réserver une prestation, le Client doit :</p>
+          <ol class="mt-2 ml-6 list-decimal space-y-1">
+            <li>Sélectionner le pack souhaité (Pack Conseil ou Pack Achat)</li>
+            <li>Choisir un créneau de rendez-vous disponible</li>
+            <li>Remplir le formulaire de réservation (nom, prénom, email, téléphone, mode de rendez-vous)</li>
+            <li>Procéder au paiement en ligne via la plateforme sécurisée Stripe</li>
+          </ol>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">4.2. Paiement sécurisé</h3>
+          <p>Le paiement s'effectue en ligne par carte bancaire via <strong>Stripe</strong>, prestataire de paiement sécurisé certifié PCI-DSS. Le Prestataire ne conserve aucune donnée bancaire.</p>
+          <p class="mt-3">La réservation est confirmée dès réception du paiement. Un email de confirmation est envoyé au Client à l'adresse email renseignée.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">4.3. Blocage temporaire du créneau</h3>
+          <p>Lors de la validation du formulaire de réservation, le créneau horaire choisi est bloqué pendant 30 minutes, le temps pour le Client de finaliser son paiement sur Stripe. Passé ce délai, si le paiement n'est pas effectué, le créneau redevient disponible et la réservation est annulée.</p>
+        </article>
+
+        <!-- Conditions d'annulation -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">5. Conditions d'annulation et de remboursement</h2>
+
+          <div class="rounded-lg bg-brand-primary-light px-6 py-5 my-6">
+            <p class="font-semibold text-brand-text text-lg">Annulation gratuite jusqu'à 48 heures avant le rendez-vous.</p>
+          </div>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">5.1. Annulation par le Client</h3>
+          <p>Le Client peut annuler sa réservation en cliquant sur le lien d'annulation sécurisé présent dans l'email de confirmation. Les conditions de remboursement sont les suivantes :</p>
+
+          <ul class="mt-3 ml-6 list-disc space-y-2">
+            <li>
+              <strong>Annulation plus de 48 heures avant le rendez-vous :</strong> remboursement intégral du montant payé.
+            </li>
+            <li>
+              <strong>Annulation dans les 48 heures précédant le rendez-vous, ou après le créneau :</strong> aucun remboursement.
+            </li>
+          </ul>
+
+          <p class="mt-4">Le remboursement, lorsqu'il est accordé, est effectué dans un délai de 7 jours ouvrés sur le moyen de paiement utilisé lors de la commande.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">5.2. Annulation ou report par le Prestataire</h3>
+          <p>En cas d'empêchement exceptionnel (force majeure, maladie, indisponibilité), le Prestataire se réserve le droit d'annuler ou de reporter le rendez-vous. Le Client en sera informé dans les meilleurs délais et pourra :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Choisir un nouveau créneau horaire, ou</li>
+            <li>Demander le remboursement intégral de sa réservation.</li>
+          </ul>
+        </article>
+
+        <!-- Droit de rétractation -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">6. Droit de rétractation</h2>
+          <p>Conformément à l'article L221-28 du Code de la consommation, le Client dispose d'un délai de 14 jours à compter de la conclusion du contrat pour exercer son droit de rétractation, sans avoir à justifier de motifs ni à payer de pénalités.</p>
+
+          <p class="mt-4 font-semibold text-brand-text">Cependant, en application de l'article L221-28 12° du Code de la consommation, le droit de rétractation ne peut être exercé pour les prestations de services pleinement exécutées avant la fin du délai de rétractation et dont l'exécution a commencé après accord préalable exprès du consommateur et renoncement exprès à son droit de rétractation.</p>
+
+          <div class="mt-4 rounded-lg bg-blue-50 border border-blue-200 px-6 py-4">
+            <p class="font-semibold text-blue-900 mb-2">En pratique :</p>
+            <p class="text-blue-800">Si vous demandez que la prestation soit réalisée avant la fin du délai de 14 jours (ce qui est généralement le cas, le premier rendez-vous ayant lieu sous 10 jours en moyenne), vous renoncez expressément à votre droit de rétractation en réservant et en acceptant les présentes CGV.</p>
+            <p class="mt-2 text-blue-800">Dans ce cas, les conditions d'annulation décrites à l'article 5 s'appliquent (annulation gratuite jusqu'à 48 heures avant le rendez-vous).</p>
+          </div>
+        </article>
+
+        <!-- Déroulement de la prestation -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">7. Déroulement de la prestation</h2>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">7.1. Préparation</h3>
+          <p>Avant le premier rendez-vous, le Client reçoit un questionnaire préparatoire à compléter. Ce questionnaire permet aux conseillers de préparer l'entretien et d'identifier les éléments clés du projet.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">7.2. Premier entretien</h3>
+          <p>Le premier entretien dure 60 minutes et se déroule en visioconférence (lien de connexion envoyé par email) ou par téléphone (appel effectué par le Prestataire au numéro renseigné).</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">7.3. Suivi et livrables</h3>
+          <p>À l'issue du premier entretien (Pack Conseil) ou tout au long de l'accompagnement (Pack Achat), le Client reçoit :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>Des recommandations écrites par email</li>
+            <li>Des analyses d'annonces et comparatifs (Pack Achat uniquement)</li>
+            <li>Un suivi régulier jusqu'à la concrétisation de l'achat (Pack Achat uniquement)</li>
+          </ul>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">7.4. Durée de l'accompagnement</h3>
+          <p>La phase de conseil (Pack Conseil) peut être réalisée rapidement, généralement sous 10 jours une fois le questionnaire complété et le premier échange effectué.</p>
+          <p class="mt-3">Pour le Pack Achat, le délai dépend de la disponibilité de véhicules intéressants sur le marché. Le Prestataire s'adapte au rythme du Client et privilégie la qualité des offres présentées.</p>
+        </article>
+
+        <!-- Responsabilité -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">8. Responsabilité et limites</h2>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">8.1. Nature du conseil</h3>
+          <p>Le Prestataire fournit un service de conseil automobile indépendant. Les recommandations formulées reposent sur l'analyse des besoins du Client, des caractéristiques techniques des véhicules et des offres disponibles sur le marché au moment de la prestation.</p>
+          <p class="mt-3">Le Prestataire s'engage à apporter un conseil objectif, neutre et professionnel, mais ne peut garantir :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>La satisfaction absolue du Client quant au véhicule acheté</li>
+            <li>L'évolution des prix du marché après l'achat</li>
+            <li>L'absence de vice caché ou de défaut mécanique sur un véhicule d'occasion</li>
+            <li>La disponibilité continue d'une annonce (les offres peuvent être retirées à tout moment par le vendeur)</li>
+          </ul>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">8.2. Absence de vente de véhicules</h3>
+          <p>Le Prestataire <strong>ne vend aucun véhicule</strong> et ne perçoit <strong>aucune commission</strong> sur les ventes. Le Prestataire n'agit ni en tant que concessionnaire, ni en tant que mandataire, ni en tant que courtier automobile.</p>
+          <p class="mt-3">Le Prestataire ne peut être tenu responsable :</p>
+          <ul class="mt-2 ml-6 list-disc space-y-1">
+            <li>De la qualité du véhicule acheté</li>
+            <li>Du comportement ou des pratiques commerciales des vendeurs (particuliers, concessionnaires, mandataires)</li>
+            <li>Des litiges entre le Client et le vendeur</li>
+            <li>Des vices cachés ou des pannes survenant après l'achat</li>
+          </ul>
+          <p class="mt-3">La responsabilité de l'achat incombe au Client, qui reste libre de suivre ou non les recommandations formulées.</p>
+
+          <h3 class="mb-3 mt-6 font-heading text-xl font-semibold text-brand-text">8.3. Limitation de responsabilité</h3>
+          <p>La responsabilité du Prestataire est limitée au montant de la prestation payée par le Client (49 € TTC pour le Pack Conseil, 299 € TTC pour le Pack Achat).</p>
+          <p class="mt-3">Le Prestataire ne pourra être tenu responsable des dommages indirects (perte de temps, perte d'opportunité, préjudice commercial, etc.) résultant de l'utilisation ou de l'impossibilité d'utiliser la prestation.</p>
+        </article>
+
+        <!-- Données personnelles -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">9. Données personnelles</h2>
+          <p>Les données personnelles collectées lors de la réservation sont traitées conformément à la réglementation en vigueur (RGPD). Pour plus d'informations, consultez notre <%= link_to "Politique de confidentialité", privacy_policy_path, class: "text-brand-primary underline hover:no-underline font-semibold" %>.</p>
+        </article>
+
+        <!-- Médiation de la consommation -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">10. Médiation de la consommation</h2>
+          <p>Conformément à l'article L.612-1 du Code de la consommation, le Client a le droit de recourir gratuitement à un médiateur de la consommation en vue de la résolution amiable d'un litige l'opposant au Prestataire.</p>
+          <div class="mt-4 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3">
+            <p class="font-semibold text-amber-900">Médiateur à désigner :</p>
+            <p class="mt-2 text-sm text-amber-800"><strong>[À COMPLÉTER : nom du médiateur choisi, coordonnées et site web]</strong></p>
+            <p class="mt-2 text-sm text-amber-800">Liste des médiateurs agréés : <a href="https://www.economie.gouv.fr/mediation-conso/mediateurs-references" target="_blank" rel="noopener noreferrer" class="underline">economie.gouv.fr/mediation-conso</a></p>
+          </div>
+          <p class="mt-4">Le Client peut également recourir à la plateforme de règlement en ligne des litiges mise en place par la Commission européenne : <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" class="text-brand-primary underline hover:no-underline">ec.europa.eu/consumers/odr/</a></p>
+        </article>
+
+        <!-- Droit applicable -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">11. Droit applicable et juridiction compétente</h2>
+          <p>Les présentes CGV sont soumises au droit français.</p>
+          <p class="mt-3">En cas de litige, les parties s'efforceront de trouver une solution amiable. À défaut, les tribunaux français seront seuls compétents.</p>
+        </article>
+
+        <!-- Acceptation des CGV -->
+        <article>
+          <h2 class="mb-4 font-heading text-2xl font-bold text-brand-text">12. Acceptation des CGV</h2>
+          <p>En réservant une prestation sur le site lebonmodele.fr et en procédant au paiement, le Client reconnaît avoir pris connaissance des présentes conditions générales de vente et les accepter sans réserve.</p>
+        </article>
+
+      </div>
+
+      <div class="mb-12 mt-16 flex flex-col items-start justify-between gap-6 rounded-[24px] bg-brand-primary-light px-8 py-11 md:flex-row md:items-center md:px-12 lg:mb-20">
+        <div>
+          <h2 class="font-heading text-[28px] font-bold text-brand-text">Des questions sur les CGV ?</h2>
+          <p class="mt-2.5 text-base text-brand-text">Contactez-nous à <a href="mailto:contact@lebonmodele.fr" class="text-brand-primary underline hover:no-underline font-semibold">contact@lebonmodele.fr</a></p>
+        </div>
+        <%= link_to "Nous contacter", contact_path, class: "inline-flex h-14 w-full items-center justify-center rounded-full bg-brand-primary px-8 text-base font-bold text-white md:w-auto" %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= render "home/footer" %>

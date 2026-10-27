@@ -23,9 +23,47 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%# Google Analytics 4 avec Consent Mode v2 - activé seulement si GA_MEASUREMENT_ID est renseigné %>
+    <% if ENV["GA_MEASUREMENT_ID"].present? %>
+      <script>
+        // Google Consent Mode v2 - Configuration par défaut (tout refusé)
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'wait_for_update': 500
+        });
+
+        gtag('js', new Date());
+        gtag('config', '<%= ENV["GA_MEASUREMENT_ID"] %>', {
+          'anonymize_ip': true
+        });
+      </script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV["GA_MEASUREMENT_ID"] %>"></script>
+    <% end %>
   </head>
 
   <body class="flex min-h-screen flex-col bg-brand-background font-body text-brand-text antialiased">
     <%= yield %>
+
+    <%# Bandeau de consentement aux cookies (RGPD) %>
+    <%= render "shared/cookie_consent_banner" %>
+
+    <%# Crisp Chat - activé seulement si CRISP_WEBSITE_ID est renseigné %>
+    <% if ENV["CRISP_WEBSITE_ID"].present? %>
+      <script type="text/javascript">
+        window.$crisp=[];window.CRISP_WEBSITE_ID="<%= ENV["CRISP_WEBSITE_ID"] %>";
+        (function(){
+          d=document;s=d.createElement("script");
+          s.src="https://client.crisp.chat/l.js";
+          s.async=1;d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+      </script>
+    <% end %>
   </body>
 </html>
