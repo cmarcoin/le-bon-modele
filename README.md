@@ -77,7 +77,7 @@ Rappels de rendez-vous : 1
 
 The project has been dockerized. This means you need to have Docker up and running on your machine to start the project.
 
-> [!NOTE]  
+> [!NOTE]
 > Please note that the dockerfile used by docker compose is `Dockerfile.dev`
 > `Dockerfile` should be used for production
 
@@ -213,7 +213,7 @@ STRIPE_PUBLISHABLE_KEY=pk_live_...      # Clé publique Stripe (affichée côté
 STRIPE_WEBHOOK_SECRET=whsec_...         # Secret de signature des webhooks Stripe
 ```
 
-**Important** : 
+**Important** :
 - Utiliser les clés du compte Stripe de **production** (préfixées `sk_live_`, `pk_live_`)
 - Configurer le webhook Stripe pour envoyer les événements vers `https://www.lebonmodele.fr/stripe/webhooks`
 - Types d'événements requis : `checkout.session.completed`, `checkout.session.expired`
@@ -246,7 +246,7 @@ ADMIN_INITIAL_PASSWORD=...               # Mot de passe admin initial (changé a
 GA_MEASUREMENT_ID=G-XXXXXXXXXX           # ID de mesure GA4 (commençant par G-)
 ```
 
-Si cette variable est renseignée, le script Google Analytics (`gtag.js`) est injecté sur toutes les pages avec **Google Consent Mode v2**.  
+Si cette variable est renseignée, le script Google Analytics (`gtag.js`) est injecté sur toutes les pages avec **Google Consent Mode v2**.
 Si elle est absente, aucun tracking n'est actif.
 
 **Configuration dans Google Analytics :**
@@ -282,7 +282,7 @@ Le site intègre un bandeau de consentement conforme RGPD et aux recommandations
 CRISP_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Website ID Crisp (UUID)
 ```
 
-Si cette variable est renseignée, le widget de chat Crisp est affiché en bas à droite sur toutes les pages.  
+Si cette variable est renseignée, le widget de chat Crisp est affiché en bas à droite sur toutes les pages.
 Si elle est absente, aucun chatbot n'est chargé.
 
 **Configuration dans Crisp :**

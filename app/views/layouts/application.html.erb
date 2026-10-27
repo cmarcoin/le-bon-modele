@@ -30,7 +30,7 @@
         // Google Consent Mode v2 - Configuration par défaut (tout refusé)
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        
+
         gtag('consent', 'default', {
           'analytics_storage': 'denied',
           'ad_storage': 'denied',
@@ -38,7 +38,7 @@
           'ad_personalization': 'denied',
           'wait_for_update': 500
         });
-        
+
         gtag('js', new Date());
         gtag('config', '<%= ENV["GA_MEASUREMENT_ID"] %>', {
           'anonymize_ip': true

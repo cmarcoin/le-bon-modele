@@ -4,10 +4,10 @@ export default class extends Controller {
   connect() {
     // Enregistrer l'instance globalement pour le bouton du footer
     window.cookieConsentController = this
-    
+
     // Vérifier si un choix a déjà été fait
     const consent = this.getConsent()
-    
+
     if (consent === null) {
       // Pas de choix enregistré, afficher le bandeau
       this.element.classList.remove("hidden")
@@ -48,7 +48,7 @@ export default class extends Controller {
 
     const consent = JSON.parse(stored)
     const sixMonthsMs = 6 * 30 * 24 * 60 * 60 * 1000
-    
+
     // Vérifier si le consentement a expiré (6 mois)
     if (Date.now() - consent.timestamp > sixMonthsMs) {
       localStorage.removeItem("cookie_consent")

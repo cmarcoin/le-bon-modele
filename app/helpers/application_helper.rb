@@ -81,14 +81,14 @@ module ApplicationHelper
     paris_time = time.in_time_zone("Europe/Paris")
     day_names = %w[Dimanche Lundi Mardi Mercredi Jeudi Vendredi Samedi]
     month_names = %w[janvier février mars avril mai juin juillet août septembre octobre novembre décembre]
-    
+
     day = day_names[paris_time.wday]
     date = paris_time.day
     month = month_names[paris_time.month - 1]
     year = paris_time.year
     hour = paris_time.hour
     minute = paris_time.min
-    
+
     time_str = minute.zero? ? "#{hour} h" : "#{hour} h #{minute.to_s.rjust(2, '0')}"
     "#{day} #{date} #{month} #{year} à #{time_str}".gsub(" h", "\u00A0h")
   end
@@ -96,7 +96,7 @@ module ApplicationHelper
   def paris_date_short(date)
     day_names = %w[dimanche lundi mardi mercredi jeudi vendredi samedi]
     month_names = %w[janvier février mars avril mai juin juillet août septembre octobre novembre décembre]
-    
+
     "#{day_names[date.wday]} #{date.day} #{month_names[date.month - 1]} #{date.year}"
   end
 
