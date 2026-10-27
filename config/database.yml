@@ -5,19 +5,19 @@ default: &default
 
 development:
   <<: *default
-  host: <%= ENV["DATABASE_HOST"] %>
-  port: <%= ENV["DATABASE_PORT"] %>
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
-  database: <%= ENV["DATABASE_NAME"] %>_development
+  host: <%= ENV["DATABASE_HOST"].presence || "localhost" %>
+  port: <%= ENV["DATABASE_PORT"].presence || 5432 %>
+  username: <%= ENV["DATABASE_USERNAME"].presence || "postgres" %>
+  password: <%= ENV["DATABASE_PASSWORD"].presence || "password" %>
+  database: <%= (ENV["DATABASE_NAME"].presence || "herve_2") %>_development
 
 test:
   <<: *default
-  host: <%= ENV["DATABASE_HOST"] %>
-  port: <%= ENV["DATABASE_PORT"] %>
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
-  database: <%= ENV["DATABASE_NAME"] %>_test
+  host: <%= ENV["DATABASE_HOST"].presence || "localhost" %>
+  port: <%= ENV["DATABASE_PORT"].presence || 5432 %>
+  username: <%= ENV["DATABASE_USERNAME"].presence || "postgres" %>
+  password: <%= ENV["DATABASE_PASSWORD"].presence || "password" %>
+  database: <%= (ENV["DATABASE_NAME"].presence || "herve_2") %>_test
 
 # Scalingo: use DATABASE_URL for production DBs (primary + queue).
 # https://doc.scalingo.com/languages/ruby/rails/solid-queue
