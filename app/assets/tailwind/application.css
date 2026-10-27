@@ -24,9 +24,11 @@ html {
   scroll-behavior: smooth;
 }
 
-body,
 html {
   overflow-x: hidden;
+}
+
+body {
   position: relative;
   width: 100%;
 }
@@ -143,12 +145,12 @@ main {
   }
 }
 
-body:has(.page-background-bands) > :not(.site-header) {
+body:has(.page-background-bands) > :not(.site-header):not(#cookie-consent-banner) {
   position: relative;
   z-index: 1;
 }
 
-main:has(.page-background-bands) > :not(.page-background-bands) {
+main:has(.page-background-bands) > :not(.page-background-bands):not(#cookie-consent-banner) {
   position: relative;
   z-index: 1;
 }
