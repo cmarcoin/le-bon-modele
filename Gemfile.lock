@@ -398,6 +398,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  addressable (>= 2.9.1)
   bootsnap
   brakeman (= 8.0.6)
   bundler-audit
@@ -409,6 +410,8 @@ DEPENDENCIES
   jbuilder
   json (~> 2.21, >= 2.21.2)
   kamal
+  loofah (>= 2.25.3)
+  nokogiri (>= 1.19.5)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
