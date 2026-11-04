@@ -304,3 +304,4 @@ https://www.lebonmodele.fr/admin/packs
 Cliquer sur « Synchroniser tous les packs avec Stripe » pour créer les produits et prix correspondants dans Stripe.
 
 Les IDs de produit (`prod_xxx`) et de prix (`price_xxx`) sont ensuite stockés en base de données et utilisés lors des paiements.
+# Force sync
