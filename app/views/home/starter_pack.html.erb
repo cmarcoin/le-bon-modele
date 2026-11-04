@@ -9,7 +9,7 @@
 
 <%= render "home/header" %>
 
-<main class="relative pt-24">
+<main class="relative pt-24" data-controller="ga4-tracking" data-action="turbo:load->ga4-tracking#trackViewItem" data-ga4-tracking-pack-name-param="<%= @starter_pack.name %>" data-ga4-tracking-pack-id-param="pack-conseil" data-ga4-tracking-price-param="<%= @starter_pack.price_cents / 100.0 %>">
   <%= render "home/background_pattern" %>
   <section class="relative px-6 py-8 lg:px-12 lg:py-10">
     <div class="mx-auto max-w-[1280px]">
@@ -33,7 +33,7 @@
                 <span class="text-[48px] font-black tracking-[-0.04em]"><%= euro_price(@starter_pack.price_cents) %></span>
                 <span class="ml-1.5 text-[19.5px] font-medium">TTC</span>
               </div>
-              <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: offer_button %>
+              <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: offer_button, data: { action: "ga4-tracking#trackSelectItem", ga4_tracking_pack_name_param: @starter_pack.name, ga4_tracking_pack_id_param: "pack-conseil", ga4_tracking_location_param: "pack-conseil-haut" } %>
             </div>
           </div>
         </article>
@@ -82,7 +82,7 @@
           une idée floue<br>
           en <span class="text-brand-primary">un choix clair</span>
         </h2>
-        <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: "#{offer_button} order-3 max-lg:mt-0 lg:mt-10" %>
+        <%= link_to "Je choisis cette offre", new_pack_booking_path(@starter_pack), class: "#{offer_button} order-3 max-lg:mt-0 lg:mt-10", data: { action: "ga4-tracking#trackSelectItem", ga4_tracking_pack_name_param: @starter_pack.name, ga4_tracking_pack_id_param: "pack-conseil", ga4_tracking_location_param: "pack-conseil-bas" } %>
       </div>
     </div>
   </section>

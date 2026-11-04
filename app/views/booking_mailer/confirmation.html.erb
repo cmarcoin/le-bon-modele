@@ -36,7 +36,7 @@
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 
         <tr><td class="px" style="padding:44px 40px 0;font-family:'Outfit',Arial,Helvetica,sans-serif;">
-          <h1 class="h1" style="margin:0;font-size:36px;line-height:1.08;font-weight:900;color:#1F5E3B;">C'est réservé&nbsp;!<br><span style="color:#1A1A1A;">À très vite, <%= @booking.customer_name.split.first %>.</span></h1>
+          <h1 class="h1" style="margin:0;font-size:36px;line-height:1.08;font-weight:900;color:#1F5E3B;">C'est réservé&nbsp;!</h1>
         </td></tr>
 
         <tr><td class="px" style="padding:20px 40px 0;font-family:'DM Sans',Arial,Helvetica,sans-serif;font-size:17px;line-height:1.6;color:#4F4F4F;">
@@ -66,7 +66,7 @@
               <div style="height:1px;background:#DDE8D5;margin:18px 0;line-height:1px;font-size:1px;">&nbsp;</div>
 
               <p style="margin:0 0 4px;font-size:13px;line-height:1.4;color:#4F4F4F;">Votre accompagnement</p>
-              <p style="margin:0;font-size:17px;line-height:1.4;font-weight:700;color:#1A1A1A;"><%= @booking.pack.name %> · <%= euro_price(@booking.amount_cents).gsub(" €", "&nbsp;€").html_safe %> TTC</p>
+              <p style="margin:0;font-size:17px;line-height:1.4;font-weight:700;color:#1A1A1A;"><%= @booking.pack.name %> · <%= euro_price(@booking.amount_cents).gsub(" €", "&nbsp;€").html_safe %>&nbsp;TTC</p>
               <p style="margin:2px 0 0;font-size:14px;line-height:1.5;color:#4F4F4F;">Paiement reçu le <%= paris_date_full_no_day(@booking.paid_at&.to_date || Date.current) %></p>
 
             </td></tr>

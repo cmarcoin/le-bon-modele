@@ -145,7 +145,7 @@ main {
   }
 }
 
-body:has(.page-background-bands) > :not(.site-header):not(#cookie-consent-banner) {
+body:has(.page-background-bands) > :not(.site-header):not(#cookie-consent-banner):not(.crisp-client) {
   position: relative;
   z-index: 1;
 }

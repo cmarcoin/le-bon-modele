@@ -26,7 +26,42 @@
 
     <%# Google Analytics 4 avec Consent Mode v2 - activé seulement si GA_MEASUREMENT_ID est renseigné %>
     <% if ENV["GA_MEASUREMENT_ID"].present? %>
+      <% 
+        # Désactiver GA4 pour : pages admin, utilisateurs admin connectés, ou appareil marqué
+        is_admin_page = request.path.start_with?('/admin')
+        is_admin_user = current_user&.admin?
+        disable_ga4 = is_admin_page || is_admin_user
+      %>
       <script>
+        // Vérifier le marquage localStorage et gérer ?ne-pas-suivre
+        (function() {
+          const params = new URLSearchParams(window.location.search);
+          const nepasSuivre = params.get('ne-pas-suivre');
+          
+          if (nepasSuivre === '1') {
+            localStorage.setItem('lbm_ne_pas_suivre', '1');
+            // Retirer le paramètre de l'URL
+            params.delete('ne-pas-suivre');
+            const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+            window.history.replaceState({}, '', newUrl);
+          } else if (nepasSuivre === '0') {
+            localStorage.removeItem('lbm_ne_pas_suivre');
+            params.delete('ne-pas-suivre');
+            const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+            window.history.replaceState({}, '', newUrl);
+          }
+        })();
+
+        <% if disable_ga4 %>
+          // GA4 désactivé (page admin ou admin connecté)
+          window['ga-disable-<%= ENV["GA_MEASUREMENT_ID"] %>'] = true;
+        <% else %>
+          // Vérifier si l'appareil est marqué
+          if (localStorage.getItem('lbm_ne_pas_suivre') === '1') {
+            window['ga-disable-<%= ENV["GA_MEASUREMENT_ID"] %>'] = true;
+          }
+        <% end %>
+
         // Google Consent Mode v2 - Configuration par défaut (tout refusé)
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -57,7 +92,9 @@
     <%# Crisp Chat - activé seulement si CRISP_WEBSITE_ID est renseigné %>
     <% if ENV["CRISP_WEBSITE_ID"].present? %>
       <script type="text/javascript">
-        window.$crisp=[];window.CRISP_WEBSITE_ID="<%= ENV["CRISP_WEBSITE_ID"] %>";
+        window.$crisp=[];
+        $crisp.push(["config", "container:index", [5500]]);
+        window.CRISP_WEBSITE_ID="<%= ENV["CRISP_WEBSITE_ID"] %>";
         (function(){
           d=document;s=d.createElement("script");
           s.src="https://client.crisp.chat/l.js";
