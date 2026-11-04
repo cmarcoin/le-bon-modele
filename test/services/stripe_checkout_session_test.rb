@@ -61,12 +61,16 @@ class StripeCheckoutSessionTest < ActiveSupport::TestCase
     assert_equal "buyer@example.com", captured_params[:customer_email]
     assert_equal "always", captured_params[:customer_creation]
     assert_equal [ "card" ], captured_params[:payment_method_types]
-    assert_equal "required", captured_params[:billing_address_collection]
+    assert_equal "auto", captured_params[:billing_address_collection]
     assert_nil captured_params[:shipping_address_collection]
     assert_equal({ enabled: true }, captured_params[:automatic_tax])
     assert_nil captured_params[:customer_update]
     assert_equal "LE BON MODELE", captured_params.dig(:payment_intent_data, :statement_descriptor)
     assert_in_delta 31.minutes.from_now.to_i, captured_params[:expires_at], 5
+
+    # Check custom_text includes the CGV mention
+    assert_equal "Paiement sécurisé — Le Bon Modèle", captured_params.dig(:custom_text, :submit, :message)
+    assert_equal "En payant, vous acceptez nos [CGV](https://www.lebonmodele.fr/cgv).", captured_params.dig(:custom_text, :after_submit, :message)
 
     line_item = captured_params[:line_items].first
     assert_equal 1, line_item[:quantity]
