@@ -70,14 +70,15 @@ class StripeCheckoutSession
       customer_email: booking.customer_email,
       customer_creation: "always",
       payment_method_types: [ "card" ],
-      billing_address_collection: "required",
+      billing_address_collection: "auto",
       automatic_tax: { enabled: true },
       payment_intent_data: {
         statement_descriptor: "LE BON MODELE",
         description: "Le Bon Modèle — #{booking.pack.name}"
       },
       custom_text: {
-        submit: { message: "Paiement sécurisé — Le Bon Modèle" }
+        submit: { message: "Paiement sécurisé — Le Bon Modèle" },
+        after_submit: { message: "En payant, vous acceptez nos [CGV](https://www.lebonmodele.fr/cgv)." }
       },
       line_items: [ line_item ],
       client_reference_id: booking.id,

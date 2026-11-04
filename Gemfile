@@ -78,3 +78,10 @@ end
 
 gem "devise", "~> 5.0"
 gem "stripe", "~> 19.1"
+
+# Security updates to address vulnerabilities
+gem "addressable", ">= 2.9.1"
+gem "loofah", ">= 2.25.3"
+gem "nokogiri", ">= 1.19.5"
+gem "rack", ">= 3.2.8"
+gem "rails-html-sanitizer", ">= 1.7.2"

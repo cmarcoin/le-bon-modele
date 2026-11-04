@@ -116,4 +116,17 @@
   </section>
 </main>
 
+<% if flash[:notice]&.include?("message a bien été envoyé") %>
+  <script>
+    // Événement GA4 generate_lead pour l'envoi réussi du formulaire de contact
+    document.addEventListener('turbo:load', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          formulaire: 'contact'
+        });
+      }
+    }, { once: true });
+  </script>
+<% end %>
+
 <%= render "home/footer" %>
