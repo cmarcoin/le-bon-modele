@@ -2,34 +2,25 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    // Ce contrôleur est utilisé pour suivre les événements GA4
-    // Exposer les méthodes statiques globalement
-    window.Ga4TrackingController = this.constructor
-    
-    // Configurer les écouteurs globaux si on est sur turbo:load
-    document.addEventListener('turbo:load', () => {
-      this.setupGlobalTracking()
-    }, { once: false })
-    
+    // Ce contrôleur est placé sur <body> et installé une seule fois
+    // Les écouteurs globaux sont configurés sans utiliser turbo:load
     this.setupGlobalTracking()
   }
 
   setupGlobalTracking() {
-    // Tracking des liens mailto et tel
-    document.querySelectorAll('a[href^="mailto:"], a[href^="tel:"]').forEach(link => {
-      if (!link.dataset.ga4TrackedLink) {
-        link.dataset.ga4TrackedLink = 'true'
-        link.addEventListener('click', (e) => {
-          const href = e.currentTarget.getAttribute('href')
-          const type = href.startsWith('mailto:') ? 'email' : 'telephone'
-          if (typeof gtag === 'function') {
-            gtag('event', 'clic_contact', { type: type })
-          }
-        })
-      }
-    })
+    // Tracking des liens mailto et tel par délégation sur document
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="mailto:"], a[href^="tel:"]')
+      if (!link) return
 
-    // Tracking de l'ouverture du chat Crisp
+      const href = link.getAttribute('href')
+      const type = href.startsWith('mailto:') ? 'email' : 'telephone'
+      if (typeof gtag === 'function') {
+        gtag('event', 'clic_contact', { type: type })
+      }
+    }, { capture: true, once: false })
+
+    // Tracking de l'ouverture du chat Crisp (une seule fois)
     if (typeof window.$crisp !== 'undefined' && !window.crispChatTracked) {
       window.crispChatTracked = true
       window.$crisp.push(['on', 'chat:opened', () => {
@@ -39,25 +30,6 @@ export default class extends Controller {
           })
         }
       }])
-    }
-  }
-
-  // Événement view_item : consultation d'une offre
-  trackViewItem(event) {
-    const packName = event.params.packName
-    const packId = event.params.packId
-    const price = parseFloat(event.params.price)
-
-    if (typeof gtag === 'function') {
-      gtag('event', 'view_item', {
-        currency: 'EUR',
-        value: price,
-        items: [{
-          item_id: packId,
-          item_name: packName,
-          price: price
-        }]
-      })
     }
   }
 
@@ -78,7 +50,7 @@ export default class extends Controller {
     }
   }
 
-  // Événement purchase : paiement confirmé (appelé directement depuis la page)
+  // Méthode statique pour purchase : appelable depuis n'importe où
   static trackPurchase(transactionId, packName, packId, price, format) {
     // Vérifier si déjà envoyé dans cette session
     const storageKey = `ga4_purchase_${transactionId}`
@@ -86,12 +58,15 @@ export default class extends Controller {
       return
     }
 
+    // Convertir phone en telephone
+    const normalizedFormat = format === 'phone' ? 'telephone' : format
+
     if (typeof gtag === 'function') {
       gtag('event', 'purchase', {
         transaction_id: transactionId,
         currency: 'EUR',
         value: parseFloat(price),
-        format: format,
+        format: normalizedFormat,
         items: [{
           item_id: packId,
           item_name: packName,
@@ -104,7 +79,7 @@ export default class extends Controller {
     }
   }
 
-  // Événement generate_lead : formulaire de contact envoyé
+  // Méthode statique pour generate_lead : appelable depuis n'importe où
   static trackGenerateLead() {
     if (typeof gtag === 'function') {
       gtag('event', 'generate_lead', {

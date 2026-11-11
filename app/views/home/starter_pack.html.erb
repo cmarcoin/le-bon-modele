@@ -9,8 +9,9 @@
 
 <%= render "home/header" %>
 
-<main class="relative pt-24" data-controller="ga4-tracking" data-action="turbo:load->ga4-tracking#trackViewItem" data-ga4-tracking-pack-name-param="<%= @starter_pack.name %>" data-ga4-tracking-pack-id-param="pack-conseil" data-ga4-tracking-price-param="<%= @starter_pack.price_cents / 100.0 %>">
+<main class="relative pt-24">
   <%= render "home/background_pattern" %>
+  <div data-controller="ga4-view-item" data-ga4-view-item-pack-name-value="<%= @starter_pack.name %>" data-ga4-view-item-pack-id-value="pack-conseil" data-ga4-view-item-price-value="<%= @starter_pack.price_cents / 100.0 %>" hidden></div>
   <section class="relative px-6 py-8 lg:px-12 lg:py-10">
     <div class="mx-auto max-w-[1280px]">
       <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">

@@ -13,8 +13,9 @@
 
 <%= render "home/header" %>
 
-<main class="relative pt-24" data-controller="ga4-tracking" data-action="turbo:load->ga4-tracking#trackViewItem" data-ga4-tracking-pack-name-param="Pack Achat" data-ga4-tracking-pack-id-param="pack-achat" data-ga4-tracking-price-param="299">
+<main class="relative pt-24">
   <%= render "home/background_pattern" %>
+  <div data-controller="ga4-view-item" data-ga4-view-item-pack-name-value="Pack Achat" data-ga4-view-item-pack-id-value="pack-achat" data-ga4-view-item-price-value="299" hidden></div>
   <section class="relative px-6 py-8 lg:px-12 lg:py-10">
     <div class="mx-auto max-w-[1280px]">
       <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-14">
@@ -99,7 +100,7 @@
           c’est notre problème,<br>
           <span class="text-brand-primary">plus le vôtre.</span>
         </h2>
-        <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "#{offer_button} order-3 max-lg:mt-0 lg:mt-10" %>
+        <%= link_to "Je choisis cette offre", new_pack_booking_path(@premium_pack), class: "#{offer_button} order-3 max-lg:mt-0 lg:mt-10", data: { action: "ga4-tracking#trackSelectItem", ga4_tracking_pack_name_param: "Pack Achat", ga4_tracking_pack_id_param: "pack-achat", ga4_tracking_location_param: "pack-achat-bas" } %>
       </div>
     </div>
   </section>

@@ -119,6 +119,7 @@
 <% if flash[:notice]&.include?("message a bien été envoyé") %>
   <script>
     // Événement GA4 generate_lead pour l'envoi réussi du formulaire de contact
+    // Appel direct sans dépendance à window.Ga4TrackingController
     document.addEventListener('turbo:load', function() {
       if (typeof gtag === 'function') {
         gtag('event', 'generate_lead', {

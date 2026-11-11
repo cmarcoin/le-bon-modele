@@ -8,7 +8,7 @@
     <div class="mx-auto max-w-[1280px]">
       <% if @booking&.paid? %>
         <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-14">
-          <div class="lg:pt-[164px]">
+          <div class="lg:pt-[108px]">
             <h1 class="font-heading text-[32px] font-black leading-[0.98] lg:text-[48px]">
               <span class="block text-brand-primary">C'est réservé !</span>
             </h1>
@@ -28,7 +28,7 @@
                   </div>
                   <div>
                     <p class="text-base font-bold text-brand-text"><%= paris_datetime_full(@booking.availability_slot.starts_at) %></p>
-                    <p class="mt-0.5 text-sm text-brand-text-secondary">Premier entretien · 60 minutes</p>
+                    <p class="mt-0.5 text-sm text-brand-text-secondary">Premier entretien · 60 minutes
                   </div>
                 </div>
 
@@ -91,7 +91,7 @@
         </div>
       <% else %>
         <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-14">
-          <div class="lg:pt-[164px]">
+          <div class="lg:pt-[108px]">
             <h1 class="font-heading text-[32px] font-black leading-[0.98] lg:text-[48px]">
               <span class="block text-brand-primary">Paiement reçu !</span>
             </h1>
@@ -121,14 +121,39 @@
   <script>
     // Événement GA4 purchase pour la confirmation de paiement
     document.addEventListener('turbo:load', function() {
-      if (typeof window.Ga4TrackingController !== 'undefined') {
-        window.Ga4TrackingController.trackPurchase(
-          '<%= params[:session_id] %>',
-          '<%= @booking.pack.name %>',
-          '<%= @booking.pack.name == "Pack Conseil" ? "pack-conseil" : "pack-achat" %>',
-          <%= @booking.amount_cents / 100.0 %>,
-          '<%= @booking.meeting_mode %>'
-        );
+      // Appel direct sans dépendance à window.Ga4TrackingController
+      const transactionId = '<%= params[:session_id] %>';
+      const packName = '<%= @booking.pack.name %>';
+      const packId = '<%= @booking.pack.name == "Pack Conseil" ? "pack-conseil" : "pack-achat" %>';
+      const price = <%= @booking.amount_cents / 100.0 %>;
+      let format = '<%= @booking.meeting_mode %>';
+      
+      // Convertir phone en telephone
+      if (format === 'phone') {
+        format = 'telephone';
+      }
+      
+      // Vérifier si déjà envoyé dans cette session
+      const storageKey = `ga4_purchase_${transactionId}`;
+      if (sessionStorage.getItem(storageKey)) {
+        return;
+      }
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'purchase', {
+          transaction_id: transactionId,
+          currency: 'EUR',
+          value: price,
+          format: format,
+          items: [{
+            item_id: packId,
+            item_name: packName,
+            price: price
+          }]
+        });
+        
+        // Marquer comme envoyé
+        sessionStorage.setItem(storageKey, 'true');
       }
     }, { once: true });
   </script>
