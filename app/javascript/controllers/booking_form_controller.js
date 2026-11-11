@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import Ga4TrackingController from "./ga4_tracking_controller"
 
 export default class extends Controller {
   static targets = ["submit"]
@@ -23,16 +24,34 @@ export default class extends Controller {
   }
 
   trackBeginCheckout(event) {
-    if (typeof gtag !== 'function') return
+    if (typeof gtag !== 'function') {
+      // Pas de GA4, laisser le formulaire se soumettre normalement
+      return
+    }
+
+    // Bloquer la soumission du formulaire
+    event.preventDefault()
 
     // Récupérer les informations du pack et du format
     const packName = this.element.dataset.packName
     const packId = this.element.dataset.packId
     const price = parseFloat(this.element.dataset.packPrice)
     const meetingModeInput = this.element.querySelector("input[name='booking[meeting_mode]']:checked")
-    const format = meetingModeInput ? meetingModeInput.value : ''
+    let format = meetingModeInput ? meetingModeInput.value : ''
+    
+    // Convertir phone en telephone
+    if (format === 'phone') {
+      format = 'telephone'
+    }
 
     let eventSent = false
+    let submitted = false
+
+    const submitForm = () => {
+      if (submitted) return
+      submitted = true
+      this.element.submit()
+    }
 
     // Envoyer l'événement avec callback
     gtag('event', 'begin_checkout', {
@@ -46,6 +65,7 @@ export default class extends Controller {
       }],
       event_callback: function() {
         eventSent = true
+        submitForm()
       }
     })
 
@@ -54,6 +74,7 @@ export default class extends Controller {
       if (!eventSent) {
         console.log('GA4 begin_checkout event timeout, continuing submission')
       }
+      submitForm()
     }, 1000)
   }
 }
