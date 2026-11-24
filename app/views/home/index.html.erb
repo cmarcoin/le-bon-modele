@@ -35,8 +35,11 @@
         </div>
       </div>
 
-      <div class="flex items-center justify-center lg:justify-end">
-        <%= image_tag "/reference-assets/famille-voitures-v3.svg", width: 1163, height: 509, alt: "Illustration de voitures pour toute la famille", class: "h-auto w-full", loading: "lazy" %>
+      <div class="flex items-center justify-center lg:justify-end lg:self-center">
+        <picture>
+          <source srcset="/reference-assets/accueil-annonces-leasing-statique.svg" media="(prefers-reduced-motion: reduce)">
+          <img src="/reference-assets/accueil-annonces-leasing.svg" width="1163" height="709" alt="Des dizaines d'annonces de leasing automobile défilent autour d'une offre « exceptionnelle » à 149 €/mois ; un homme les regarde, perplexe." class="h-auto w-full" loading="lazy">
+        </picture>
       </div>
     </div>
   </section>
@@ -46,7 +49,7 @@
       <div class="text-center">
         <h2 class="font-heading text-[28px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary lg:text-[40px]">Notre approche</h2>
         <div class="mx-auto mt-5 max-w-[980px] lg:max-w-[1120px] space-y-3 text-base leading-[1.6] lg:text-[20px] lg:leading-[1.5] text-brand-text-secondary">
-          <% approach_paragraphs = site_copy("home.approach", "Sur le papier, acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
+          <% approach_paragraphs = site_copy("home.approach", "Acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
           <% if approach_paragraphs[1].to_s.start_with?("En réalité") %>
             <p>
               <%= highlight_le_bon_modele(approach_paragraphs[0], style: :plain) %>
