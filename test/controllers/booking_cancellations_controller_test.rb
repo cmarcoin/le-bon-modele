@@ -57,14 +57,18 @@ class BookingCancellationsControllerTest < ActionDispatch::IntegrationTest
     original_refund = Stripe::Refund.method(:create)
     Stripe::Refund.define_singleton_method(:create) { |*_args| Struct.new(:id).new("re_customer") }
 
-    assert_enqueued_emails 2 do
-      post cancel_booking_path(token: @booking.cancellation_token)
-    end
+    freeze_time do
+      token = @booking.cancellation_token
 
-    assert_redirected_to cancel_booking_path(token: @booking.cancellation_token)
-    assert_equal "canceled", @booking.reload.status
-    assert_equal "refunded", @booking.payment_transaction.reload.status
-    assert_includes AvailabilitySlot.available_for(@pack), @slot
+      assert_enqueued_emails 2 do
+        post cancel_booking_path(token: token)
+      end
+
+      assert_redirected_to cancel_booking_path(token: token)
+      assert_equal "canceled", @booking.reload.status
+      assert_equal "refunded", @booking.payment_transaction.reload.status
+      assert_includes AvailabilitySlot.available_for(@pack), @slot
+    end
   ensure
     Stripe::Refund.define_singleton_method(:create, original_refund)
   end
