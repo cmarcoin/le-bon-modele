@@ -1,8 +1,8 @@
 <% content_for :title, "Le Bon Modèle" %>
 <% reviews = [
-  ["Volkswagen Touran + Renault Twingo E-Tech", "CM", "Claire & Marc L.", "Haute-Savoie", "Entre notre monospace à 250\u00A0000\u00A0km et la BMW en leasing, on ne savait plus s'il fallait remplacer une voiture ou deux. Vélos, plongée, trajets pro jusqu'à Grenoble… nos besoins étaient compliqués. Charles et Jules ont tout remis à plat avec nous : revendre la BMW 15\u00A0000\u00A0€, prendre un Touran d'occasion et une Twingo électrique à 14\u00A0000\u00A0€. Au total, largement moins que les 45\u00A0000\u00A0€ qu'on avait envisagés. Et jamais de discours commercial."],
-  ["Toyota Corolla Touring Sports", "ÉR", "Émilie R.", "Lac d'Annecy", "Deux enfants, du matériel de camping chaque week-end en montagne, et un contrôle technique dans deux mois avec une alerte liquide de refroidissement. On hésitait entre un break et un SUV, avec seulement 20\u00A0000\u00A0€. Charles et Jules nous ont montré qu'un break répondait mieux à nos besoins, puis nous ont déniché une belle Corolla Touring Sports à ce prix : un coffre aussi grand que celui de notre ancien monospace, une voiture qui a de la gueule, et enfin un choix clair."],
-  ["Dacia Duster", "NV", "Nathalie V.", "Chambéry", "Après un accident, je me suis retrouvée sans voiture, avec une recherche urgente et un budget de 40\u00A0000\u00A0€ en tête. Je pensais au tout électrique, mais notre garage fait environ 2\u00A0m de haut. Charles et Jules ont analysé avec moi mes vrais trajets – 1\u00A0500\u00A0km par an, quelques autoroutes pour aller à Oléron – et m'ont orientée vers un Duster, que j'ai acheté 25\u00A0000\u00A0€. J'ai moins dépensé, pour une voiture plus adaptée, et mon fils y rentre son BMX."]
+  ["Volkswagen Touran + Renault Twingo E-Tech", "CM", "Claire & Marc L.", "Haute-Savoie", "Entre notre monospace à 250\u00A0000\u00A0km et la BMW en leasing, on ne savait plus s’il fallait remplacer une voiture ou deux. Vélos, plongée, trajets pro jusqu’à Grenoble… nos besoins étaient compliqués. Charles et Jules ont tout remis à plat avec nous : revendre la BMW 15\u00A0000\u00A0€, prendre un Touran d’occasion et une Twingo électrique à 14\u00A0000\u00A0€. Au total, largement moins que les 45\u00A0000\u00A0€ qu’on avait envisagés. Et jamais de discours commercial."],
+  ["Toyota Corolla Touring Sports", "ÉR", "Émilie R.", "Lac d’Annecy", "Deux enfants, du matériel de camping chaque week-end en montagne, et un contrôle technique dans deux mois avec une alerte liquide de refroidissement. On hésitait entre un break et un SUV, avec seulement 20\u00A0000\u00A0€. Charles et Jules nous ont montré qu’un break répondait mieux à nos besoins, puis nous ont déniché une belle Corolla Touring Sports à ce prix : un coffre aussi grand que celui de notre ancien monospace, une voiture qui a de la gueule, et enfin un choix clair."],
+  ["Dacia Duster", "NV", "Nathalie V.", "Chambéry", "Après un accident, je me suis retrouvée sans voiture, avec une recherche urgente et un budget de 40\u00A0000\u00A0€ en tête. Je pensais au tout électrique, mais notre garage fait environ 2\u00A0m de haut. Charles et Jules ont analysé avec moi mes vrais trajets – 1\u00A0500\u00A0km par an, quelques autoroutes pour aller à Oléron – et m’ont orientée vers un Duster, que j’ai acheté 25\u00A0000\u00A0€. J’ai moins dépensé, pour une voiture plus adaptée, et mon fils y rentre son BMX."]
 ] %>
 
 <%= render "home/header" %>
@@ -12,7 +12,7 @@
   <section class="px-6 py-8 lg:px-12 lg:py-10 lg:overflow-x-hidden">
     <div class="mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
       <div class="lg:pt-[108px] relative z-10">
-        <% hero_lines = site_copy("home.hero_title", "Choisissez la voiture qu'il vous faut. Pas celle qu'on cherche à vous vendre.").split(/(?<=\.)\s+/) %>
+        <% hero_lines = site_copy("home.hero_title", "Choisissez la voiture qu’il vous faut. Pas celle qu’on cherche à vous vendre.").split(/(?<=\.)\s+/) %>
         <h1 class="max-w-[640px] font-heading text-[32px] font-black leading-[0.98] lg:text-[48px]">
           <% hero_lines.each_with_index do |line, index| %>
             <span class="<%= class_names("block", index.zero? ? "text-brand-primary" : "mt-4 text-brand-text") %>"><%= line %></span>
@@ -20,7 +20,7 @@
         </h1>
 
         <p class="mt-8 lg:mt-11 max-w-[580px] text-[20px] leading-[1.5] text-brand-text-secondary">
-          <%= highlight_le_bon_modele(site_copy("home.hero_subtitle", "Bien acheter, c'est être bien conseillé. Avec Le Bon Modèle, deux experts indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus adaptée à votre quotidien et à votre budget."), style: :bold) %>
+          <%= highlight_le_bon_modele(site_copy("home.hero_subtitle", "Bien acheter, c’est être bien conseillé. Avec Le Bon Modèle, deux experts indépendants vous accompagnent, pas à pas, pour choisir la voiture la plus adaptée à votre quotidien et à votre budget."), style: :bold) %>
         </p>
 
         <div class="mt-7 flex flex-wrap gap-x-12 gap-y-3">
@@ -38,7 +38,7 @@
       <div class="flex items-center justify-center lg:justify-end lg:self-start lg:translate-y-16 relative z-0">
         <picture class="lg:scale-125 lg:origin-center">
           <source srcset="/reference-assets/accueil-annonces-leasing-statique.svg" media="(prefers-reduced-motion: reduce)">
-          <img src="/reference-assets/accueil-annonces-leasing.svg" width="1163" height="709" alt="Des dizaines d'annonces de leasing automobile défilent autour d'une offre « exceptionnelle » à 149 €/mois ; un homme les regarde, perplexe." class="h-auto w-full" loading="lazy">
+          <img src="/reference-assets/accueil-annonces-leasing.svg" width="1163" height="709" alt="Des dizaines d’annonces de leasing automobile défilent autour d’une offre « exceptionnelle » à 149 €/mois ; un homme les regarde, perplexe." class="h-auto w-full" loading="lazy">
         </picture>
       </div>
     </div>
@@ -49,7 +49,7 @@
       <div class="text-center">
         <h2 class="font-heading text-[28px] font-extrabold leading-[1.1] tracking-[-0.01em] text-brand-primary lg:text-[40px]">Notre approche</h2>
         <div class="mx-auto mt-5 max-w-[980px] lg:max-w-[1120px] space-y-3 text-base leading-[1.6] lg:text-[20px] lg:leading-[1.5] text-brand-text-secondary">
-          <% approach_paragraphs = site_copy("home.approach", "Acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d'options, d'annonces et de modes d'achat, c'est difficile de s'y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
+          <% approach_paragraphs = site_copy("home.approach", "Acheter une voiture peut sembler simple.\nEn réalité, entre la multitude de marques et de modèles, de motorisations et d’options, d’annonces et de modes d’achat, c’est difficile de s’y retrouver.\nAvec Le Bon Modèle, on vous aide à y voir clair : de vrais conseillers vous guident pas à pas pour choisir et acheter la voiture la plus adaptée à votre quotidien et à votre budget, sans angles morts.").split(/\n+/) %>
           <% if approach_paragraphs[1].to_s.start_with?("En réalité") %>
             <p>
               <%= highlight_le_bon_modele(approach_paragraphs[0], style: :plain) %>
@@ -69,8 +69,8 @@
 
       <div class="relative mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-x-[88px]">
         <% [
-          [site_copy("home.block_1_title", "On est passés par là"), site_copy("home.block_1_body", "Derrière Le Bon Modèle, il n'y a pas d'IA, mais Charles et Jules : deux conducteurs qui savent par expérience à quel point acheter une voiture peut être complexe, et qui ont appris à comparer les offres, décrypter les prix et dénicher les bonnes affaires."), :plain],
-          [site_copy("home.block_2_title", "Conseillers indépendants"), site_copy("home.block_2_body", "Nous ne vendons pas de voitures. Nous ne prenons pas de commission. Notre métier, c'est de vous fournir un avis d'expert objectif, pour vous aider à faire un choix éclairé.\nEt notre seul client, c'est vous."), :bold],
+          [site_copy("home.block_1_title", "On est passés par là"), site_copy("home.block_1_body", "Derrière Le Bon Modèle, il n’y a pas d’IA, mais Charles et Jules : deux conducteurs qui savent par expérience à quel point acheter une voiture peut être complexe, et qui ont appris à comparer les offres, décrypter les prix et dénicher les bonnes affaires."), :plain],
+          [site_copy("home.block_2_title", "Conseillers indépendants"), site_copy("home.block_2_body", "Nous ne vendons pas de voitures. Nous ne prenons pas de commission. Notre métier, c’est de vous fournir un avis d’expert objectif, pour vous aider à faire un choix éclairé.\nEt notre seul client, c’est vous."), :bold],
           [site_copy("home.block_3_title", "Double expertise"), site_copy("home.block_3_body", "Nous combinons une connaissance approfondie des véhicules avec une compréhension fine de vos besoins et de vos contraintes.\nNous appliquons une méthode rigoureuse et privilégions des échanges directs, au téléphone ou en visio, pour vous accompagner pas à pas."), :bold]
         ].each_with_index do |(title, body, style), index| %>
           <article class="<%= "relative md:before:absolute md:before:-left-11 md:before:top-0 md:before:h-full md:before:w-px md:before:bg-[#E3DDD5] max-md:border-t max-md:border-[#E3DDD5] max-md:pt-8" if index.positive? %>">
