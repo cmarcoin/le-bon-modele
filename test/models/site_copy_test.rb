@@ -4,7 +4,10 @@ class SiteCopyTest < ActiveSupport::TestCase
   test "fetch returns the stored value then the default" do
     assert_equal "fallback", SiteCopy.fetch("missing.key", "fallback")
 
-    SiteCopy.create!(key: "home.hero_title", label: "Slogan", group: "home", value: "Nouveau slogan")
+    # Use find_or_initialize_by to avoid duplicate key error when SiteCopy is pre-seeded
+    copy = SiteCopy.find_or_initialize_by(key: "home.hero_title")
+    copy.assign_attributes(label: "Slogan", group: "home", value: "Nouveau slogan")
+    copy.save!
 
     assert_equal "Nouveau slogan", SiteCopy.fetch("home.hero_title", "fallback")
   end
