@@ -12,8 +12,9 @@ module ActiveSupport
     include ActionMailer::TestHelper
 
     # Ensure SiteCopy defaults are seeded before tests run
+    # This runs once per parallel worker to populate the test database
     parallelize_setup do |worker|
-      ActiveRecord::Base.connection.execute("TRUNCATE site_copies RESTART IDENTITY")
+      SiteCopy.delete_all
       SiteCopy.seed!
     end
   end
