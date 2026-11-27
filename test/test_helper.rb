@@ -12,10 +12,15 @@ module ActiveSupport
     include ActionMailer::TestHelper
 
     # Ensure SiteCopy defaults are seeded before tests run
-    # This runs once per parallel worker to populate the test database
+    # Use a lock to prevent duplicate key errors from parallel workers
     parallelize_setup do |worker|
-      SiteCopy.delete_all
-      SiteCopy.seed!
+      ActiveRecord::Base.connection.execute("SELECT pg_advisory_lock(123456789)")
+      begin
+        # Only seed if not already seeded
+        SiteCopy.seed! if SiteCopy.count == 0
+      ensure
+        ActiveRecord::Base.connection.execute("SELECT pg_advisory_unlock(123456789)")
+      end
     end
   end
 end
