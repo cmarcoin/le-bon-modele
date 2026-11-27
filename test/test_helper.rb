@@ -13,6 +13,7 @@ module ActiveSupport
 
     # Ensure SiteCopy defaults are seeded before tests run
     parallelize_setup do |worker|
+      ActiveRecord::Base.connection.execute("TRUNCATE site_copies RESTART IDENTITY")
       SiteCopy.seed!
     end
   end
