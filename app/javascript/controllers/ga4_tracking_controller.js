@@ -2,14 +2,16 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    // Ce contrôleur est placé sur <body> et installé une seule fois
-    // Les écouteurs globaux sont configurés sans utiliser turbo:load
+    // Ce contrôleur est placé sur <body> et se reconnecte à chaque navigation Turbo
+    // Les écouteurs globaux sont installés une seule fois via un flag global
     this.setupGlobalTracking()
   }
 
   setupGlobalTracking() {
-    // Tracking des liens mailto et tel par délégation sur document
-    document.addEventListener('click', (e) => {
+    // Installer l'écouteur de clic une seule fois pour éviter les doublons
+    if (!window.ga4ClickTrackingInstalled) {
+      window.ga4ClickTrackingInstalled = true
+      document.addEventListener('click', (e) => {
       const link = e.target.closest('a[href^="mailto:"], a[href^="tel:"]')
       if (!link) return
 
@@ -19,6 +21,7 @@ export default class extends Controller {
         gtag('event', 'clic_contact', { type: type })
       }
     }, { capture: true, once: false })
+    }
 
     // Tracking de l'ouverture du chat Crisp (une seule fois)
     if (typeof window.$crisp !== 'undefined' && !window.crispChatTracked) {
@@ -46,44 +49,6 @@ export default class extends Controller {
           item_name: packName
         }],
         emplacement: location
-      })
-    }
-  }
-
-  // Méthode statique pour purchase : appelable depuis n'importe où
-  static trackPurchase(transactionId, packName, packId, price, format) {
-    // Vérifier si déjà envoyé dans cette session
-    const storageKey = `ga4_purchase_${transactionId}`
-    if (sessionStorage.getItem(storageKey)) {
-      return
-    }
-
-    // Convertir phone en telephone
-    const normalizedFormat = format === 'phone' ? 'telephone' : format
-
-    if (typeof gtag === 'function') {
-      gtag('event', 'purchase', {
-        transaction_id: transactionId,
-        currency: 'EUR',
-        value: parseFloat(price),
-        format: normalizedFormat,
-        items: [{
-          item_id: packId,
-          item_name: packName,
-          price: parseFloat(price)
-        }]
-      })
-      
-      // Marquer comme envoyé
-      sessionStorage.setItem(storageKey, 'true')
-    }
-  }
-
-  // Méthode statique pour generate_lead : appelable depuis n'importe où
-  static trackGenerateLead() {
-    if (typeof gtag === 'function') {
-      gtag('event', 'generate_lead', {
-        formulaire: 'contact'
       })
     }
   }

@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import Ga4TrackingController from "./ga4_tracking_controller"
 
 export default class extends Controller {
   static targets = ["submit"]
