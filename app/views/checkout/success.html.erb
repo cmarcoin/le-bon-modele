@@ -7,6 +7,7 @@
   <section class="relative px-6 pt-8 pb-20 lg:px-12 lg:pt-10 lg:pb-[120px]">
     <div class="mx-auto max-w-[1280px]">
       <% if @booking&.paid? %>
+        <div hidden data-controller="ga4-purchase" data-ga4-purchase-transaction-id-value="<%= params[:session_id] %>" data-ga4-purchase-pack-name-value="<%= @booking.pack.name %>" data-ga4-purchase-pack-id-value="<%= @booking.pack.name == 'Pack Conseil' ? 'pack-conseil' : 'pack-achat' %>" data-ga4-purchase-price-value="<%= @booking.amount_cents / 100.0 %>" data-ga4-purchase-format-value="<%= @booking.meeting_mode %>"></div>
         <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-14">
           <div class="lg:pt-[108px]">
             <h1 class="font-heading text-[32px] font-black leading-[0.98] lg:text-[48px]">
@@ -117,46 +118,5 @@
   </section>
 </main>
 
-<% if @booking&.paid? %>
-  <script>
-    // Événement GA4 purchase pour la confirmation de paiement
-    document.addEventListener('turbo:load', function() {
-      // Appel direct sans dépendance à window.Ga4TrackingController
-      const transactionId = '<%= params[:session_id] %>';
-      const packName = '<%= @booking.pack.name %>';
-      const packId = '<%= @booking.pack.name == "Pack Conseil" ? "pack-conseil" : "pack-achat" %>';
-      const price = <%= @booking.amount_cents / 100.0 %>;
-      let format = '<%= @booking.meeting_mode %>';
-      
-      // Convertir phone en telephone
-      if (format === 'phone') {
-        format = 'telephone';
-      }
-      
-      // Vérifier si déjà envoyé dans cette session
-      const storageKey = `ga4_purchase_${transactionId}`;
-      if (sessionStorage.getItem(storageKey)) {
-        return;
-      }
-
-      if (typeof gtag === 'function') {
-        gtag('event', 'purchase', {
-          transaction_id: transactionId,
-          currency: 'EUR',
-          value: price,
-          format: format,
-          items: [{
-            item_id: packId,
-            item_name: packName,
-            price: price
-          }]
-        });
-        
-        // Marquer comme envoyé
-        sessionStorage.setItem(storageKey, 'true');
-      }
-    }, { once: true });
-  </script>
-<% end %>
 
 <%= render "home/footer" %>
